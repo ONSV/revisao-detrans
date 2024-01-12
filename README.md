@@ -1,4 +1,4 @@
-# Revsião da Análise do DETRANs
+# Revsião da Análise dos DETRANs
 
 As anotações a seguir são observações que podem estar erradas e beneficiaram de revisão. A metodologia da revisão se baseou em:
 
