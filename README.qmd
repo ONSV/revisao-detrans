@@ -56,6 +56,7 @@ geodf <- df |>
       "SE" ~ -0.6,
       "AL" ~ -0.4,
       "RJ" ~ -1,
+      "AC" ~ 0.5,
       .default = 0
     ),
     nudge_x_text = case_match(
@@ -118,7 +119,7 @@ geodf |>
                  nudge_y = geodf$nudge_y_text, 
                  nudge_x = geodf$nudge_x_text) +
     coord_sf() +
-    labs(title = "Avaliação dos DETRANs para estados brasileiros") +
+    labs(title = "Avaliação dos DETRANs") +
     xlab("") + ylab("") +
     theme(text = element_text(size = 10, 
                               family = "TT Arial", 
