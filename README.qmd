@@ -15,7 +15,10 @@ library(googlesheets4)
 library(onsvplot)
 library(geobr)
 library(sf)
+```
 
+
+```{r include=FALSE}
 if(file.exists("data.rda")) {
   load("data.rda")
 } else {
@@ -27,6 +30,8 @@ if(file.exists("data.rda")) {
   
   save(df, file = "data.rda")
 }
+
+theme_set(theme_onsv())
 
 df |> 
   mutate(nota = rowMeans(select(df, where(is.numeric)))) |> 
@@ -81,7 +86,7 @@ geodf |>
                  nudge_y = geodf$nudge_y_text, 
                  nudge_x = geodf$nudge_x_text) +
     coord_sf() +
-    labs(title = "Avaliação dos DETRANs para estados brasileiros") +
+    labs(title = "Avaliação dos DETRANs") +
     xlab("") + ylab("") +
     theme(text = element_text(size = 12, 
                               family = "TT Arial", 
@@ -92,7 +97,9 @@ ggsave("plots/map1.png", height = 5, width = 7)
 
 
 ```{r echo=FALSE}
-knitr::kable(mutate(df, Nota = rowMeans(select(df, where(is.numeric)))))
+knitr::kable(
+  mutate(df, Nota = rowMeans(select(df, where(is.numeric)))),
+  digits = 2)
 ```
 
 ```{r echo=FALSE}
@@ -121,7 +128,7 @@ geodf |>
     coord_sf() +
     labs(title = "Avaliação dos DETRANs") +
     xlab("") + ylab("") +
-    theme(text = element_text(size = 10, 
+    theme(text = element_text(size = 12, 
                               family = "TT Arial", 
                               color = "grey30"))
 ```
