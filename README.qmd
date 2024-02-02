@@ -19,7 +19,7 @@ library(sf)
 
 
 ```{r include=FALSE}
-if(file.exists("data.rda")) {
+if (file.exists("data.rda")) {
   load("data.rda")
 } else {
   df <- read_sheet(
@@ -129,7 +129,6 @@ geodf |>
     labs(title = "Avaliação dos DETRANs") +
     xlab("") + ylab("") +
     theme(text = element_text(size = 12, 
-                              family = "TT Arial", 
                               color = "grey30"))
 ```
 
