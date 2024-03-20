@@ -1,0 +1,77 @@
+---
+title: "Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito – DETRANs"
+format: 
+  onsvpub-html:
+    smooth-scroll: true
+author: 
+  - Pedro Augusto Borges dos Santos
+  - João Pedro Melani Saraiva
+date: last-modified
+title-block-banner: true
+editor_options: 
+  chunk_output_type: console
+bibliography: references.bib
+csl: associacao-brasileira-de-normas-tecnicas.csl
+---
+
+### Sobre o relatório {.unnumbered}
+
+#### Como citar {.unnumbered}
+
+#### Licença de uso {.unnumbered}
+
+#### Código livre e aberto {.unnumbered}
+
+## Introdução
+
+### Objetivo
+
+O presente documento tem por objetivo apresentar uma avaliação do nível de informações disponibilizadas nos portais (sítios eletrônicos) dos DETRANs (Departamentos Estaduais de Trânsito) de todas as unidades da federação brasileiras.
+
+Os DETRANs, por sua atuação, trabalham com um grande número de informações relevantes para a gestão do trânsito no país, tendo muitas delas, além do teor formal e burocrático, uma grande utilidade para avaliações no âmbito da segurança viária, tais como: infrações de trânsito, acidentes de trânsito, e habilitação, entre outros.
+
+Nesse sentido, este documento busca apresentar uma análise da situação de cada DETRAN, permitindo obter um panorama de como essas instituições trabalham e disponibilizam informações de interesse social. Além da introdução, o documento compõe-se das seguintes seções: @sec-metodos, com as consultas preliminares, pontuação e critérios estabelecidos; e @sec-resultados, com a pontuação geral em cada categoria analisada, com a evolução das notas resultantes ao longo dos anos e com os exemplos de boas práticas encontradas nos sítios eletrônicos.
+
+### Atribuições do DETRAN
+
+De acordo com o CTB (Código de Trânsito Brasileiro), são competências do DETRAN o planejamento, coordenação, execução e controle relacionados às seguintes áreas: habilitação de condutores, veículos, fiscalização de trânsito, estatísticas e educação para o trânsito.
+
+Na habilitação de condutores, cabe ao DETRAN realizar e controlar o processo de formação, reciclagem e suspensão dos condutores, assim como a expedição e cassação da Licença de Aprendizagem, Permissão para Dirigir e CNH. 
+
+Em relação aos veículos, compete ao DETRAN o seu registro, emplacamento, licenciamento e a expedição do seu Certificado de Registro e Licenciamento Anual.
+
+Na área de fiscalização, o DETRAN deve fazer cumprir a legislação e as normas de trânsito, sendo responsável pela autuação e aplicação de medidas administrativas cabíveis pelas infrações previstas no Código de Trânsito Brasileiro.
+
+Em relação a educação para o trânsito, é responsabilidade do DETRAN a promoção e participação de projetos de educação e segurança no trânsito. Por fim, coleta de dados estatísticos e a elaboração de estudos sobre acidentes de trânsito e suas causas também devem ser cumpridos pelo DETRAN.
+
+### Versão anterior
+
+Este trabalho é uma segunda versão do relatório publicado em 2020 pelo Observatório, que virou uma comunicação técnica publicada no segundo Simpósio de Transportes do Paraná (STPR), também em 2020 [@santos2020]. A elaboração de uma nova versão ira possibilitar a evolução dos portais dos DETRANs de cada estado.
+
+## Métodos {#sec-metodos}
+
+### Consultas Preliminares
+
+### Critérios de Avaliação
+
+## Resultados {#sec-resultados}
+
+### Frota de Veículos
+
+### Condutores Habilitados
+
+### CFCs
+
+### Infrações
+
+### Sinistros de Trânsito
+
+### Educação para o Trânsito
+
+### Evolução dos Resultados
+
+### Boas Práticas
+
+## Apêndice - Links acessados {.unnumbered}
+
+## Referências {.unnumbered}

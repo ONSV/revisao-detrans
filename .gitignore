@@ -3,3 +3,5 @@
 .Rhistory
 
 *.code-workspace
+
+.DS_Store
