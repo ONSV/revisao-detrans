@@ -213,7 +213,8 @@ df_revisao_2020 <-
 
 df_revisoes <-
   rbind(df_revisao_2020, df_revisao_2024) |> 
-  rename_with(~ str_to_lower(str_replace(.x, "\\.", "_")))
+  rename_with(~ str_to_lower(str_replace(.x, "\\.", "_"))) |> 
+  rename_with(~ str_replace(.x, "acidentes", "sinistros"))
 
 view(df_revisoes)
 

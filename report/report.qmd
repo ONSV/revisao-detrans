@@ -14,6 +14,16 @@ bibliography: references.bib
 csl: associacao-brasileira-de-normas-tecnicas.csl
 ---
 
+```{r echo=FALSE}
+library(tidyverse)
+library(here)
+library(flextable)
+library(onsvplot)
+library(scales)
+
+load(here("data", "revisoes.rda"))
+```
+
 ### Sobre o relatório {.unnumbered}
 
 #### Como citar {.unnumbered}
@@ -52,7 +62,165 @@ Este trabalho é uma segunda versão do relatório publicado em 2020 pelo Observ
 
 ### Consultas Preliminares
 
+O estudo foi realizado por meio do acesso dos sites do DETRAN de cada estado a fim de averiguar a existência de dados estatíticos sobre a frota veicular, condutores habilitados, infrações e sinistros de trânsito. Também foi avaliada a existência de informações relacionadas à educação para o trânsito (campanhas, material educativo, regras de trânsito, etc.), dados quantitivos do atendimento público pelo departamento, disponibilidade de canais de atendimento e dados informativos sobre os centros de formação de condutores do estado em questão. A @tbl-consultas demonstra estes resultados:
+
+```{r}
+#| include: false
+
+get_region <- function(acronyms) {
+  region_map <- list(
+    "Norte" = c("AC", "AM", "AP", "PA", "RO", "RR", "TO"),
+    "Nordeste" = c("AL", "BA", "CE", "MA", "PB", "PE", "PI", "RN", "SE"),
+    "Centro-Oeste" = c("GO", "MT", "MS", "DF"),
+    "Sudeste" = c("ES", "MG", "RJ", "SP"),
+    "Sul" = c("PR", "RS", "SC")
+  )
+
+  region <- sapply(acronyms, function(acronym) {
+    for (r in names(region_map)) {
+      if (acronym %in% region_map[[r]]) {
+        return(r)
+      }
+    }
+    return("Not found")
+  })
+
+  return(region)
+}
+
+consulta_pre <- df_revisoes |>
+  mutate(regiao = get_region(uf), .before = 1) |>
+  filter(ano == 2024) |>
+  mutate(
+    frota = rowSums(across(starts_with("frota"))),
+    condutores = rowSums(across(starts_with("condutores"))),
+    infracoes = rowSums(across(starts_with("infracoes"))),
+    sinistros = rowSums(across(starts_with("sinistros"))),
+    atendimento = rowSums(across(starts_with("atendimento"))),
+    educ = rowSums(across(starts_with("educ"))),
+    cfcs
+  ) |>
+  select(regiao,
+         uf,
+         frota,
+         condutores,
+         infracoes,
+         sinistros,
+         atendimento,
+         educ,
+         cfcs) 
+```
+
+```{r}
+#| tbl-cap: Tabela de consultas preliminares
+#| label: tbl-consultas
+
+consulta_pre |>
+  mutate(across(where(is.numeric), ~ ifelse(.x == 0, "NÃO", "SIM"))) |>
+  arrange(desc(regiao)) |>
+  flextable() |>
+  merge_v(j = ~ regiao) |>
+  set_header_labels(
+    regiao = "Região",
+    uf = "UF",
+    frota = "Frota veicular",
+    condutores = "Condutores habilitados",
+    infracoes = "Infrações",
+    sinistros = "Sinistros",
+    atendimento = "Atendimento ao público",
+    educ = "Educação para o trânsito",
+    cfcs = "CFC"
+  ) |>
+  bg(
+    j = ~ . - regiao - uf,
+    bg = col_factor(
+      palette = c("#df555d", "#3d7590"),
+      domain = c("SIM", "NÃO")
+    ),
+    part = "body"
+  ) |>
+  color(j = ~ . - regiao - uf,
+        color = "white",
+        part = "body") |>
+  theme_vanilla() |>
+  surround(
+    j = ~ . - regiao - uf,
+    border.top = officer::fp_border(color = "grey90"),
+    border.bottom = officer::fp_border(color = "grey90"),
+  ) |>
+  align(align = "center", part = "all") |> 
+  fontsize(size = 9, part = "all") |> 
+  line_spacing(space = 0.65, part = "all") 
+```
+
 ### Critérios de Avaliação
+
+A partir das categorias anteriormente discutidas, critérios de avaliação foram estabelecidos para quantificar a disponibilidade de dados e informações de cada um dos DETRANs. Assim sendo, são concedidos níveis de desempenho que equivalem a pontuações para cada um dos critérios aferidos: **Melhor Prática** - Nota 10; **Prática Intermediária** - Nota 6,67; **Prática Inicial** - Nota 3,34 e **Prática Ausente** - Nota 0.
+
+A avaliação dos dados estatísticos de frota veicular, condutores habilitados, infrações e sinistros de trânsito se baseou em:
+
+-   Periodicidade: quantidade de anos disponíveis;
+
+-   Interatividade: tipo de arquivos ou informações disponíveis e;
+
+-   Nível de desagregação: quantidade de variáveis disponíveis para análise.
+
+A relação destes critérios está ilustrada na @tbl-criterios:
+
+```{r}
+#| tbl-cap: Tabela de critérios de avaliação para frota, condutores habilitados, infrações e sinistros
+#| label: tbl-criterios
+
+criterio <- data.frame(
+  notas = c(3.3, 6.7, 10),
+  periodicidade = c("3 anos de atraso/ < 5 anos", "2 anos de atraso/ < 5 anos", "2 anos de atraso/ > 5 anos"),
+  interatividade = c("txt", "xlsx", "Interativo"),
+  desagreg = c("1 a 2 desagregações", "3 a 4 desagregações", "5+ desagregações")
+)
+
+rbind(
+  mutate(criterio, categoria = "frota"),
+  mutate(criterio, categoria = "condutores"),
+  mutate(
+    criterio,
+    categoria = "infrações",
+    desagreg = c("1 desagregação", "2 desagregações", "3+ desagregações")
+  ),
+  mutate(
+    criterio,
+    categoria = "sinistros",
+    desagreg = c("1 a 5 desagregações", "6 a 10 desagregações", "11+ desagregações")
+  )
+) |>
+  relocate(categoria) |> 
+  mutate(categoria = str_to_title(categoria)) |> 
+  rename_with(str_to_title) |> 
+  rename(`Nível de desagregação` = Desagreg) |>
+  flextable() |>
+  merge_v(j = ~ Categoria) |> 
+  theme_vanilla() |> 
+  align(align = "center", part = "all") |> 
+  autofit()
+```
+
+As informações sobre o atendimento ao público, educação para o trânsito e CFCs foram aferidas por outros critérios mais específicos por não se tratarem de dados estatísticos, exigindo uma mudança na abordagem de avaliação.
+
+::: panel-tabset
+## Atendimento ao público
+
+```{r}
+data.frame(
+  notas = c(3.3, 6.7, 10),
+  stats =  c("3 anos de atraso/ < 5 anos", "2 anos de atraso/ < 5 anos", "2 anos de atraso/ > 5 anos"),
+  canais = c("Atendimento por telefone", "Atendimento por (1) e e-mail", "Atendimento por (2) e mensagem")
+) |> 
+  flextable()
+```
+
+## Educação para o trânsito
+
+## Informações de CFCs
+:::
 
 ## Resultados {#sec-resultados}
 
