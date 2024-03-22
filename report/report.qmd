@@ -14,13 +14,19 @@ bibliography: references.bib
 csl: associacao-brasileira-de-normas-tecnicas.csl
 ---
 
-```{r echo=FALSE}
+```{r}
+#| include: false
+
 library(tidyverse)
 library(here)
 library(flextable)
 library(onsvplot)
 library(scales)
+library(geobr)
+library(sf)
 
+
+estados <- read_state()
 load(here("data", "revisoes.rda"))
 ```
 
@@ -75,7 +81,7 @@ get_region <- function(acronyms) {
     "Sudeste" = c("ES", "MG", "RJ", "SP"),
     "Sul" = c("PR", "RS", "SC")
   )
-
+  
   region <- sapply(acronyms, function(acronym) {
     for (r in names(region_map)) {
       if (acronym %in% region_map[[r]]) {
@@ -150,7 +156,10 @@ consulta_pre |>
   ) |>
   align(align = "center", part = "all") |> 
   fontsize(size = 9, part = "all") |> 
-  line_spacing(space = 0.65, part = "all") 
+  line_spacing(space = 0.55, part = "body") |> 
+  line_spacing(space = 0.6, part = "header") |> 
+  color(color = "white", part = "header") |> 
+  bg(bg = onsv_palette$blue, part = "header")
 ```
 
 ### Critérios de Avaliação
@@ -173,7 +182,11 @@ A relação destes critérios está ilustrada na @tbl-criterios:
 
 criterio <- data.frame(
   notas = c(3.3, 6.7, 10),
-  periodicidade = c("3 anos de atraso/ < 5 anos", "2 anos de atraso/ < 5 anos", "2 anos de atraso/ > 5 anos"),
+  periodicidade = c(
+    "3 anos de atraso/ < 5 anos",
+    "2 anos de atraso/ < 5 anos",
+    "2 anos de atraso/ > 5 anos"
+  ),
   interatividade = c("txt", "xlsx", "Interativo"),
   desagreg = c("1 a 2 desagregações", "3 a 4 desagregações", "5+ desagregações")
 )
@@ -192,39 +205,218 @@ rbind(
     desagreg = c("1 a 5 desagregações", "6 a 10 desagregações", "11+ desagregações")
   )
 ) |>
-  relocate(categoria) |> 
-  mutate(categoria = str_to_title(categoria)) |> 
-  rename_with(str_to_title) |> 
+  relocate(categoria, periodicidade, interatividade, desagreg, notas) |>
+  mutate(categoria = str_to_title(categoria)) |>
+  rename_with(str_to_title) |>
   rename(`Nível de desagregação` = Desagreg) |>
   flextable() |>
-  merge_v(j = ~ Categoria) |> 
-  theme_vanilla() |> 
-  align(align = "center", part = "all") |> 
-  autofit()
+  merge_v(j = ~ Categoria) |>
+  theme_vanilla() |>
+  align(align = "center", part = "all") |>
+  autofit() |>
+  color(color = "white", part = "header") |>
+  bg(bg = onsv_palette$blue, part = "header")
 ```
 
-As informações sobre o atendimento ao público, educação para o trânsito e CFCs foram aferidas por outros critérios mais específicos por não se tratarem de dados estatísticos, exigindo uma mudança na abordagem de avaliação.
-
-::: panel-tabset
-## Atendimento ao público
+As informações sobre o atendimento ao público, educação para o trânsito e CFCs foram aferidas por outros critérios mais específicos por não se tratarem de dados estatísticos, exigindo uma mudança na abordagem de avaliação. As Tabelas [-@tbl-atend], [-@tbl-educ] e [-@tbl-cfcs] demonstram os critérios para estes casos:
 
 ```{r}
-data.frame(
+#| tbl-cap: Tabela de critérios de avaliação para atendimento ao público
+#| label: tbl-atend
+
+tbl_atend <- data.frame(
   notas = c(3.3, 6.7, 10),
-  stats =  c("3 anos de atraso/ < 5 anos", "2 anos de atraso/ < 5 anos", "2 anos de atraso/ > 5 anos"),
-  canais = c("Atendimento por telefone", "Atendimento por (1) e e-mail", "Atendimento por (2) e mensagem")
-) |> 
-  flextable()
+  stats =  c(
+    "3 anos de atraso/ < 5 anos",
+    "2 anos de atraso/ < 5 anos",
+    "2 anos de atraso/ > 5 anos"
+  ),
+  canais = c(
+    "Atendimento por telefone",
+    "Atendimento por (1) e e-mail",
+    "Atendimento por (2) e mensagem"
+  )
+) |>
+  relocate(stats, canais, notas) |>
+  flextable() |>
+  theme_vanilla() |>
+  color(color = "white", part = "header") |>
+  bg(bg = onsv_palette$blue, part = "header") |>
+  set_header_labels(stats = "Estatísticas",
+                    canais = "Canais de atendimento",
+                    notas = "Notas") |>
+  align(align = "center", part = "all") |> 
+  autofit(add_w = 2)
+
+tbl_atend
 ```
 
-## Educação para o trânsito
+```{r}
+#| tbl-cap: Tabela de critérios de avaliação para conteúdo educativo
+#| label: tbl-educ
 
-## Informações de CFCs
-:::
+tbl_educ <- data.frame(
+  conteudo = c(
+    "Dicas, sugestões de leitura, cartilhas, orientações gerais e cadernos pedagógicos."
+  ),
+  divulgacao = c("Cursos, palestras, ações, projetos e campanhas.")
+) |>
+  flextable() |>
+  theme_vanilla() |>
+  color(color = "white", part = "header") |>
+  bg(bg = onsv_palette$blue, part = "header") |>
+  set_header_labels(conteudo = "Conteúdos didáticos",
+                    divulgacao = "Divulgação de atividades") |>
+  align(align = "center", part = "all") |> 
+  autofit()
+
+tbl_educ
+```
+
+```{r}
+#| tbl-cap: Tabela de critérios de avaliação para informações sobre CFCs
+#| label: tbl-cfcs
+
+tbl_cfc <- data.frame(
+  lista = c(
+    "Quantidade de CFCs no estado",
+    "Lista completa dos CFCs",
+    "Informações adicionais sobre o índice de aprovação dos alunos, quais CFCs possuem simuladores de direção, número de habilitados e informações sobre o credenciamento."
+  ),
+  notas = c(3.3, 6.7, 10)
+) |>
+  flextable() |>
+  theme_vanilla() |>
+  color(color = "white", part = "header") |>
+  bg(bg = onsv_palette$blue, part = "header") |>
+  set_header_labels(lista = "Lista sobre CFCs credenciados",
+                    notas = "Notas") |>
+  align(align = "center", part = "all") |> 
+  autofit()
+
+tbl_cfc
+```
 
 ## Resultados {#sec-resultados}
 
 ### Frota de Veículos
+
+```{r}
+frota <- df_revisoes |> 
+  filter(ano == 2024) |>
+  select(uf, starts_with("frota"), nota_final) |> 
+  mutate(regiao = get_region(uf), .before = 1,
+         nota_final = round(nota_final, 2)) |> 
+  arrange(desc(regiao))
+```
+
+A @tbl-frota aponta a qualidade dos dados estatísticos da frota veicular como fornecidos pelo portal dos DETRANs. A periodicidade aparenta ser o critério de melhor performance na maior parte dos departamentos:
+
+```{r}
+#| tbl-cap: Tabela de desempenho para dados de frota
+#| label: tbl-frota
+
+frota |>
+  mutate(across(
+    starts_with("frota"),
+    ~ case_match(
+      .x,
+      10.0 ~ "Ótimo",
+      6.7 ~ "Intermediário",
+      3.3 ~ "Inicial",
+      0 ~ "Ausente"
+    )
+  )) |>
+  flextable() |>
+  merge_v(j = ~ regiao) |>
+  set_header_labels(
+    regiao = "Região",
+    uf = "UF",
+    frota_period = "Periodicidade",
+    frota_inter = "Interatividade",
+    frota_desagreg = "Nível de desagregação",
+    nota_final = "Nota Final"
+  ) |>
+  theme_vanilla() |>
+  align(align = "center", part = "all") |>
+  color(color = "white", part = "header") |>
+  color(j = ~ . - regiao - uf,
+        color = "white",
+        part = "body") |>
+  bg(bg = onsv_palette$blue, part = "header") |>
+  bg(
+    bg = col_numeric(
+      palette = c("#df555d", "#3d7590"),
+      domain = c(0, 10)
+    ),
+    part = "body",
+    j = ~ nota_final
+  ) |>
+  bg(
+    bg = col_factor(
+      palette = c("#df555d", "#3d7590"),
+      domain = c("Ótimo", "Intermediário", "Inicial", "Ausente")
+    ),
+    part = "body",
+    j = ~ . - uf - regiao - nota_final
+  ) |>
+  bold(part = "body", j = ~ . - regiao - uf) |>
+  surround(
+    j = ~ . - regiao - uf,
+    border.top = officer::fp_border(color = "grey90"),
+    border.bottom = officer::fp_border(color = "grey90"),
+  ) |>
+  line_spacing(space = 0.4, part = "body") |>
+  line_spacing(space = 0.6, part = "header") |>
+  autofit()
+```
+
+A @fig-map-frota aponta a nota média dos três critérios para os dados de frota veicular dos departamentos de cada estado. Em destaque, estão:
+
+```{r}
+#| fig-cap: Mapa nota média para dados de frota
+#| label: fig-map-frota
+
+frota_map <- 
+  frota |> 
+  rename(abbrev_state = uf) |> 
+  merge(estados) |> 
+  mutate(nota_frota = rowMeans(across(starts_with("frota")))) |>
+  mutate(
+    nudge_y_text = case_match(
+      abbrev_state,
+      "DF" ~ 1,
+      "RN" ~ 0.25,
+      "SE" ~ -0.6,
+      "AL" ~ -0.4,
+      "RJ" ~ -1,
+      "AC" ~ 0.5,
+      .default = 0
+    ),
+    nudge_x_text = case_match(
+      abbrev_state,
+      "PB" ~ 3,
+      "PE" ~ 3.9,
+      "AL" ~ 1.75,
+      "ES" ~ 1.60,
+      "SE" ~ 1,
+      "RJ" ~ 1,
+      .default = 0
+    )
+  ) |> 
+  st_as_sf()
+
+ggplot(frota_map) + 
+  geom_sf(aes(fill = nota_frota)) +
+  geom_sf_text(aes(label = abbrev_state), 
+               size = 2,
+               color = "grey20",
+               nudge_x = frota_map$nudge_x_text,
+               nudge_y = frota_map$nudge_y_text) +
+  scale_fill_gradient(high = "#3d7590", low = "#df555d") +
+  theme_minimal() +
+  labs(fill = "Nota Média")
+```
 
 ### Condutores Habilitados
 
