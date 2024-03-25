@@ -1148,6 +1148,62 @@ ggplot(atendimento_map) +
 
 ### Evolução dos Resultados
 
+```{r}
+df_revisoes |>
+  select(uf, nota_final, ano) |>
+  mutate(uf = reorder(uf, nota_final),
+         ano = as_factor(ano)) |>
+  arrange(desc(nota_final)) |>
+  pivot_wider(values_from = nota_final,
+              names_from = ano,
+              names_prefix = "ano_") |> 
+  ggplot() +
+    geom_segment(aes(
+      x = ano_2020,
+      xend = ano_2024,
+      y = uf,
+      yend = uf
+    )) +
+    geom_point(aes(ano_2020, uf, color = "2020"), size = 2) +
+    geom_point(aes(ano_2024, uf, color = "2024"), size = 2) +
+    scale_color_manual(values = c(onsv_palette$red, onsv_palette$blue)) +
+    labs(x = "Pontuação", y = NULL, color = "Ano") +
+    theme_minimal() +
+    theme(legend.justification = c("right", "top"))
+```
+
+```{r}
+df_revisoes |>
+  select(uf, nota_final, ano) |>
+  pivot_wider(values_from = nota_final,
+              names_from = ano,
+              names_prefix = "ano_") |>
+  mutate(difer = (ano_2024 - ano_2020) / ano_2024,
+         uf = reorder(uf, difer)) |>
+  pivot_longer(c(ano_2020, ano_2024, difer)) |>
+  mutate(
+    fill = case_when(
+      name == "difer" & value > 0 ~ "up",
+      name == "difer" & value <= 0 ~ "down",
+      .default = "none"
+    ),
+    name = case_match(
+      name,
+      "ano_2020" ~ "2020",
+      "ano_2024" ~ "2024",
+      "difer" ~ "Diferença percentual"
+    )
+  ) |>
+  ggplot(aes(value, uf, fill = fill)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(vars(name), scales = "free_x") +
+  scale_fill_manual(values = c(onsv_palette$red, onsv_palette$blue, onsv_palette$green)) +
+  theme_minimal() +
+  theme(legend.position = "none",
+        panel.spacing.x = unit(1,"cm")) +
+  
+```
+
 ### Boas Práticas
 
 ## Apêndice - Links acessados {.unnumbered}
