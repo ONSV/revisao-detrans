@@ -28,6 +28,11 @@ library(sf)
 
 estados <- read_state()
 load(here("data", "revisoes.rda"))
+
+map_blue <- "#77C6ED"
+tbl_blue <- "#3d7590"
+tbl_red <- "#df555d"
+map_red <- "#e47076"
 ```
 
 ### Sobre o relatório {.unnumbered}
@@ -140,7 +145,7 @@ consulta_pre |>
   bg(
     j = ~ . - regiao - uf,
     bg = col_factor(
-      palette = c("#df555d", "#3d7590"),
+      palette = c(tbl_red, tbl_blue),
       domain = c("SIM", "NÃO")
     ),
     part = "body"
@@ -346,7 +351,7 @@ frota |>
   bg(bg = onsv_palette$blue, part = "header") |>
   bg(
     bg = col_numeric(
-      palette = c("#df555d", "#3d7590"),
+      palette = c(tbl_red, tbl_blue),
       domain = c(0, 10)
     ),
     part = "body",
@@ -354,7 +359,7 @@ frota |>
   ) |>
   bg(
     bg = col_factor(
-      palette = c("#df555d", "#3d7590"),
+      palette = c(tbl_red, tbl_blue),
       domain = c("Ótimo", "Intermediário", "Inicial", "Ausente")
     ),
     part = "body",
@@ -373,8 +378,12 @@ frota |>
 
 A @fig-map-frota aponta a nota média dos três critérios para os dados de frota veicular dos departamentos de cada estado. Em destaque, estão:
 
+-   RJ, RO e SE: 10 pontos e;
+
+-   GO, MA, MS, PE, RS, SC, SP: 8,9 pontos.
+
 ```{r}
-#| fig-cap: Mapa nota média para dados de frota
+#| fig-cap: Mapa de nota média para dados de frota
 #| label: fig-map-frota
 
 frota_map <- 
@@ -413,9 +422,12 @@ ggplot(frota_map) +
                color = "grey20",
                nudge_x = frota_map$nudge_x_text,
                nudge_y = frota_map$nudge_y_text) +
-  scale_fill_gradient(high = "#3d7590", low = "#df555d") +
+  scale_fill_gradient(high = map_blue, low = map_red, labels = comma_format(decimal.mark = ",", big.mark = "."), guide = "legend") +
   theme_minimal() +
-  labs(fill = "Nota Média")
+  theme(
+    legend.justification = c("right", "top")
+  ) +
+  labs(fill = "Nota Média", x = NULL, y = NULL)
 ```
 
 ### Condutores Habilitados
