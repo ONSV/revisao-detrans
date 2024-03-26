@@ -24,6 +24,8 @@ library(onsvplot)
 library(scales)
 library(geobr)
 library(sf)
+library(ggh4x)
+library(gt)
 
 estados <- read_state()
 load(here("data", "revisoes.rda"))
@@ -31,8 +33,9 @@ load(here("data", "revisoes.rda"))
 map_blue <- "#77C6ED"
 tbl_blue <- "#3d7590"
 tbl_red <- "#df555d"
-map_red <- "#e47076"
-col_func <- colorRampPalette(colors = c(map_red, map_blue))
+map_white <- "#e47076"
+map_white <- "white"
+col_func <- colorRampPalette(colors = c(map_white, map_blue))
 ```
 
 ### Sobre o relatório {.unnumbered}
@@ -220,7 +223,8 @@ rbind(
   align(align = "center", part = "all") |>
   autofit() |>
   color(color = "white", part = "header") |>
-  bg(bg = onsv_palette$blue, part = "header")
+  bg(bg = onsv_palette$blue, part = "header") |> 
+  colformat_double(decimal.mark = ",")
 ```
 
 As informações sobre o atendimento ao público, educação para o trânsito e CFCs foram aferidas por outros critérios mais específicos por não se tratarem de dados estatísticos, exigindo uma mudança na abordagem de avaliação. As Tabelas [-@tbl-cri-atend], [-@tbl-cri-educ] e [-@tbl-cri-cfcs] demonstram os critérios para estes casos:
@@ -251,7 +255,8 @@ tbl_atend <- data.frame(
                     canais = "Canais de atendimento",
                     notas = "Notas") |>
   align(align = "center", part = "all") |> 
-  autofit(add_w = 2)
+  autofit(add_w = 2) |> 
+  colformat_double(decimal.mark = ",")
 
 tbl_atend
 ```
@@ -297,7 +302,8 @@ tbl_cfc <- data.frame(
   set_header_labels(lista = "Lista sobre CFCs credenciados",
                     notas = "Notas") |>
   align(align = "center", part = "all") |> 
-  autofit()
+  autofit() |> 
+  colformat_double(decimal.mark = ",")
 
 tbl_cfc
 ```
@@ -317,7 +323,9 @@ frota <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-A @tbl-frota aponta a qualidade dos dados estatísticos da frota veicular como fornecidos pelo portal dos DETRANs. A periodicidade aparenta ser o critério de melhor performance na maior parte dos departamentos:
+Primeiramente, os dados de frota de veículos, condutores habilitados, infrações e sinistros são analisados conforme os três critérios de avaliação vistos na @tbl-criterios, podendo se enquadrar qualitativamento como prática **Ótima** (10), **Intermediária** (6,7), **Inicial** (3,3) ou **Ausente** (0). No caso da frota, o nível de desagregação considera as variáveis de ano de fabricação do veículo, categoria (particular, aluguel, etc.), combustível, espécie (passageiro, carga, etc.), procedência (nacional ou estrangeira) e tipo de veículo.
+
+A @tbl-frota aponta a qualidade dos dados estatísticos da frota veicular como fornecidos pelo portal dos DETRANs, assim como a nota média destes critérios. A periodicidade aparenta ser o critério de melhor performance na maior parte dos departamentos.
 
 ```{r}
 #| tbl-cap: Tabela de desempenho para dados de frota
@@ -375,7 +383,8 @@ frota |>
   ) |>
   line_spacing(space = 0.4, part = "body") |>
   line_spacing(space = 0.6, part = "header") |>
-  autofit()
+  autofit() |> 
+  colformat_double(decimal.mark = ",")
 ```
 
 A @fig-map-frota aponta a nota média dos três critérios para os dados de frota veicular dos departamentos de cada estado. Em destaque, estão:
@@ -423,7 +432,7 @@ ggplot(frota_map) +
                color = "grey20",
                nudge_x = frota_map$nudge_x_text,
                nudge_y = frota_map$nudge_y_text) +
-  scale_fill_gradient(high = map_blue, low = map_red, labels = comma_format(decimal.mark = ",", big.mark = "."), guide = "legend") +
+  scale_fill_gradient(high = map_blue, low = map_white, labels = comma_format(decimal.mark = ",", big.mark = "."), guide = "legend") +
   theme_minimal() +
   theme(
     legend.justification = c("right", "top")
@@ -444,7 +453,7 @@ condutores <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-A @tbl-condutores mostra o desempenho médio dos DETRANs na disponibilização de dados de condutores habilitados. Novamente, a periodicidade e a interatividade são os critérios com maior e menor performance geral respectivamente:
+A @tbl-condutores mostra o desempenho médio dos DETRANs na disponibilização de dados de condutores habilitados, visto que neste caso as variáveis de desagregação compreendem a categoria da habilitação, sexo, opção de doador, situação (provisória ou definitiva), idade do condutor e tempo de habilitação. Novamente, a periodicidade e a interatividade são os critérios com maior e menor performance geral respectivamente.
 
 ```{r}
 #| tbl-cap: Tabela de desempenho para dados de condutores habilitados
@@ -502,7 +511,8 @@ condutores |>
   ) |>
   line_spacing(space = 0.4, part = "body") |>
   line_spacing(space = 0.6, part = "header") |>
-  autofit()
+  autofit() |> 
+  colformat_double(decimal.mark = ",")
 ```
 
 O mapeamento das notas atribuídas permite observar uma leve diferença na disponibilidade de informações de condutores em comparação à frota veicular. Como demonstrado na @fig-map-condutores, destacam-se:
@@ -550,7 +560,7 @@ ggplot(condutores_map) +
                color = "grey20",
                nudge_x = condutores_map$nudge_x_text,
                nudge_y = condutores_map$nudge_y_text) +
-  scale_fill_gradient(high = map_blue, low = map_red, labels = comma_format(decimal.mark = ",", big.mark = "."), guide = "legend") +
+  scale_fill_gradient(high = map_blue, low = map_white, labels = comma_format(decimal.mark = ",", big.mark = "."), guide = "legend") +
   theme_minimal() +
   theme(
     legend.justification = c("right", "top")
@@ -568,7 +578,7 @@ cfcs <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-Devido ao fato da avaliação dos CFCs ser feita a partir de um único critério de avaliação, como indica a @tbl-cri-cfcs, as notas para cada estado estão ilustradas na @tbl-cfcs em valores qualitativos:
+Devido ao fato da avaliação dos CFCs ser feita a partir de um único critério de avaliação, como indica a @tbl-cri-cfcs, as notas para cada estado estão ilustradas na @tbl-cfcs em pontuações qualitativos:
 
 ```{r}
 #| tbl-cap: Tabela de desempenho para informações de centros de formação de condutores
@@ -690,6 +700,8 @@ infracoes <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
+A @tbl-infracoes contém os resultados das consultas para dados sobre infrações de cada departamento estadual, também utilizando de classificações qualitativas relacionadas a uma nota média final. Neste caso, a desagregação considerou a divisão por artigo de infração, grupo de infração (circulação, estacionamento, etc.), natureza (grave, leve, etc.), instrumento de autuação, local de autuação, faixa etária do condutor infrator, sexo do condutor infrator, por responsável (condutor ou proprietário) e exercício de atividade remunerada ou não do infrator.
+
 ```{r}
 #| tbl-cap: Tabela de desempenho para dados de infrações
 #| label: tbl-infracoes
@@ -746,8 +758,11 @@ infracoes |>
   ) |>
   line_spacing(space = 0.4, part = "body") |>
   line_spacing(space = 0.6, part = "header") |>
-  autofit()
+  autofit() |> 
+  colformat_double(decimal.mark = ",")
 ```
+
+A @fig-map-infracoes demonstra uma escassez de dados especificamente na região Norte e em alguns estados do Nordeste.
 
 ```{r}
 #| fig-cap: Mapa de nota média para dados de infrações
@@ -788,7 +803,7 @@ ggplot(infracoes_map) +
                color = "grey20",
                nudge_x = infracoes_map$nudge_x_text,
                nudge_y = infracoes_map$nudge_y_text) +
-  scale_fill_gradient(high = map_blue, low = map_red, labels = comma_format(decimal.mark = ",", big.mark = "."), guide = "legend") +
+  scale_fill_gradient(high = map_blue, low = map_white, labels = comma_format(decimal.mark = ",", big.mark = "."), guide = "legend") +
   theme_minimal() +
   theme(
     legend.justification = c("right", "top")
@@ -809,7 +824,12 @@ sinistros <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
+Os sinistros são avaliados de acordo com a @tbl-criterios, com suas classificações para cada critério e nota média destacados na @tbl-sinistros. Entende-se como variáveis para a desagregação desta categoria a gravidade do acidente (fatal ou não), período (dia ou noite), área (urbana ou rural), natureza (atropelamento, choque, etc.), dias da semana, horário, sexo da vítima e/ou do condutor, faixa etária da vítima e/ou do condutor, tipo da vítima e/ou do condutor (ciclista, pedestre, etc.), categoria do condutor (habilitado, inabilitado, etc.), tempo de habilitação do condutor e espécie do veículo envolvido (automóvel, bicicleta, etc.).
+
 ```{r}
+#| tbl-cap: Tabela de desempenho para dados de sinistros
+#| label: tbl-sinistros
+
 sinistros |>
   mutate(across(
     starts_with("sinistros"),
@@ -862,10 +882,16 @@ sinistros |>
   ) |>
   line_spacing(space = 0.4, part = "body") |>
   line_spacing(space = 0.6, part = "header") |>
-  autofit()
+  autofit() |> 
+  colformat_double(decimal.mark = ",")
 ```
 
+A @fig-map-sinistros demonstra a escassez de informações de sinistros em uma grande parcela dos departamentos, sendo a categoria de dado estatístico de maior déficit nos portais de acesso à informação.
+
 ```{r}
+#| fig-cap: Mapa de nota média para dados de sinistros
+#| label: fig-map-sinistros
+
 sinistros_map <- 
   sinistros |> 
   rename(abbrev_state = uf) |> 
@@ -901,7 +927,7 @@ ggplot(sinistros_map) +
                color = "grey20",
                nudge_x = sinistros_map$nudge_x_text,
                nudge_y = sinistros_map$nudge_y_text) +
-  scale_fill_gradient(high = map_blue, low = map_red, labels = comma_format(decimal.mark = ",", big.mark = "."), guide = "legend") +
+  scale_fill_gradient(high = map_blue, low = map_white, labels = comma_format(decimal.mark = ",", big.mark = "."), guide = "legend") +
   theme_minimal() +
   theme(
     legend.justification = c("right", "top")
@@ -910,6 +936,8 @@ ggplot(sinistros_map) +
 ```
 
 ### Educação para o Trânsito
+
+As consultas para informações de educação para o trânsito estão apresentadas na @tbl-educ, com pontações atribuídos conforma os critérios de avaliação da @tbl-cri-educ.
 
 ```{r}
 educacao <- df_revisoes |>
@@ -923,6 +951,9 @@ educacao <- df_revisoes |>
 ```
 
 ```{r}
+#| tbl-cap: Tabela de desempenho para dados de educação para o trânsito
+#| label: tbl-educ
+
 educacao |> 
     mutate(across(
     starts_with("educ"),
@@ -974,14 +1005,20 @@ educacao |>
   ) |>
   line_spacing(space = 0.4, part = "body") |>
   line_spacing(space = 0.6, part = "header") |>
-  autofit()
+  autofit() |> 
+  colformat_double(decimal.mark = ",")
 ```
 
+A @fig-map-educ demonstra como a maioria dos estados possui disponibilidade adequada de conteúdos didátivos e atividades educativas.
+
 ```{r}
-educacao_map <- 
-  educacao |> 
-  rename(abbrev_state = uf) |> 
-  merge(estados) |> 
+#| fig-cap: Mapa de nota média para dados de educação para o trânsito
+#| label: fig-map-educ
+
+educacao_map <-
+  educacao |>
+  rename(abbrev_state = uf) |>
+  merge(estados) |>
   mutate(
     nudge_y_text = case_match(
       abbrev_state,
@@ -1003,21 +1040,26 @@ educacao_map <-
       "RJ" ~ 1,
       .default = 0
     )
-  ) |> 
+  ) |>
   st_as_sf()
 
-ggplot(educacao_map) + 
+ggplot(educacao_map) +
   geom_sf(aes(fill = nota_final)) +
-  geom_sf_text(aes(label = abbrev_state), 
-               size = 2,
-               color = "grey20",
-               nudge_x = educacao_map$nudge_x_text,
-               nudge_y = educacao_map$nudge_y_text) +
-  scale_fill_gradient(high = map_blue, low = map_red, labels = comma_format(decimal.mark = ",", big.mark = "."), guide = "legend") +
-  theme_minimal() +
-  theme(
-    legend.justification = c("right", "top")
+  geom_sf_text(
+    aes(label = abbrev_state),
+    size = 2,
+    color = "grey20",
+    nudge_x = educacao_map$nudge_x_text,
+    nudge_y = educacao_map$nudge_y_text
   ) +
+  scale_fill_gradient(
+    high = map_blue,
+    low = map_white,
+    labels = comma_format(decimal.mark = ",", big.mark = "."),
+    guide = "legend"
+  ) +
+  theme_minimal() +
+  theme(legend.justification = c("right", "top")) +
   labs(fill = "Nota Média", x = NULL, y = NULL)
 ```
 
@@ -1034,7 +1076,12 @@ atendimento <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
+Os resultados das consultas sobre atendimento ao público estão apresentados na @tbl-atendimento. É notável a carência de estatísticas de atendimento para a maioria dos DETRANs.
+
 ```{r}
+#| tbl-cap: Tabela de desempenho para dados de atendimento ao público
+#| label: tbl-atendimento
+
 atendimento |>
   mutate(
     atendimento_canais =
@@ -1099,10 +1146,16 @@ atendimento |>
   ) |>
   line_spacing(space = 0.4, part = "body") |>
   line_spacing(space = 0.6, part = "header") |>
-  autofit()
+  autofit() |> 
+  colformat_double(decimal.mark = ",")
 ```
 
+A @fig-map-atend apresenta as notas média para os estados em relação ao atendimento ao público.
+
 ```{r}
+#| fig-cap: Mapa de nota média para dados de atendimento ao público
+#| label: fig-map-atend
+
 atendimento_map <- 
   atendimento |> 
   rename(abbrev_state = uf) |> 
@@ -1138,7 +1191,7 @@ ggplot(atendimento_map) +
                color = "grey20",
                nudge_x = atendimento_map$nudge_x_text,
                nudge_y = atendimento_map$nudge_y_text) +
-  scale_fill_gradient(high = map_blue, low = map_red, labels = comma_format(decimal.mark = ",", big.mark = "."), guide = "legend") +
+  scale_fill_gradient(high = map_blue, low = map_white, labels = comma_format(decimal.mark = ",", big.mark = "."), guide = "legend") +
   theme_minimal() +
   theme(
     legend.justification = c("right", "top")
@@ -1156,30 +1209,75 @@ df_revisoes |>
   arrange(desc(nota_final)) |>
   pivot_wider(values_from = nota_final,
               names_from = ano,
-              names_prefix = "ano_") |> 
+              names_prefix = "ano_") |>
   ggplot() +
-    geom_segment(aes(
+  geom_segment(
+    aes(
       x = ano_2020,
       xend = ano_2024,
       y = uf,
       yend = uf
-    )) +
-    geom_point(aes(ano_2020, uf, color = "2020"), size = 2) +
-    geom_point(aes(ano_2024, uf, color = "2024"), size = 2) +
-    scale_color_manual(values = c(onsv_palette$red, onsv_palette$blue)) +
-    labs(x = "Pontuação", y = NULL, color = "Ano") +
-    theme_minimal() +
-    theme(legend.justification = c("right", "top"))
+    ),
+    linewidth = 1,
+    alpha = 0.15
+  ) +
+  geom_point(
+    aes(ano_2020, uf, color = "2020"),
+    size = 1,
+    shape = 1,
+    stroke = 1.5
+  ) +
+  geom_point(
+    aes(ano_2024, uf, color = "2024"),
+    size = 1,
+    shape = 1,
+    stroke = 1.5
+  ) +
+  geom_text(
+    aes(
+      y = uf,
+      x = ifelse(ano_2024 > ano_2020, ano_2024 + 0.4, ano_2024 - 0.4),
+      label = round(ano_2024, 1),
+      color = "2024"
+    ),
+    size = 2.5,
+    show.legend = F
+  ) +
+  geom_text(
+    aes(
+      y = uf,
+      x = ifelse(ano_2020 > ano_2024, ano_2020 + 0.4, ano_2020 - 0.4),
+      label = round(ano_2020, 1),
+      color = "2020"
+    ),
+    size = 2.5,
+    show.legend = F
+  ) +
+  scale_color_manual(values = c(onsv_palette$red, onsv_palette$blue)) +
+  scale_x_continuous(limits = c(0, 10.5)) +
+  labs(x = NULL, y = NULL, color = NULL) +
+  theme_minimal() +
+  theme(legend.justification = c("right", "top"))
 ```
 
 ```{r}
+scales <- list(
+  scale_x_continuous(limits = c(0, 10)),
+  scale_x_continuous(limits = c(0, 10)),
+  scale_x_continuous(
+    breaks = seq(-1.5, 1.5, 0.75),
+    limits = c(-1.5, 1.5),
+    labels = percent
+  )
+)
+
 df_revisoes |>
   select(uf, nota_final, ano) |>
   pivot_wider(values_from = nota_final,
               names_from = ano,
               names_prefix = "ano_") |>
   mutate(difer = (ano_2024 - ano_2020) / ano_2024,
-         uf = reorder(uf, difer)) |>
+         uf = reorder(uf, ano_2024)) |>
   pivot_longer(c(ano_2020, ano_2024, difer)) |>
   mutate(
     fill = case_when(
@@ -1191,17 +1289,101 @@ df_revisoes |>
       name,
       "ano_2020" ~ "2020",
       "ano_2024" ~ "2024",
-      "difer" ~ "Diferença percentual"
+      "difer" ~ "Variação percentual"
     )
   ) |>
   ggplot(aes(value, uf, fill = fill)) +
   geom_bar(stat = "identity") +
   facet_wrap(vars(name), scales = "free_x") +
-  scale_fill_manual(values = c(onsv_palette$red, onsv_palette$blue, onsv_palette$green)) +
+  scale_fill_manual(values = c(onsv_palette$red,
+                               onsv_palette$blue,
+                               onsv_palette$green)) +
   theme_minimal() +
   theme(legend.position = "none",
-        panel.spacing.x = unit(1,"cm")) +
-  
+        panel.spacing.x = unit(0.75, "cm")) +
+  facetted_pos_scales(x = scales) +
+  labs(x = NULL, y= NULL)
+```
+
+```{r}
+comparison_map <-
+  df_revisoes |> 
+  select(uf, nota_final, ano) |> 
+  rename(abbrev_state = uf) |> 
+  left_join(estados, by = "abbrev_state") |>
+  mutate(
+    nudge_y_text = case_match(
+      abbrev_state,
+      "DF" ~ 1,
+      "RN" ~ 0.25,
+      "SE" ~ -0.6,
+      "AL" ~ -0.4,
+      "RJ" ~ -1,
+      "AC" ~ 0.5,
+      .default = 0
+    ),
+    nudge_x_text = case_match(
+      abbrev_state,
+      "PB" ~ 3,
+      "PE" ~ 3.9,
+      "AL" ~ 1.75,
+      "ES" ~ 1.60,
+      "SE" ~ 1,
+      "RJ" ~ 1,
+      .default = 0
+    )
+  ) |> 
+  st_as_sf() 
+
+ggplot(comparison_map) +
+  geom_sf(aes(fill = nota_final)) +
+  geom_sf_text(aes(label = abbrev_state), 
+               nudge_x = comparison_map$nudge_x_text,
+               nudge_y = comparison_map$nudge_y_text,
+               size = 2) +
+  facet_wrap(vars(ano)) +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification = "left") +
+  scale_fill_gradient(high = map_blue, low = map_white, limits = c(0, 10), labels = comma_format(decimal.mark = ",")) +
+  labs(x = NULL, y = NULL, fill = NULL)
+```
+
+```{r}
+df_revisoes |> 
+  select(uf, nota_final, ano) |> 
+  pivot_wider(names_from = ano, names_prefix = "ano", values_from = nota_final) |> 
+  summarise(.by = uf, ano2020 = mean(ano2020), ano2024 = mean(ano2024)) |> 
+  mutate(var = (ano2024 - ano2020)/ano2024) |> 
+  arrange(desc(var)) |> 
+  gt(rowname_col = "uf") |> 
+  fmt_percent(var, dec_mark = ",") |> 
+  fmt_number(starts_with("ano"), dec_mark = ",") |>
+  data_color(var, method = "numeric", palette = "RdBu") |> 
+  cols_label(
+    ano2020 = "2020",
+    ano2024 = "2024",
+    var = "Variação percentual"
+  )
+```
+
+```{r}
+df_revisoes |> 
+  select(uf, nota_final, ano) |> 
+  pivot_wider(names_from = ano, names_prefix = "ano", values_from = nota_final) |> 
+  mutate(regiao = get_region(uf), .before = 1) |> 
+  summarise(.by = regiao, ano2020 = mean(ano2020), ano2024 = mean(ano2024)) |> 
+  mutate(var = (ano2024 - ano2020)/ano2024) |> 
+  arrange(desc(var)) |> 
+  gt(rowname_col = "regiao") |> 
+  fmt_percent(var, dec_mark = ",") |> 
+  fmt_number(starts_with("ano"), dec_mark = ",") |>
+  data_color(var, method = "numeric", palette = "RdBu") |> 
+  cols_label(
+    ano2020 = "2020",
+    ano2024 = "2024",
+    var = "Variação percentual"
+  )
 ```
 
 ### Boas Práticas
