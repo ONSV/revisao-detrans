@@ -70,13 +70,13 @@ Em relação a educação para o trânsito, é responsabilidade do DETRAN a prom
 
 ### Versão anterior
 
-Este trabalho é uma segunda versão do relatório publicado em 2020 pelo Observatório, que virou uma comunicação técnica publicada no segundo Simpósio de Transportes do Paraná (STPR), também em 2020 [@santos2020]. A elaboração de uma nova versão ira possibilitar a evolução dos portais dos DETRANs de cada estado.
+Este trabalho é uma segunda versão do relatório publicado em 2020 pelo Observatório Nacional de Segurança Viária, que virou uma comunicação técnica publicada no segundo Simpósio de Transportes do Paraná (STPR), também em 2020 [@santos2020]. A elaboração de uma nova versão ira possibilitar a evolução dos portais dos DETRANs de cada estado.
 
 ## Métodos {#sec-metodos}
 
 ### Consultas Preliminares
 
-O estudo foi realizado por meio do acesso dos sites do DETRAN de cada estado a fim de averiguar a existência de dados estatíticos sobre a frota veicular, condutores habilitados, infrações e sinistros de trânsito. Também foi avaliada a existência de informações relacionadas à educação para o trânsito (campanhas, material educativo, regras de trânsito, etc.), dados quantitivos do atendimento público pelo departamento, disponibilidade de canais de atendimento e dados informativos sobre os centros de formação de condutores do estado em questão. A @tbl-consultas demonstra estes resultados:
+O estudo foi realizado por meio do acesso dos *sites* dos DETRANs de cada estado brasileiro a fim de averiguar a existência de dados estatíticos sobre a frota veicular, os condutores habilitados, as infrações e sinistros de trânsito. Também foi avaliada a existência de informações relacionadas à educação para o trânsito (campanhas, material educativo, regras de trânsito, etc.), dados quantitivos do atendimento público pelo departamento, disponibilidade de canais de atendimento e dados informativos sobre os centros de formação de condutores do estado em questão. A @tbl-consultas demonstra os resultados de uma consulta preliminar destes portais:
 
 ```{r}
 #| include: false
@@ -172,9 +172,9 @@ consulta_pre |>
 
 ### Critérios de Avaliação
 
-A partir das categorias anteriormente discutidas, critérios de avaliação foram estabelecidos para quantificar a disponibilidade de dados e informações de cada um dos DETRANs. Assim sendo, são concedidos níveis de desempenho que equivalem a pontuações para cada um dos critérios aferidos: **Melhor Prática** - Nota 10; **Prática Intermediária** - Nota 6,67; **Prática Inicial** - Nota 3,34 e **Prática Ausente** - Nota 0.
+A partir das categorias anteriormente discutidas, critérios de avaliação foram estabelecidos para quantificar a disponibilidade de dados e informações de cada um dos DETRANs. Assim sendo, são concedidos níveis de desempenho que equivalem a pontuações para cada um dos critérios aferidos: **Prática Ótima** - Nota 10; **Prática Intermediária** - Nota 6,7; **Prática Inicial** - Nota 3,3 e **Prática Ausente** - Nota 0.
 
-A avaliação dos dados estatísticos de frota veicular, condutores habilitados, infrações e sinistros de trânsito se baseou em:
+A avaliação dos dados estatísticos da frota veicular, condutores habilitados, infrações e sinistros de trânsito se baseou nos critérios de:
 
 -   Periodicidade: quantidade de anos disponíveis;
 
@@ -227,7 +227,7 @@ rbind(
   colformat_double(decimal.mark = ",")
 ```
 
-As informações sobre o atendimento ao público, educação para o trânsito e CFCs foram aferidas por outros critérios mais específicos por não se tratarem de dados estatísticos, exigindo uma mudança na abordagem de avaliação. As Tabelas [-@tbl-cri-atend], [-@tbl-cri-educ] e [-@tbl-cri-cfcs] demonstram os critérios para estes casos:
+As informações sobre o atendimento ao público, educação para o trânsito e CFCs foram aferidas por outros critérios específicos, por não se tratarem de dados estritamente estatísticos, exigindo uma mudança na abordagem de avaliação. As Tabelas [-@tbl-cri-atend], [-@tbl-cri-educ] e [-@tbl-cri-cfcs] demonstram os critérios para cada um destes casos:
 
 ```{r}
 #| tbl-cap: Tabela de critérios de avaliação para atendimento ao público
@@ -323,9 +323,9 @@ frota <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-Primeiramente, os dados de frota de veículos, condutores habilitados, infrações e sinistros são analisados conforme os três critérios de avaliação vistos na @tbl-criterios, podendo se enquadrar qualitativamento como prática **Ótima** (10), **Intermediária** (6,7), **Inicial** (3,3) ou **Ausente** (0). No caso da frota, o nível de desagregação considera as variáveis de ano de fabricação do veículo, categoria (particular, aluguel, etc.), combustível, espécie (passageiro, carga, etc.), procedência (nacional ou estrangeira) e tipo de veículo.
+Primeiramente, os dados de frota de veículos, condutores habilitados, infrações e sinistros são analisados conforme os três critérios de avaliação anteriormente vistos na @tbl-criterios. No caso da frota, o nível de desagregação considera as variáveis de ano de fabricação do veículo, categoria (particular, aluguel, etc.), combustível, espécie (passageiro, carga, etc.), procedência (nacional ou estrangeira) e tipo de veículo.
 
-A @tbl-frota aponta a qualidade dos dados estatísticos da frota veicular como fornecidos pelo portal dos DETRANs, assim como a nota média destes critérios. A periodicidade aparenta ser o critério de melhor performance na maior parte dos departamentos.
+A @tbl-frota aponta a qualidade dos dados estatísticos da frota veicular como fornecidos pelos portais dos DETRANs, assim como a nota média para estes critérios. A periodicidade aparenta ser o critério de melhor performance na maior parte dos departamentos para esta categoria.
 
 ```{r}
 #| tbl-cap: Tabela de desempenho para dados de frota
@@ -421,18 +421,23 @@ frota_map <-
   ) |> 
   st_as_sf()
 
-ggplot(frota_map) + 
+ggplot(frota_map) +
   geom_sf(aes(fill = nota_final)) +
-  geom_sf_text(aes(label = abbrev_state), 
-               size = 2,
-               color = "grey20",
-               nudge_x = frota_map$nudge_x_text,
-               nudge_y = frota_map$nudge_y_text) +
-  scale_fill_gradient(high = map_blue, low = map_white, labels = comma_format(decimal.mark = ",", big.mark = "."), guide = "legend") +
-  theme_minimal() +
-  theme(
-    legend.justification = c("right", "top")
+  geom_sf_text(
+    aes(label = abbrev_state),
+    size = 2,
+    color = "grey20",
+    nudge_x = frota_map$nudge_x_text,
+    nudge_y = frota_map$nudge_y_text
   ) +
+  scale_fill_gradient(
+    high = map_blue,
+    low = map_white,
+    labels = comma_format(decimal.mark = ",", big.mark = "."),
+    guide = "legend"
+  ) +
+  theme_minimal() +
+  theme(legend.justification = c("right", "top")) +
   labs(fill = "Nota Média", x = NULL, y = NULL)
 ```
 
@@ -511,7 +516,7 @@ condutores |>
   colformat_double(decimal.mark = ",")
 ```
 
-O mapa das notas atribuídas demonstrado na @fig-map-condutores permite observar uma leve diferença na disponibilidade de informações de condutores em comparação à frota veicular.
+O mapa de notas atribuídas demonstrado na @fig-map-condutores permite observar a distribuição de informações de condutores no território brasileiro.
 
 ```{r}
 #| fig-cap: Mapa de nota média para dados de condutores habilitados
@@ -545,18 +550,23 @@ condutores_map <-
   ) |> 
   st_as_sf()
 
-ggplot(condutores_map) + 
+ggplot(condutores_map) +
   geom_sf(aes(fill = nota_final)) +
-  geom_sf_text(aes(label = abbrev_state), 
-               size = 2,
-               color = "grey20",
-               nudge_x = condutores_map$nudge_x_text,
-               nudge_y = condutores_map$nudge_y_text) +
-  scale_fill_gradient(high = map_blue, low = map_white, labels = comma_format(decimal.mark = ",", big.mark = "."), guide = "legend") +
-  theme_minimal() +
-  theme(
-    legend.justification = c("right", "top")
+  geom_sf_text(
+    aes(label = abbrev_state),
+    size = 2,
+    color = "grey20",
+    nudge_x = condutores_map$nudge_x_text,
+    nudge_y = condutores_map$nudge_y_text
   ) +
+  scale_fill_gradient(
+    high = map_blue,
+    low = map_white,
+    labels = comma_format(decimal.mark = ",", big.mark = "."),
+    guide = "legend"
+  ) +
+  theme_minimal() +
+  theme(legend.justification = c("right", "top")) +
   labs(fill = "Nota Média", x = NULL, y = NULL)
 ```
 
@@ -664,18 +674,18 @@ cfcs_map <-
   ) |> 
   st_as_sf()
 
-ggplot(cfcs_map) + 
+ggplot(cfcs_map) +
   geom_sf(aes(fill = cfcs)) +
-  geom_sf_text(aes(label = abbrev_state), 
-               size = 2,
-               color = "grey20",
-               nudge_x = cfcs_map$nudge_x_text,
-               nudge_y = cfcs_map$nudge_y_text) +
+  geom_sf_text(
+    aes(label = abbrev_state),
+    size = 2,
+    color = "grey20",
+    nudge_x = cfcs_map$nudge_x_text,
+    nudge_y = cfcs_map$nudge_y_text
+  ) +
   scale_fill_manual(values = col_func(3)) +
   theme_minimal() +
-  theme(
-    legend.justification = c("right", "top")
-  ) +
+  theme(legend.justification = c("right", "top")) +
   labs(fill = "Nota Média", x = NULL, y = NULL)
 ```
 
@@ -788,18 +798,23 @@ infracoes_map <-
   ) |> 
   st_as_sf()
 
-ggplot(infracoes_map) + 
+ggplot(infracoes_map) +
   geom_sf(aes(fill = nota_final)) +
-  geom_sf_text(aes(label = abbrev_state), 
-               size = 2,
-               color = "grey20",
-               nudge_x = infracoes_map$nudge_x_text,
-               nudge_y = infracoes_map$nudge_y_text) +
-  scale_fill_gradient(high = map_blue, low = map_white, labels = comma_format(decimal.mark = ",", big.mark = "."), guide = "legend") +
-  theme_minimal() +
-  theme(
-    legend.justification = c("right", "top")
+  geom_sf_text(
+    aes(label = abbrev_state),
+    size = 2,
+    color = "grey20",
+    nudge_x = infracoes_map$nudge_x_text,
+    nudge_y = infracoes_map$nudge_y_text
   ) +
+  scale_fill_gradient(
+    high = map_blue,
+    low = map_white,
+    labels = comma_format(decimal.mark = ",", big.mark = "."),
+    guide = "legend"
+  ) +
+  theme_minimal() +
+  theme(legend.justification = c("right", "top")) +
   labs(fill = "Nota Média", x = NULL, y = NULL)
 ```
 
@@ -816,7 +831,7 @@ sinistros <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-Os sinistros são avaliados de acordo com a @tbl-criterios, com suas classificações para cada critério e nota média destacados na @tbl-sinistros. Entende-se como variáveis para a desagregação desta categoria a gravidade do acidente (fatal ou não), período (dia ou noite), área (urbana ou rural), natureza (atropelamento, choque, etc.), dias da semana, horário, sexo da vítima e/ou do condutor, faixa etária da vítima e/ou do condutor, tipo da vítima e/ou do condutor (ciclista, pedestre, etc.), categoria do condutor (habilitado, inabilitado, etc.), tempo de habilitação do condutor e espécie do veículo envolvido (automóvel, bicicleta, etc.).
+Os sinistros são avaliados também de acordo com a @tbl-criterios, com suas classificações finais e notas médias apresentadas na @tbl-sinistros. Entende-se como variáveis para a desagregação desta categoria: a gravidade do acidente (fatal ou não), período (dia ou noite), área (urbana ou rural), natureza (atropelamento, choque, etc.), dias da semana, horário, sexo da vítima e/ou do condutor, faixa etária da vítima e/ou do condutor, tipo da vítima e/ou do condutor (ciclista, pedestre, etc.), categoria do condutor (habilitado, inabilitado, etc.), tempo de habilitação do condutor e espécie do veículo envolvido (automóvel, bicicleta, etc.).
 
 ```{r}
 #| tbl-cap: Tabela de desempenho para dados de sinistros
@@ -912,18 +927,23 @@ sinistros_map <-
   ) |> 
   st_as_sf()
 
-ggplot(sinistros_map) + 
+ggplot(sinistros_map) +
   geom_sf(aes(fill = nota_final)) +
-  geom_sf_text(aes(label = abbrev_state), 
-               size = 2,
-               color = "grey20",
-               nudge_x = sinistros_map$nudge_x_text,
-               nudge_y = sinistros_map$nudge_y_text) +
-  scale_fill_gradient(high = map_blue, low = map_white, labels = comma_format(decimal.mark = ",", big.mark = "."), guide = "legend") +
-  theme_minimal() +
-  theme(
-    legend.justification = c("right", "top")
+  geom_sf_text(
+    aes(label = abbrev_state),
+    size = 2,
+    color = "grey20",
+    nudge_x = sinistros_map$nudge_x_text,
+    nudge_y = sinistros_map$nudge_y_text
   ) +
+  scale_fill_gradient(
+    high = map_blue,
+    low = map_white,
+    labels = comma_format(decimal.mark = ",", big.mark = "."),
+    guide = "legend"
+  ) +
+  theme_minimal() +
+  theme(legend.justification = c("right", "top")) +
   labs(fill = "Nota Média", x = NULL, y = NULL)
 ```
 
@@ -1001,7 +1021,7 @@ educacao |>
   colformat_double(decimal.mark = ",")
 ```
 
-A @fig-map-educ demonstra como a maioria dos estados possui disponibilidade adequada de conteúdos didáticos e atividades educativas.
+A @fig-map-educ demonstra como a maioria dos departamentos estaduais possui disponibilidade adequada de conteúdos didáticos e atividades educativas para o trânsito.
 
 ```{r}
 #| fig-cap: Mapa de nota média para dados de educação para o trânsito
@@ -1070,7 +1090,7 @@ atendimento <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-Os resultados das consultas sobre atendimento ao público estão apresentados na @tbl-atendimento. É notável a carência de estatísticas de atendimento para a maioria dos DETRANs.
+Os resultados das consultas sobre o atendimento ao público estão apresentados na @tbl-atendimento. É notável a carência de estatísticas de atendimento para a maioria dos DETRANs.
 
 ```{r}
 #| tbl-cap: Tabela de desempenho para dados de atendimento ao público
@@ -1202,7 +1222,7 @@ ggplot(atendimento_map) +
 
 ### Evolução dos Resultados
 
-As pontuações finais calculadas para a revisão das informações disponibilizadas nos portais dos DETRANs de 2024 permite não apenas identificar os departamentos de melhor performance para aos critérios de avaliação estabelecidos, mas também averiguar como progrediram ou regrediram em relação à avaliação de 2020, como visto na @fig-dumbbell.
+As pontuações finais calculadas para a revisão das informações disponibilizadas nos portais dos DETRANs de 2024 permite não apenas identificar os departamentos de melhor performance conforme os critérios de avaliação estabelecidos, mas também averiguar como progrediram ou regrediram em relação à avaliação de 2020, como visto na @fig-dumbbell.
 
 ```{r}
 #| fig-cap: Gráfico de halteres da nota final para os DETRANs
@@ -1243,7 +1263,7 @@ df_revisoes |>
     aes(
       y = uf,
       x = ifelse(ano_2024 > ano_2020, ano_2024 + 0.4, ano_2024 - 0.4),
-      label = round(ano_2024, 1),
+      label = format(round(ano_2024, 1), decimal.mark = ","),
       color = "2024"
     ),
     size = 2.5,
@@ -1253,7 +1273,7 @@ df_revisoes |>
     aes(
       y = uf,
       x = ifelse(ano_2020 > ano_2024, ano_2020 + 0.4, ano_2020 - 0.4),
-      label = round(ano_2020, 1),
+      label = format(round(ano_2020, 1), decimal.mark = ","),
       color = "2020"
     ),
     size = 2.5,
@@ -1266,15 +1286,21 @@ df_revisoes |>
   theme(legend.justification = c("right", "top"))
 ```
 
-É possível observar os estados que mais evoluíram em relação a sua pontuação anterior observando as variações percentuais entre 2024 e 2020, como aponta a @fig-var-percent .
+Além disso, é possível observar os estados que mais evoluíram em relação a sua pontuação anterior observando as variações percentuais entre 2024 e 2020, como aponta a @fig-var-percent.
 
 ```{r}
 #| fig-cap: Gráficos de desempenho e variação percentual dos DETRANs
 #| label: fig-var-percent
 
 scales <- list(
-  scale_x_continuous(limits = c(0, 10)),
-  scale_x_continuous(limits = c(0, 10)),
+  scale_x_continuous(
+    limits = c(0, 10),
+    labels = label_comma(decimal.mark = ",")
+  ),
+  scale_x_continuous(
+    limits = c(0, 10),
+    labels = label_comma(decimal.mark = ",")
+  ),
   scale_x_continuous(
     breaks = seq(-1.5, 1.5, 0.75),
     limits = c(-1.5, 1.5),
@@ -1328,6 +1354,8 @@ Em 2024, houve uma progressão majoritariamente positiva para os DETRANs. Avalia
 
 -   Rio de Janeiro - 7,7.
 
+A @fig-map-compare apresenta um mapa de comparação das pontuações finais de todos estados.
+
 ```{r}
 #| fig-cap: Mapa de notas finais para DETRANs de 2020 e 2024
 #| label: fig-map-compare
@@ -1365,10 +1393,9 @@ comparison_map |>
   ggplot() +
   geom_sf(aes(fill = nota_final)) +
   geom_sf_text(
-    aes(label = round(nota_final, 1)),
+    aes(label = abbrev_state),
     nudge_x = comparison_map$nudge_x_text,
     nudge_y = comparison_map$nudge_y_text,
-    color = ifelse(comparison_map$nota_final >= 7, "red", "black"),
     size = 2
   ) +
   facet_wrap(vars(ano)) +
@@ -1376,32 +1403,43 @@ comparison_map |>
   theme(legend.position = "top",
         legend.justification = "left") +
   theme(legend.key.height = unit(0.5, 'lines')) +
-  scale_fill_gradient(
-    low = map_white,
-    high = map_blue,
+  scale_fill_distiller(
+    palette = "RdBu",
+    direction = 1,
     limits = c(0, 10),
     labels = comma_format(decimal.mark = ",", big.mark = ".")
   ) +
   labs(x = NULL, y = NULL, fill = NULL)
 ```
 
+O resultado final de todas as consultas efetuadas, bem como os valores médios para cada categoria de dado acessado e a variação percentual das notas finais podem ser observados na @tbl-final, em ordem descendente das pontuações atribuídas.
+
 ```{r}
-variacao <- df_revisoes |> 
-  select(uf, nota_final, ano) |> 
-  pivot_wider(names_from = ano, names_prefix = "ano", values_from = nota_final) |> 
-  summarise(.by = uf, ano2020 = mean(ano2020), ano2024 = mean(ano2024)) |> 
-  mutate(var = (ano2024 - ano2020)/ano2024) |> 
-  arrange(desc(var)) |> 
+#| tbl-cap: Tabela de resultados finais das consultas para 2024
+#| label: tbl-final
+
+variacao <- df_revisoes |>
+  select(uf, nota_final, ano) |>
+  pivot_wider(names_from = ano,
+              names_prefix = "ano",
+              values_from = nota_final) |>
+  summarise(
+    .by = uf,
+    ano2020 = mean(ano2020),
+    ano2024 = mean(ano2024)
+  ) |>
+  mutate(var = (ano2024 - ano2020) / ano2024) |>
+  arrange(desc(var)) |>
   select(uf, var)
 
-consulta_pre |> 
-  mutate(nota_final = rowMeans(across(frota:cfcs))) |> 
-  arrange(desc(nota_final)) |> 
-  select(-regiao) |> 
-  left_join(variacao, by = "uf") |> 
-  gt(rowname_col = "uf") |> 
+consulta_pre |>
+  mutate(nota_final = rowMeans(across(frota:cfcs))) |>
+  arrange(desc(nota_final)) |>
+  select(-regiao) |>
+  left_join(variacao, by = "uf") |>
+  gt(rowname_col = "uf") |>
   fmt_number(dec_mark = ",", sep_mark = ".") |>
-  fmt_percent(var) |> 
+  fmt_percent(var, dec_mark = ",", sep_mark = ".") |>
   cols_label(
     frota = "Frota veicular",
     condutores = "Condutores habilitados",
@@ -1412,14 +1450,14 @@ consulta_pre |>
     cfcs = "CFCs",
     nota_final = "Nota Final",
     var = "Variação"
-  ) |> 
-  cols_align(align = "center") |> 
+  ) |>
+  cols_align(align = "center") |>
   tab_options(
     column_labels.background.color = onsv_palette$blue,
     column_labels.font.weight = "bold"
   ) |>
   tab_style(style = cell_text(color = onsv_palette$blue),
-            locations = cells_title()) |> 
+            locations = cells_title()) |>
   data_color(nota_final:var, method = "numeric", palette = "RdBu")
 ```
 
