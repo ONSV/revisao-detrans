@@ -32,9 +32,15 @@ load(here("data", "revisoes.rda"))
 
 map_blue <- "#77C6ED"
 tbl_blue <- "#3d7590"
+
 tbl_red <- "#df555d"
+tbl_orange <- "#da9446"
+tbl_yellow <- "#bfb232"
+tbl_green <- "#1fa149"
+
 map_red <- "#e47076"
 map_white <- "white"
+pal <- c(tbl_red, tbl_orange, tbl_yellow, tbl_green)
 col_func <- colorRampPalette(colors = c(map_white, map_blue))
 ```
 
@@ -159,7 +165,7 @@ consulta_pre |>
   bg(
     j = ~ . - regiao - uf,
     bg = col_factor(
-      palette = c(tbl_red, tbl_blue),
+      palette = c(pal[1], pal[4]),
       domain = c("SIM", "NÃO")
     ),
     part = "body"
@@ -372,7 +378,7 @@ frota |>
   bg(bg = onsv_palette$blue, part = "header") |>
   bg(
     bg = col_numeric(
-      palette = c(tbl_red, tbl_blue),
+      palette = pal,
       domain = c(0, 10)
     ),
     part = "body",
@@ -380,7 +386,7 @@ frota |>
   ) |>
   bg(
     bg = col_factor(
-      palette = c(tbl_red, tbl_blue),
+      palette = pal,
       domain = c("Ótimo", "Intermediário", "Inicial", "Ausente")
     ),
     part = "body",
@@ -394,7 +400,7 @@ frota |>
   ) |>
   line_spacing(space = 0.4, part = "body") |>
   line_spacing(space = 0.6, part = "header") |>
-  autofit() |> 
+  autofit() |>
   colformat_double(decimal.mark = ",")
 ```
 
@@ -501,7 +507,7 @@ condutores |>
   bg(bg = onsv_palette$blue, part = "header") |>
   bg(
     bg = col_numeric(
-      palette = c(tbl_red, tbl_blue),
+      palette = pal,
       domain = c(0, 10)
     ),
     part = "body",
@@ -509,7 +515,7 @@ condutores |>
   ) |>
   bg(
     bg = col_factor(
-      palette = c(tbl_red, tbl_blue),
+      palette = pal,
       domain = c("Ótimo", "Intermediário", "Inicial", "Ausente")
     ),
     part = "body",
@@ -624,7 +630,7 @@ cfcs |>
   bg(bg = onsv_palette$blue, part = "header") |>
   bg(
     bg = col_factor(
-      palette = c(tbl_red, tbl_blue),
+      palette = pal,
       domain = c("Ótimo", "Intermediário", "Inicial", "Ausente")
     ),
     part = "body",
@@ -749,7 +755,7 @@ infracoes |>
   bg(bg = onsv_palette$blue, part = "header") |>
   bg(
     bg = col_numeric(
-      palette = c(tbl_red, tbl_blue),
+      palette = pal,
       domain = c(0, 10)
     ),
     part = "body",
@@ -757,7 +763,7 @@ infracoes |>
   ) |>
   bg(
     bg = col_factor(
-      palette = c(tbl_red, tbl_blue),
+      palette = pal,
       domain = c("Ótimo", "Intermediário", "Inicial", "Ausente")
     ),
     part = "body",
@@ -878,7 +884,7 @@ sinistros |>
   bg(bg = onsv_palette$blue, part = "header") |>
   bg(
     bg = col_numeric(
-      palette = c(tbl_red, tbl_blue),
+      palette = pal,
       domain = c(0, 10)
     ),
     part = "body",
@@ -886,7 +892,7 @@ sinistros |>
   ) |>
   bg(
     bg = col_factor(
-      palette = c(tbl_red, tbl_blue),
+      palette = pal,
       domain = c("Ótimo", "Intermediário", "Inicial", "Ausente")
     ),
     part = "body",
@@ -1006,7 +1012,7 @@ educacao |>
   bg(bg = onsv_palette$blue, part = "header") |>
   bg(
     bg = col_numeric(
-      palette = c(tbl_red, tbl_blue),
+      palette = pal,
       domain = c(0, 10)
     ),
     part = "body",
@@ -1014,7 +1020,7 @@ educacao |>
   ) |>
   bg(
     bg = col_factor(
-      palette = c(tbl_red, tbl_blue),
+      palette = pal,
       domain = c("Ótimo", "Intermediário", "Inicial", "Ausente")
     ),
     part = "body",
@@ -1141,7 +1147,7 @@ atendimento |>
   bg(bg = onsv_palette$blue, part = "header") |>
   bg(
     bg = col_numeric(
-      palette = c(tbl_red, tbl_blue),
+      palette = pal,
       domain = c(0, 10)
     ),
     part = "body",
@@ -1149,7 +1155,7 @@ atendimento |>
   ) |>
   bg(
     bg = col_factor(
-      palette = c(tbl_red, tbl_blue),
+      palette = pal,
       domain = c("Ótimo", "Intermediário", "Inicial", "Ausente")
     ),
     part = "body",
@@ -1157,7 +1163,7 @@ atendimento |>
   ) |>
   bg(
     bg = col_factor(
-      palette = c(tbl_red, tbl_blue),
+      palette = pal,
       domain = c("Presente", "Ausente")
     ),
     part = "body",
@@ -1469,7 +1475,7 @@ consulta_pre |>
   ) |>
   tab_style(style = cell_text(color = onsv_palette$blue),
             locations = cells_title()) |>
-  data_color(nota_final:var, method = "numeric", palette = "RdBu")
+  data_color(nota_final:var, method = "numeric", palette = pal)
 ```
 
 ### Boas Práticas
