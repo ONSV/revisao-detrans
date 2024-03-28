@@ -42,9 +42,20 @@ col_func <- colorRampPalette(colors = c(map_white, map_blue))
 
 #### Como citar {.unnumbered}
 
+ONSV; UFPR (2024). Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito – DETRANs. Observatório Nacional de Segurança
+Viária e Universidade Federal do Paraná. Disponível em: ____ .
+
 #### Licença de uso {.unnumbered}
 
+Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito – DETRANs © 2024 por Observatório Nacional de Segurança Viária e Universidade
+Federal do Paraná está licenciada sob CC BY-NC 4.0. Para ver uma cópia desta licença,
+acesse ____ .
+
 #### Código livre e aberto {.unnumbered}
+
+Todo o processo metodológico de coleta, transformação e visualização dos dados
+presentes nesse relatório estão disponíveis no repositório ____ .
+
 
 ## Introdução
 
