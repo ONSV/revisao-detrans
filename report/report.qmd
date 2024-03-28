@@ -603,23 +603,25 @@ Devido ao fato da avaliação dos CFCs ser feita a partir de um único critério
 #| tbl-cap: Tabela de desempenho para informações de centros de formação de condutores
 #| label: tbl-cfcs
 
-cfcs |> 
-  mutate(across(
-    cfcs,
-    ~ case_match(
-      .x,
-      10.0 ~ "Ótimo",
-      6.7 ~ "Intermediário",
-      3.3 ~ "Inicial",
-      0 ~ "Ausente"
-    )
-  )) |>
+cfcs |>
+  mutate(
+    nota = cfcs,
+    cfcs =
+       case_match(
+        cfcs,
+        10.0 ~ "Ótimo",
+        6.7 ~ "Intermediário",
+        3.3 ~ "Inicial",
+        0 ~ "Ausente"
+      )
+  ) |>
   flextable() |>
   merge_v(j = ~ regiao) |>
   set_header_labels(
     regiao = "Região",
     uf = "UF",
-    cfcs = "Nota Média"
+    cfcs = "Lista de CFCs",
+    nota = "Nota Média"
   ) |>
   theme_vanilla() |>
   align(align = "center", part = "all") |>
@@ -628,6 +630,14 @@ cfcs |>
         color = "white",
         part = "body") |>
   bg(bg = onsv_palette$blue, part = "header") |>
+  bg(
+    bg = col_numeric(
+      palette = pal,
+      domain = c(0, 10)
+    ),
+    part = "body",
+    j = ~ nota
+  ) |>
   bg(
     bg = col_factor(
       palette = pal,
@@ -644,7 +654,8 @@ cfcs |>
   ) |>
   line_spacing(space = 0.4, part = "body") |>
   line_spacing(space = 0.6, part = "header") |>
-  autofit()
+  autofit() |> 
+  colformat_double(decimal.mark = ",")
 ```
 
 Observa-se na @fig-map-cfcs a predominância do desempenho intermediário nestes dados. Há também uma clara ausência de DETRANs com **Prática Inicial**:
