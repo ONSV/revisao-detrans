@@ -4,7 +4,7 @@ library(googlesheets4)
 tbl_links <- read_sheet(
   "https://docs.google.com/spreadsheets/d/1oNpc9VXaSiFcnH2f2RU_6jkWzOr4QXVYgFTnav8OAn0/edit#gid=1264866835",
   sheet = 3,
-  range = "AC1:AL28",
+  range = "AC1:AK28",
   .name_repair = "universal"
 )
 

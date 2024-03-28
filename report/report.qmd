@@ -1340,8 +1340,7 @@ tbl_links |>
     `Sinistros` = sinistros,
     `Estatísticas de atendimento` = estatistica_atend,
     `Canais de atendimento` = canais,
-    `Conteúdos didáticos` = conteudos,
-    `Divulgação de atividades` = divulgacao,
+    `Educação para trânsito` = educ,
     CFCs = cfc
   ) |>
   pivot_longer(-UF) |>
