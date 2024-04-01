@@ -3,6 +3,7 @@ title: "Avaliação do Nível de Informações Disponibilizadas nos Portais dos 
 format: 
   onsvpub-html:
     smooth-scroll: true
+editor: source
 author: 
   - Pedro Augusto Borges dos Santos
   - João Pedro Melani Saraiva
@@ -30,38 +31,26 @@ library(gt)
 estados <- read_state()
 load(here("data", "revisoes.rda"))
 
-map_blue <- "#77C6ED"
-tbl_blue <- "#3d7590"
-
 tbl_red <- "#df555d"
 tbl_orange <- "#da9446"
 tbl_yellow <- "#bfb232"
 tbl_green <- "#1fa149"
-
-map_red <- "#e47076"
-map_white <- "white"
 pal <- c(tbl_red, tbl_orange, tbl_yellow, tbl_green)
-col_func <- colorRampPalette(colors = pal)
 ```
 
 ### Sobre o relatório {.unnumbered}
 
 #### Como citar {.unnumbered}
 
-ONSV; UFPR (2024). Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito – DETRANs. Observatório Nacional de Segurança
-Viária e Universidade Federal do Paraná. Disponível em: ____ .
+ONSV; UFPR (2024). Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito -- DETRANs. Observatório Nacional de Segurança Viária e Universidade Federal do Paraná. Disponível em: \_\_\_\_ .
 
 #### Licença de uso {.unnumbered}
 
-Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito – DETRANs © 2024 por Observatório Nacional de Segurança Viária e Universidade
-Federal do Paraná está licenciada sob CC BY-NC 4.0. Para ver uma cópia desta licença,
-acesse ____ .
+Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito -- DETRANs © 2024 por Observatório Nacional de Segurança Viária e Universidade Federal do Paraná está licenciada sob CC BY-NC 4.0. Para ver uma cópia desta licença, acesse \_\_\_\_ .
 
 #### Código livre e aberto {.unnumbered}
 
-Todo o processo metodológico de coleta, transformação e visualização dos dados
-presentes nesse relatório estão disponíveis no repositório ____ .
-
+Todo o processo metodológico de coleta, transformação e visualização dos dados presentes nesse relatório estão disponíveis no repositório \_\_\_\_ .
 
 ## Introdução
 
@@ -69,7 +58,7 @@ presentes nesse relatório estão disponíveis no repositório ____ .
 
 O presente documento tem por objetivo apresentar uma avaliação do nível de informações disponibilizadas nos portais (sítios eletrônicos) dos DETRANs (Departamentos Estaduais de Trânsito) de todas as unidades da federação brasileiras.
 
-Os DETRANs, por sua atuação, trabalham com um grande número de informações relevantes para a gestão do trânsito no país, tendo muitas delas, além do teor formal e burocrático, uma grande utilidade para avaliações no âmbito da segurança viária, tais como: infrações de trânsito, acidentes de trânsito, e habilitação, entre outros.
+Os DETRANs, por sua atuação, trabalham com um grande número de informações relevantes para a gestão do trânsito no país, tendo muitas delas, além do teor formal e burocrático, uma grande utilidade para avaliações no âmbito da segurança viária, tais como: infrações de trânsito, sinistros de trânsito, e habilitação, entre outros.
 
 Nesse sentido, este documento busca apresentar uma análise da situação de cada DETRAN, permitindo obter um panorama de como essas instituições trabalham e disponibilizam informações de interesse social. Além da introdução, o documento compõe-se das seguintes seções: @sec-metodos, com as consultas preliminares, pontuação e critérios estabelecidos; e @sec-resultados, com a pontuação geral em cada categoria analisada, com a evolução das notas resultantes ao longo dos anos e com os exemplos de boas práticas encontradas nos sítios eletrônicos.
 
@@ -93,7 +82,7 @@ Este trabalho é uma segunda versão do relatório publicado em 2020 pelo Observ
 
 ### Consultas Preliminares
 
-O estudo foi realizado por meio do acesso dos *sites* dos DETRANs de cada estado brasileiro a fim de averiguar a existência de dados estatíticos sobre a frota veicular, os condutores habilitados, as infrações e sinistros de trânsito. Também foi avaliada a existência de informações relacionadas à educação para o trânsito (campanhas, material educativo, regras de trânsito, etc.), dados quantitivos do atendimento público pelo departamento, disponibilidade de canais de atendimento e dados informativos sobre os centros de formação de condutores do estado em questão. A @tbl-consultas demonstra os resultados de uma consulta preliminar destes portais:
+O estudo foi realizado por meio do acesso dos *sites* dos DETRANs de cada estado brasileiro a fim de averiguar a existência de dados estatíticos sobre a frota veicular, condutores habilitados, infrações e sinistros de trânsito. Também foram avaliados a existência de informações relacionadas à educação para o trânsito (campanhas, material educativo, regras de trânsito, etc.), dados quantitivos do atendimento ao público pelo departamento, disponibilidade de canais de atendimento e dados informativos sobre os centros de formação de condutores do estado em questão. A @tbl-consultas demonstra os resultados de uma consulta preliminar destes portais:
 
 ```{r}
 #| include: false
@@ -224,9 +213,17 @@ consulta_pre |>
 
 ### Critérios de Avaliação
 
-A partir das categorias anteriormente discutidas, critérios de avaliação foram estabelecidos para quantificar a disponibilidade de dados e informações de cada um dos DETRANs. Assim sendo, são concedidos níveis de desempenho que equivalem a pontuações para cada um dos critérios aferidos: **Prática Ótima** - Nota 10; **Prática Intermediária** - Nota 6,7; **Prática Inicial** - Nota 3,3 e **Prática Ausente** - Nota 0.
+A partir das categorias anteriormente discutidas, critérios de avaliação foram estabelecidos para quantificar a disponibilidade de dados e informações de cada um dos DETRANs. Assim sendo, são concedidos níveis de desempenho que equivalem a pontuações para cada um dos critérios aferidos:
 
-A avaliação dos dados estatísticos da frota veicular, condutores habilitados, infrações e sinistros de trânsito se baseou nos critérios de:
+- **Prática Ótima** - Nota 10; 
+
+- **Prática Intermediária** - Nota 6,7; 
+
+- **Prática Inicial** - Nota 3,3 e;
+
+- **Prática Ausente** - Nota 0.
+
+A avaliação dos dados estatísticos da **frota veicular**, **condutores habilitados**, **infrações** e **sinistros** de trânsito se baseou nos critérios de:
 
 -   Periodicidade: quantidade de anos disponíveis;
 
@@ -279,7 +276,7 @@ rbind(
   colformat_double(decimal.mark = ",")
 ```
 
-As informações sobre o atendimento ao público, educação para o trânsito e CFCs foram aferidas por outros critérios específicos, por não se tratarem de dados estritamente estatísticos, exigindo uma mudança na abordagem de avaliação. As Tabelas [-@tbl-cri-atend], [-@tbl-cri-educ] e [-@tbl-cri-cfcs] demonstram os critérios para cada um destes casos:
+As informações sobre o **atendimento ao público**, **educação para o trânsito** e **CFCs** foram aferidas com outros critérios mais específicos por não se tratarem de dados estritamente estatísticos, exigindo uma mudança na abordagem de avaliação. As Tabelas [-@tbl-cri-atend], [-@tbl-cri-educ] e [-@tbl-cri-cfcs] demonstram os critérios para cada um destes casos:
 
 ```{r}
 #| tbl-cap: Tabela de critérios de avaliação para atendimento ao público
@@ -543,7 +540,7 @@ condutores |>
   colformat_double(decimal.mark = ",")
 ```
 
-O mapa de notas atribuídas demonstrado na @fig-map-condutores permite observar a distribuição de informações de condutores no território brasileiro.
+O mapa de notas atribuídas demonstrado na @fig-map-condutores permite observar a distribuição de informações de condutores habilitados de cada estado.
 
 ```{r}
 #| fig-cap: Mapa de nota média para dados de condutores habilitados
@@ -582,7 +579,7 @@ cfcs <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-Devido ao fato da avaliação dos CFCs ser feita a partir de um único critério de avaliação, como indica a @tbl-cri-cfcs, as notas para cada estado estão ilustradas na @tbl-cfcs em pontuações qualitativos:
+Devido ao fato da avaliação dos CFCs ser efetuada a partir de um único critério de avaliação, como indica a @tbl-cri-cfcs, as notas para cada estado estão ilustradas na @tbl-cfcs em pontuações qualitativas:
 
 ```{r}
 #| tbl-cap: Tabela de desempenho para informações de centros de formação de condutores
@@ -687,7 +684,7 @@ infracoes <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-A @tbl-infracoes contém os resultados das consultas para dados sobre infrações de cada departamento estadual, também utilizando de classificações qualitativas relacionadas a uma nota média final. Neste caso, a desagregação considerou a divisão por artigo de infração, grupo de infração (circulação, estacionamento, etc.), natureza (grave, leve, etc.), instrumento de autuação, local de autuação, faixa etária do condutor infrator, sexo do condutor infrator, por responsável (condutor ou proprietário) e exercício de atividade remunerada ou não do infrator.
+A @tbl-infracoes contém os resultados das consultas de dados sobre infrações, também utilizando de classificações qualitativas relacionadas a uma nota média final. Neste caso, a desagregação considerou a divisão por artigo de infração, grupo de infração (circulação, estacionamento, etc.), natureza (grave, leve, etc.), instrumento de autuação, local de autuação, faixa etária do condutor infrator, sexo do condutor infrator, por responsável (condutor ou proprietário) e exercício de atividade remunerada ou não do infrator.
 
 ```{r}
 #| tbl-cap: Tabela de desempenho para dados de infrações
@@ -749,7 +746,7 @@ infracoes |>
   colformat_double(decimal.mark = ",")
 ```
 
-A @fig-map-infracoes demonstra uma escassez de dados especificamente na região Norte e em alguns estados do Nordeste.
+A tabela anterior e a @fig-map-infracoes demonstra uma escassez de dados especificamente na região Norte e em alguns estados do Nordeste.
 
 ```{r}
 #| fig-cap: Mapa de nota média para dados de infrações
@@ -791,7 +788,7 @@ sinistros <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-Os sinistros são avaliados também de acordo com a @tbl-criterios, com suas classificações finais e notas médias apresentadas na @tbl-sinistros. Entende-se como variáveis para a desagregação desta categoria: a gravidade do acidente (fatal ou não), período (dia ou noite), área (urbana ou rural), natureza (atropelamento, choque, etc.), dias da semana, horário, sexo da vítima e/ou do condutor, faixa etária da vítima e/ou do condutor, tipo da vítima e/ou do condutor (ciclista, pedestre, etc.), categoria do condutor (habilitado, inabilitado, etc.), tempo de habilitação do condutor e espécie do veículo envolvido (automóvel, bicicleta, etc.).
+Os sinistros de trânsito são avaliados também de acordo com a @tbl-criterios, com suas classificações finais e notas médias apresentadas na @tbl-sinistros. Entende-se como variáveis para a desagregação desta categoria a gravidade do acidente (fatal ou não), período (dia ou noite), área (urbana ou rural), natureza (atropelamento, choque, etc.), dias da semana, horário, sexo da vítima e/ou do condutor, faixa etária da vítima e/ou do condutor, tipo da vítima e/ou do condutor (ciclista, pedestre, etc.), categoria do condutor (habilitado, inabilitado, etc.), tempo de habilitação do condutor e espécie do veículo envolvido (automóvel, bicicleta, etc.).
 
 ```{r}
 #| tbl-cap: Tabela de desempenho para dados de sinistros
@@ -853,7 +850,7 @@ sinistros |>
   colformat_double(decimal.mark = ",")
 ```
 
-A @fig-map-sinistros demonstra a carência de informações de sinistros em uma grande parcela dos departamentos, sendo a categoria de dado estatístico com maior déficit nos portais de acesso à informação.
+A @fig-map-sinistros demonstra uma carência de informações de sinistros em uma grande parcela dos departamentos, sendo a categoria de dado estatístico com maior déficit nos portais de acesso à informação.
 
 ```{r}
 #| fig-cap: Mapa de nota média para dados de sinistros
@@ -998,7 +995,7 @@ atendimento <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-Os resultados das consultas sobre o atendimento ao público estão apresentados na @tbl-atendimento. É notável a carência de estatísticas de atendimento para a maioria dos DETRANs.
+Os resultados das consultas sobre o atendimento ao público estão apresentados na @tbl-atendimento. É notável a ausência de estatísticas de atendimento para a maioria dos DETRANs.
 
 ```{r}
 #| tbl-cap: Tabela de desempenho para dados de atendimento ao público
@@ -1104,7 +1101,7 @@ ggplot(atendimento_map) +
 
 ### Evolução dos Resultados
 
-As pontuações finais calculadas para a revisão das informações disponibilizadas nos portais dos DETRANs de 2024 permite não apenas identificar os departamentos de melhor performance conforme os critérios de avaliação estabelecidos, mas também averiguar como progrediram ou regrediram em relação à avaliação de 2020, como visto na @fig-dumbbell.
+As pontuações finais calculadas para a avaliação das informações disponibilizadas nos portais dos DETRANs de 2024 permite não apenas identificar os departamentos de melhor performance conforme os critérios de avaliação estabelecidos, mas também averiguar como progrediram ou regrediram em relação à avaliação de 2020, como visto na @fig-dumbbell.
 
 ```{r}
 #| fig-cap: Gráfico de halteres da nota final para os DETRANs
@@ -1199,7 +1196,7 @@ df_revisoes |>
   labs(x = NULL, y = NULL)
 ```
 
-Em 2024, houve uma progressão majoritariamente positiva para os DETRANs. Avaliando arbitrariamente os departamentos que obtiveram notas maiores que 7, estão em destaque:
+Em 2024, houve uma progressão majoritariamente positiva para os DETRANs. Considerando os departamentos que obtiveram notas maiores que 7, estão em destaque:
 
 -   Sergipe - 9,61;
 
@@ -1216,6 +1213,7 @@ A @fig-map-compare apresenta um mapa de comparação das pontuações finais de 
 ```{r}
 #| fig-cap: Mapa de notas finais para DETRANs de 2020 e 2024
 #| label: fig-map-compare
+#| fig-height: 2.5
 
 comparison_map <-
   df_revisoes |> 
@@ -1230,7 +1228,7 @@ comparison_map |>
   labs(fill = "Nota Final")
 ```
 
-O resultado final de todas as consultas efetuadas, bem como os valores médios para cada categoria de dado acessado e a variação percentual das notas finais podem ser observados na @tbl-final, em ordem descendente das pontuações atribuídas.
+O resultado final de todas as consultas efetuadas, bem como os valores médios para cada categoria de dado acessado e a variação percentual das notas finais podem ser observados na @tbl-final, em ordem descendente das pontuações atribuídas em 2024.
 
 ```{r}
 #| tbl-cap: Tabela de resultados finais das consultas para 2024
@@ -1283,14 +1281,13 @@ consulta_pre |>
 
 ### Boas Práticas
 
-Esta seção é dedicada a salientar alguns exemplos de boas práticas adotadas por DETRANs a fim de demonstrar alguns costumes que podem aperfeiçoar o desempenho dos portais virtuais em geral. A escolha das menções nesta seção foi promovida em relação às maiores notas atribuídas.
+Esta seção é dedicada a salientar alguns exemplos de boas práticas adotadas por DETRANs a fim de demonstrar alguns costumes que podem aperfeiçoar o desempenho dos portais virtuais em geral. A escolha das menções nesta seção foi promovida em relação às maiores notas encontradas no estudo.
 
 #### Frota - Detran RJ
 
 A @fig-rj demonstra um gerenciador de tabelas disponível no portal do Detran RJ, que apesar de não conter gráficos ou visualizações sobre os dados, possui um extenso intervalo temporal e um alto nível de desagregação das variáveis, fornecidos de forma interativa com filtros e tabelas dinâmicas.
 
 ::: {#fig-rj}
-
 ![](assets/detran_rj.png)
 
 Gerenciador de Tabelas do Detran RJ.\
@@ -1299,10 +1296,9 @@ Fonte: https://www.detran.se.gov.br/?pg=estatistica/veiculos#gsc.tab=0
 
 #### Condutores - Detran RO
 
-Na @fig-ro, o Detran RO disponibiliza os dados em um *dashboard*, um relatório interativo, com filtros e gráficos dinâmicos para a visualização dos dados fornecidos, sendo implementado no *software* Power BI. É recomendável o uso de aplicativos de análise de dados semelhantes para geração de relatórios interativos, como Tableu, Google Looker Studio e o anteriormente citado Microsoft Power BI.
+Na @fig-ro, o Detran RO disponibiliza os dados em um *dashboard*, ou relatório interativo, com filtros e gráficos dinâmicos para a visualização dos dados fornecidos, sendo implementado no *software* Power BI. O uso de programas de análise de dados para geração de relatórios interativos, como Tableau, Google Looker Studio e o anteriormente citado Microsoft Power BI, é uma prática muito recomendada aos departamentos em geral.
 
 ::: {#fig-ro}
-
 ![](assets/detran_ro.png)
 
 Dashboard de dados de condutores habilitados do Detran RO\
@@ -1314,7 +1310,6 @@ Fonte: https://www.detran.ro.gov.br/post/43/2023/9/12/anuario-estatistico-condut
 Como anteriormente citado, uma boa prática para demonstração dos dados é a geração de dashboards através de programas de análise de dados. Na @fig-ms, o Detran MS incorpora em seu portal visualizações dinâmicas criadas em Tableau.
 
 ::: {#fig-ms}
-
 ![](assets/detran_ms.png)
 
 Dashboard de infrações do Detran MS.\
@@ -1326,17 +1321,15 @@ Fonte: http://www.paineis.detran.ms.gov.br/Infracoes.html
 O Detran SE disponibiliza uma grande quantidade de níveis de desagregação, como visto na @fig-se-1.
 
 ::: {#fig-se-1}
-
 ![](assets/detran_se_1.png)
 
 Página de estatísticas de sinistros do Detran SE.\
 Fonte: https://www.detran.se.gov.br/?pg=estatistica/acidentes#gsc.tab=0
 :::
 
-Seus dados são apresentados em tabelas dinâmicas, com filtros e um extenso intervalo temporal disponível, como apresenta a @fig-se-2.
+Seus dados são apresentados em tabelas dinâmicas, com filtros e um extenso intervalo temporal, como apresenta a @fig-se-2.
 
 ::: {#fig-se-2}
-
 ![](assets/detran_se_2.png)
 
 Exemplo de tabela dinâmica do Detran SE.\
@@ -1345,10 +1338,9 @@ Fonte: https://www.detran.se.gov.br/?pg=estatistica/acidentes/boat_001#gsc.tab=0
 
 #### Atendimento ao Público - Detran SP
 
-Além de providenciar contato por telefone, e-mail e mensagem via WhatsApp, o serviço de atendimento do Detran SP oferece a possibilidade de registrar manifestações personalizadas pelo próprio portal (@fig-sp-1) e aplicativos para auxílio ao público (@fig-sp-2). 
+Além de providenciar contato por telefone, e-mail e mensagem via WhatsApp, o serviço de atendimento do Detran SP oferece a possibilidade de registrar manifestações personalizadas pelo próprio portal (@fig-sp-1) e aplicativos para auxílio ao público (@fig-sp-2).
 
 ::: {#fig-sp-1}
-
 ![](assets/detran_sp_1.png)
 
 Serviço de atendimento pelo portal do Detran SP.\
@@ -1356,7 +1348,6 @@ Fonte: https://www.detran.sp.gov.br/wps/portal/portaldetran/detran/canaisdecomun
 :::
 
 ::: {#fig-sp-2}
-
 ![](assets/detran_sp_2.png)
 
 Aplicativos do portal do Detran SP.\
@@ -1365,10 +1356,9 @@ Fonte: https://www.detran.sp.gov.br/wps/portal/portaldetran/cidadao/appsdetran
 
 #### Educação para o Trânsito - Detran PR
 
-A @fig-pr-educ apresenta como o Detran PR dispõe de uma grande variedade de materiais e divulgações para a educação e conscientização sobre o trânsito disponíveis em diversos formatos digitais, como vídeos, cursos EaD, *podcasts*, entre outros. 
+A @fig-pr-educ apresenta o portal educativo do Detran PR, que dispõe de uma grande variedade de materiais e divulgações sobre a educação e conscientização para o trânsito disponíveis em diversos formatos digitais, como vídeos, cursos EaD, *podcasts*, entre outros.
 
 ::: {#fig-pr-educ}
-
 ![](assets/detran_pr_educ.png)
 
 Portal de educação do Detran PR.\
@@ -1380,7 +1370,6 @@ Fonte: https://www.detraneduca.pr.gov.br/
 O Detran PR também possui em seu portal tabelas interativas para a consulta de CFCs de forma dinâmica e eficiente, como demonstrado na @fig-pr-cfcs.
 
 ::: {#fig-pr-cfcs}
-
 ![](assets/detran_pr_cfcs.png)
 
 Lista de CFCs/Instituições do Detran PR.\
@@ -1464,6 +1453,5 @@ tbl_links |>
   tab_style(style = cell_fill(color = "grey90"),
             locations = cells_row_groups())
 ```
-
 
 ## Referências {.unnumbered}
