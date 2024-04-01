@@ -643,7 +643,7 @@ cfcs |>
 Observa-se na @fig-map-cfcs a predominância do desempenho intermediário nestes dados. Há também uma clara ausência de DETRANs com **Prática Inicial**:
 
 ```{r}
-#| fig-cap: Mapa de nota para informações de centros de formação de condutores
+#| fig-cap: Mapa de notas para informações de centros de formação de condutores
 #| label: fig-map-cfcs
 
 cfcs_map <- 
@@ -746,7 +746,7 @@ infracoes |>
   colformat_double(decimal.mark = ",")
 ```
 
-A tabela anterior e a @fig-map-infracoes demonstra uma escassez de dados especificamente na região Norte e em alguns estados do Nordeste.
+A tabela anterior e a @fig-map-infracoes demonstram uma escassez de dados especificamente na região Norte e em alguns estados do Nordeste.
 
 ```{r}
 #| fig-cap: Mapa de nota média para dados de infrações
@@ -1291,7 +1291,7 @@ A @fig-rj demonstra um gerenciador de tabelas disponível no portal do Detran RJ
 ![](assets/detran_rj.png)
 
 Gerenciador de Tabelas do Detran RJ.\
-Fonte: https://www.detran.se.gov.br/?pg=estatistica/veiculos#gsc.tab=0
+Fonte: https://www.detran.rj.gov.br/_estatisticas.veiculos/index.asp
 :::
 
 #### Condutores - Detran RO
