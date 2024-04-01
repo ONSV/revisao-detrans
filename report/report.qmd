@@ -1283,6 +1283,110 @@ consulta_pre |>
 
 ### Boas Práticas
 
+Esta seção é dedicada a salientar alguns exemplos de boas práticas adotadas por DETRANs a fim de demonstrar alguns costumes que podem aperfeiçoar o desempenho dos portais virtuais em geral. A escolha das menções nesta seção foi promovida em relação às maiores notas atribuídas.
+
+#### Frota - Detran RJ
+
+A @fig-rj demonstra um gerenciador de tabelas disponível no portal do Detran RJ, que apesar de não conter gráficos ou visualizações sobre os dados, possui um extenso intervalo temporal e um alto nível de desagregação das variáveis, fornecidos de forma interativa com filtros e tabelas dinâmicas.
+
+::: {#fig-rj}
+
+![](assets/detran_rj.png)
+
+Gerenciador de Tabelas do Detran RJ.\
+Fonte: https://www.detran.se.gov.br/?pg=estatistica/veiculos#gsc.tab=0
+:::
+
+#### Condutores - Detran RO
+
+Na @fig-ro, o Detran RO disponibiliza os dados em um *dashboard*, um relatório interativo, com filtros e gráficos dinâmicos para a visualização dos dados fornecidos, sendo implementado no *software* Power BI. É recomendável o uso de aplicativos de análise de dados semelhantes para geração de relatórios interativos, como Tableu, Google Looker Studio e o anteriormente citado Microsoft Power BI.
+
+::: {#fig-ro}
+
+![](assets/detran_ro.png)
+
+Dashboard de dados de condutores habilitados do Detran RO\
+Fonte: https://www.detran.ro.gov.br/post/43/2023/9/12/anuario-estatistico-condutores-habilitados/
+:::
+
+#### Infrações - Detran MS
+
+Como anteriormente citado, uma boa prática para demonstração dos dados é a geração de dashboards através de programas de análise de dados. Na @fig-ms, o Detran MS incorpora em seu portal visualizações dinâmicas criadas em Tableau.
+
+::: {#fig-ms}
+
+![](assets/detran_ms.png)
+
+Dashboard de infrações do Detran MS.\
+Fonte: http://www.paineis.detran.ms.gov.br/Infracoes.html
+:::
+
+#### Sinistros - Detran SE
+
+O Detran SE disponibiliza uma grande quantidade de níveis de desagregação, como visto na @fig-se-1.
+
+::: {#fig-se-1}
+
+![](assets/detran_se_1.png)
+
+Página de estatísticas de sinistros do Detran SE.\
+Fonte: https://www.detran.se.gov.br/?pg=estatistica/acidentes#gsc.tab=0
+:::
+
+Seus dados são apresentados em tabelas dinâmicas, com filtros e um extenso intervalo temporal disponível, como apresenta a @fig-se-2.
+
+::: {#fig-se-2}
+
+![](assets/detran_se_2.png)
+
+Exemplo de tabela dinâmica do Detran SE.\
+Fonte: https://www.detran.se.gov.br/?pg=estatistica/acidentes/boat_001#gsc.tab=0
+:::
+
+#### Atendimento ao Público - Detran SP
+
+Além de providenciar contato por telefone, e-mail e mensagem via WhatsApp, o serviço de atendimento do Detran SP oferece a possibilidade de registrar manifestações personalizadas pelo próprio portal (@fig-sp-1) e aplicativos para auxílio ao público (@fig-sp-2). 
+
+::: {#fig-sp-1}
+
+![](assets/detran_sp_1.png)
+
+Serviço de atendimento pelo portal do Detran SP.\
+Fonte: https://www.detran.sp.gov.br/wps/portal/portaldetran/detran/canaisdecomunicacao
+:::
+
+::: {#fig-sp-2}
+
+![](assets/detran_sp_2.png)
+
+Aplicativos do portal do Detran SP.\
+Fonte: https://www.detran.sp.gov.br/wps/portal/portaldetran/cidadao/appsdetran
+:::
+
+#### Educação para o Trânsito - Detran PR
+
+A @fig-pr-educ apresenta como o Detran PR dispõe de uma grande variedade de materiais e divulgações para a educação e conscientização sobre o trânsito disponíveis em diversos formatos digitais, como vídeos, cursos EaD, *podcasts*, entre outros. 
+
+::: {#fig-pr-educ}
+
+![](assets/detran_pr_educ.png)
+
+Portal de educação do Detran PR.\
+Fonte: https://www.detraneduca.pr.gov.br/
+:::
+
+#### CFCs - Detran PR
+
+O Detran PR também possui em seu portal tabelas interativas para a consulta de CFCs de forma dinâmica e eficiente, como demonstrado na @fig-pr-cfcs.
+
+::: {#fig-pr-cfcs}
+
+![](assets/detran_pr_cfcs.png)
+
+Lista de CFCs/Instituições do Detran PR.\
+Fonte: https://www.detran.pr.gov.br/Pagina/CFCInstituicoes-Cursos-de-Capacitacao-e-Especializados
+:::
+
 ## Apêndice - Links acessados {.unnumbered}
 
 Os *links* de acesso às informações consultadas estão disponíves na @tbl-links:
