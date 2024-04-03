@@ -475,7 +475,7 @@ ggplot(frota_map) +
     nudge_y = frota_map$nudge_y_text
   ) +
   scale_fill_manual(values = pal) +
-  theme_minimal() +
+  theme_void() +
   theme(legend.justification = c("right", "top")) +
   labs(fill = "Nota Média", x = NULL, y = NULL)
 ```
@@ -581,7 +581,7 @@ ggplot(condutores_map) +
     nudge_y = condutores_map$nudge_y_text
   ) +
   scale_fill_manual(values = pal) +
-  theme_minimal() +
+  theme_void() +
   theme(legend.justification = c("right", "top")) +
   labs(fill = "Nota Média", x = NULL, y = NULL)
 ```
@@ -683,7 +683,7 @@ ggplot(cfcs_map) +
     nudge_y = cfcs_map$nudge_y_text
   ) +
   scale_fill_manual(values = pal) + 
-  theme_minimal() +
+  theme_void() +
   theme(legend.justification = c("right", "top")) +
   labs(fill = "Nota Média", x = NULL, y = NULL)
 ```
@@ -787,7 +787,7 @@ ggplot(infracoes_map) +
     nudge_y = infracoes_map$nudge_y_text
   ) +
   scale_fill_manual(values = pal) +
-  theme_minimal() +
+  theme_void() +
   theme(legend.justification = c("right", "top")) +
   labs(fill = "Nota Média", x = NULL, y = NULL)
 ```
@@ -891,7 +891,7 @@ ggplot(sinistros_map) +
     nudge_y = sinistros_map$nudge_y_text
   ) +
   scale_fill_manual(values = pal) +
-  theme_minimal() +
+  theme_void() +
   theme(legend.justification = c("right", "top")) +
   labs(fill = "Nota Média", x = NULL, y = NULL)
 ```
@@ -994,7 +994,7 @@ ggplot(educacao_map) +
     nudge_y = educacao_map$nudge_y_text
   ) +
   scale_fill_manual(values = pal) +
-  theme_minimal() +
+  theme_void() +
   theme(legend.justification = c("right", "top")) +
   labs(fill = "Nota Média", x = NULL, y = NULL)
 ```
@@ -1111,7 +1111,7 @@ ggplot(atendimento_map) +
     nudge_y = atendimento_map$nudge_y_text
   ) +
   scale_fill_manual(values = pal) +
-  theme_minimal() +
+  theme_void() +
   theme(legend.justification = c("right", "top")) +
   labs(fill = "Nota Média", x = NULL, y = NULL)
 ```
@@ -1249,7 +1249,7 @@ comparison_map |>
   ggplot() +
   geom_sf(aes(fill = fill)) + 
   scale_fill_manual(values = pal) +
-  theme_minimal() +
+  theme_void() +
   facet_wrap(vars(ano)) +
   labs(fill = "Nota Final")
 ```
