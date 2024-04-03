@@ -174,7 +174,7 @@ consulta_pre <- df_revisoes |>
 ```
 
 ```{r}
-#| tbl-cap: Tabela de consultas preliminares
+#| tbl-cap: Consultas preliminares
 #| label: tbl-consultas
 
 consulta_pre |>
@@ -222,38 +222,58 @@ consulta_pre |>
 
 A partir das categorias anteriormente discutidas, critérios de avaliação foram estabelecidos para quantificar a disponibilidade de dados e informações de cada um dos DETRANs. Assim sendo, são concedidos níveis de desempenho que equivalem a pontuações para cada um dos critérios aferidos:
 
-- **Prática Ótima** - Nota 10; 
+1. **Prática Ótima** - Nota 10; 
 
-- **Prática Intermediária** - Nota 6,7; 
+2. **Prática Intermediária** - Nota 6,7; 
 
-- **Prática Inicial** - Nota 3,3 e;
+3. **Prática Inicial** - Nota 3,3 e;
 
-- **Prática Ausente** - Nota 0.
+4. **Prática Ausente** - Nota 0.
 
-A avaliação dos dados estatísticos da **frota veicular**, **condutores habilitados**, **infrações** e **sinistros** de trânsito se baseou nos critérios de:
+A avaliação dos dados estatísticos da **frota veicular**, **condutores habilitados**, **infrações** e **sinistros** de trânsito se baseou nos critérios de periodicidade (quantidade de anos disponíveis), interatividade (tipo de arquivos ou informações disponíveis) e nível de desagregação (quantidade de variáveis disponíveis para análise).
 
--   Periodicidade: quantidade de anos disponíveis;
+A **periodicidade** foi avaliada em:
 
--   Interatividade: tipo de arquivos ou informações disponíveis e;
+- Ótima: Quando há um máximo de 2 anos de atraso em relação ao ano atual para o dado mais recente e mais de 5 anos de dados disponíves;
 
--   Nível de desagregação: quantidade de variáveis disponíveis para análise.
+- Intermediária: Máximo de 2 anos de atraso ou menos de 5 anos disponíveis e;
+
+- Inicial: 3+ anos de atraso e menos de 5 anos disponíveis.
+
+Neste contexto, para um estado ser situado como *Ótimo*, por exemplo, seria necessário ter mais de 5 anos disponíveis e seu dado mais recente ser de, no mínino, 2022.
+
+A **interatividade** foi avaliada em:
+
+- Ótima: Possui dados disponibilizados em relatórios interativos ou *dashboards* para consultas dinâmicas;
+
+- Intermediária: Dados disponibilizados em arquivos de planinhas (como `.xls`, `.xlsx` e `.ods`) de editores como Microsoft Excel, Google Sheets e LibreOffice Calc, e;
+
+- Inicial: Dados disponibilizados apenas como texto na página ou arquivos de texto (`.txt`, `.csv`, etc.).
+
+O **nível de desagregação** foi avaliado em:
+
+- Ótimo: Quantidade grande de variáveis;
+
+- Intermediário: Quantidade média de variáveis e;
+
+- Inicial: Quantidade baixa de variáveis.
 
 A relação destes critérios está ilustrada na @tbl-criterios:
 
 <!-- Falta explicar melhor esses critérios: o que significa 3 anos ou 2 anos de atraso? o que é txt? xlsx? sempre explicar tudo no texto -->
 
 ```{r}
-#| tbl-cap: Tabela de critérios de avaliação para frota, condutores habilitados, infrações e sinistros
+#| tbl-cap: Critérios de avaliação para frota, condutores habilitados, infrações e sinistros
 #| label: tbl-criterios
 
 criterio <- data.frame(
   notas = c(3.3, 6.7, 10),
   periodicidade = c(
-    "3 anos de atraso/ < 5 anos",
-    "2 anos de atraso/ < 5 anos",
-    "2 anos de atraso/ > 5 anos"
+    "3+ anos de atraso e < 5 anos",
+    "2 anos de atraso ou < 5 anos",
+    "2 anos de atraso e > 5 anos"
   ),
-  interatividade = c("txt", "xlsx", "Interativo"),
+  interatividade = c("Texto", "Planilha", "Interativo"),
   desagreg = c("1 a 2 desagregações", "3 a 4 desagregações", "5+ desagregações")
 )
 
@@ -290,20 +310,20 @@ As informações sobre o **atendimento ao público**, **educação para o trâns
 <!-- O que é "atendimento por (1) e e-mail?" Explicar melhor essa tabela tambem -->
 
 ```{r}
-#| tbl-cap: Tabela de critérios de avaliação para atendimento ao público
+#| tbl-cap: Critérios de avaliação para atendimento ao público
 #| label: tbl-cri-atend
 
 tbl_atend <- data.frame(
   notas = c(3.3, 6.7, 10),
   stats =  c(
-    "3 anos de atraso/ < 5 anos",
-    "2 anos de atraso/ < 5 anos",
-    "2 anos de atraso/ > 5 anos"
+    "3+ anos de atraso e < 5 anos",
+    "2 anos de atraso ou < 5 anos",
+    "2 anos de atraso e > 5 anos"
   ),
   canais = c(
     "Atendimento por telefone",
-    "Atendimento por (1) e e-mail",
-    "Atendimento por (2) e mensagem"
+    "Atendimento por telefone e e-mail",
+    "Atendimento por telefone, e-mail e mensagem"
   )
 ) |>
   relocate(stats, canais, notas) |>
@@ -322,7 +342,7 @@ tbl_atend
 ```
 
 ```{r}
-#| tbl-cap: Tabela de critérios de avaliação para conteúdo educativo
+#| tbl-cap: Critérios de avaliação para conteúdo educativo
 #| label: tbl-cri-educ
 
 tbl_educ <- data.frame(
@@ -344,7 +364,7 @@ tbl_educ
 ```
 
 ```{r}
-#| tbl-cap: Tabela de critérios de avaliação para informações sobre CFCs
+#| tbl-cap: Critérios de avaliação para informações sobre CFCs
 #| label: tbl-cri-cfcs
 
 tbl_cfc <- data.frame(
@@ -388,7 +408,7 @@ Primeiramente, os dados de frota de veículos, condutores habilitados, infraçõ
 A @tbl-frota aponta a qualidade dos dados estatísticos da frota veicular como fornecidos pelos portais dos DETRANs, assim como a nota média para estes critérios. A periodicidade aparenta ser o critério de melhor performance na maior parte dos departamentos para esta categoria.
 
 ```{r}
-#| tbl-cap: Resultados da categoria 'Frota de veículos'
+#| tbl-cap: Resultados da categoria "Frota de Veículos"
 #| label: tbl-frota
 
 frota |>
@@ -453,8 +473,10 @@ A @fig-map-frota aponta a nota média dos três critérios para os dados de frot
 
 <!-- Também não precisa deixar as coordenadas e nem o grid nos mapas. Deixe um fundo sem elemebros -->
 
+<!-- R.: Feito -->
+
 ```{r}
-#| fig-cap: Resultados da categoria 'Frota de Veículos'
+#| fig-cap: Resultados da categoria "Frota de Veículos"
 #| label: fig-map-frota
 
 frota_map <- 
@@ -475,7 +497,7 @@ ggplot(frota_map) +
     nudge_y = frota_map$nudge_y_text
   ) +
   scale_fill_manual(values = pal) +
-  theme_minimal() +
+  theme_void() +
   theme(legend.justification = c("right", "top")) +
   labs(fill = "Nota Média", x = NULL, y = NULL)
 ```
@@ -498,7 +520,7 @@ A @tbl-condutores mostra o desempenho dos DETRANs na disponibilização de dados
 <!-- Mesma coisa vale pra tabela. Não precisa colocar no título que é uma tabela -->
 
 ```{r}
-#| tbl-cap: Resultados da categoria 'Condutores Habilitados'
+#| tbl-cap: Resultados da categoria "Condutores Habilitados"
 #| label: tbl-condutores
 
 condutores |>
@@ -560,7 +582,7 @@ condutores |>
 O mapa de notas atribuídas demonstrado na @fig-map-condutores permite observar a distribuição de informações de condutores habilitados de cada estado.
 
 ```{r}
-#| fig-cap: Resultados da categoria 'Condutores Habilitados'
+#| fig-cap: Resultados da categoria "Condutores Habilitados"
 #| label: fig-map-condutores
 
 condutores_map <- 
@@ -581,7 +603,7 @@ ggplot(condutores_map) +
     nudge_y = condutores_map$nudge_y_text
   ) +
   scale_fill_manual(values = pal) +
-  theme_minimal() +
+  theme_void() +
   theme(legend.justification = c("right", "top")) +
   labs(fill = "Nota Média", x = NULL, y = NULL)
 ```
@@ -599,7 +621,7 @@ cfcs <- df_revisoes |>
 Devido ao fato da avaliação dos CFCs ser efetuada a partir de um único critério de avaliação, como indica a @tbl-cri-cfcs, as notas para cada estado estão ilustradas na @tbl-cfcs em pontuações qualitativas:
 
 ```{r}
-#| tbl-cap: Resultados da categoria 'CFCs'
+#| tbl-cap: Resultados da categoria "CFCs"
 #| label: tbl-cfcs
 
 cfcs |>
@@ -660,7 +682,7 @@ cfcs |>
 Observa-se na @fig-map-cfcs a predominância do desempenho intermediário nestes dados. Há também uma clara ausência de DETRANs com **Prática Inicial**:
 
 ```{r}
-#| fig-cap: Resultados da categoria 'CFCs'
+#| fig-cap: Resultados da categoria "CFCs"
 #| label: fig-map-cfcs
 
 cfcs_map <- 
@@ -683,7 +705,7 @@ ggplot(cfcs_map) +
     nudge_y = cfcs_map$nudge_y_text
   ) +
   scale_fill_manual(values = pal) + 
-  theme_minimal() +
+  theme_void() +
   theme(legend.justification = c("right", "top")) +
   labs(fill = "Nota Média", x = NULL, y = NULL)
 ```
@@ -704,7 +726,7 @@ infracoes <- df_revisoes |>
 A @tbl-infracoes contém os resultados das consultas de dados sobre infrações, também utilizando de classificações qualitativas relacionadas a uma nota média final. Neste caso, a desagregação considerou a divisão por artigo de infração, grupo de infração (circulação, estacionamento, etc.), natureza (grave, leve, etc.), instrumento de autuação, local de autuação, faixa etária do condutor infrator, sexo do condutor infrator, por responsável (condutor ou proprietário) e exercício de atividade remunerada ou não do infrator.
 
 ```{r}
-#| tbl-cap: Resultados da categoria 'Infrações'
+#| tbl-cap: Resultados da categoria "Infrações"
 #| label: tbl-infracoes
 
 infracoes |>
@@ -766,7 +788,7 @@ infracoes |>
 A tabela anterior e a @fig-map-infracoes demonstram uma escassez de dados especificamente nos DETRANs da Região Norte e em alguns DETRANs do Nordeste.
 
 ```{r}
-#| fig-cap: Resultados da categoria 'Infrações'
+#| fig-cap: Resultados da categoria "Infrações"
 #| label: fig-map-infracoes
 
 infracoes_map <- 
@@ -787,7 +809,7 @@ ggplot(infracoes_map) +
     nudge_y = infracoes_map$nudge_y_text
   ) +
   scale_fill_manual(values = pal) +
-  theme_minimal() +
+  theme_void() +
   theme(legend.justification = c("right", "top")) +
   labs(fill = "Nota Média", x = NULL, y = NULL)
 ```
@@ -891,7 +913,7 @@ ggplot(sinistros_map) +
     nudge_y = sinistros_map$nudge_y_text
   ) +
   scale_fill_manual(values = pal) +
-  theme_minimal() +
+  theme_void() +
   theme(legend.justification = c("right", "top")) +
   labs(fill = "Nota Média", x = NULL, y = NULL)
 ```
@@ -994,7 +1016,7 @@ ggplot(educacao_map) +
     nudge_y = educacao_map$nudge_y_text
   ) +
   scale_fill_manual(values = pal) +
-  theme_minimal() +
+  theme_void() +
   theme(legend.justification = c("right", "top")) +
   labs(fill = "Nota Média", x = NULL, y = NULL)
 ```
@@ -1111,7 +1133,7 @@ ggplot(atendimento_map) +
     nudge_y = atendimento_map$nudge_y_text
   ) +
   scale_fill_manual(values = pal) +
-  theme_minimal() +
+  theme_void() +
   theme(legend.justification = c("right", "top")) +
   labs(fill = "Nota Média", x = NULL, y = NULL)
 ```
@@ -1122,9 +1144,12 @@ As pontuações finais calculadas para a avaliação das informações disponibi
 
 <!-- Reduzir o tamanho do texto no gráfico; aumentar a altura do gráfico; a palavra "centro-oeste" ficou cortada -->
 
+<!-- R.: Feito -->
+
 ```{r}
 #| fig-cap: Evolução dos resultados finais entre 2020 e 2024
 #| label: fig-dumbbell
+#| fig-height: 5
 
 df_revisoes |>
   select(uf, nota_final, ano) |> 
@@ -1152,70 +1177,17 @@ df_revisoes |>
   ) +
   scale_color_manual(values = c(onsv_palette$red, onsv_palette$green)) +
   scale_x_continuous(limits = c(0, 10)) +
-  scale_y_discrete(position = "left") +
+  scale_y_discrete(position = "left", ) +
   labs(x = NULL, y = NULL, color = NULL) +
   theme_bw() +
   facet_grid(vars(regiao), scales = "free_y", space = "free_y", switch = "y") +
-  theme(strip.text = element_text(size = 8))
+  theme(strip.text = element_text(size = 6),
+        axis.text.y = element_text(size = 6))
 ```
-
-Além disso, é possível observar os estados que mais evoluíram em relação a sua pontuação anterior observando as variações percentuais entre 2024 e 2020, como aponta a @fig-var-percent.
 
 <!-- João, reveja o jeito que voce fez esse cálculo. Não tem como um valor finito e positivo apresentar uma redução de 150% -->
 
-```{r}
-#| fig-cap: Variação percentual entre os anos de 2020 e 2024
-#| label: fig-var-percent
-
-scales <- list(
-  scale_x_continuous(
-    limits = c(0, 10),
-    labels = label_comma(decimal.mark = ",")
-  ),
-  scale_x_continuous(
-    limits = c(0, 10),
-    labels = label_comma(decimal.mark = ",")
-  ),
-  scale_x_continuous(
-    breaks = seq(-1.5, 1.5, 0.75),
-    limits = c(-1.5, 1.5),
-    labels = percent
-  )
-)
-
-df_revisoes |>
-  select(uf, nota_final, ano) |>
-  pivot_wider(values_from = nota_final,
-              names_from = ano,
-              names_prefix = "ano_") |>
-  mutate(difer = (ano_2024 - ano_2020) / ano_2024,
-         uf = reorder(uf, difer)) |>
-  pivot_longer(c(ano_2020, ano_2024, difer)) |>
-  mutate(
-    fill = case_when(
-      name == "difer" & value > 0 ~ "up",
-      name == "difer" & value <= 0 ~ "down",
-      .default = "none"
-    ),
-    name = case_match(
-      name,
-      "ano_2020" ~ "2020",
-      "ano_2024" ~ "2024",
-      "difer" ~ "Variação percentual"
-    )
-  ) |>
-  ggplot(aes(value, uf, fill = fill)) +
-  geom_bar(stat = "identity") +
-  facet_wrap(vars(name), scales = "free_x") +
-  scale_fill_manual(values = c(onsv_palette$red,
-                               onsv_palette$blue,
-                               onsv_palette$green)) +
-  theme_minimal() +
-  theme(legend.position = "none",
-        panel.spacing.x = unit(0.75, "cm")) +
-  facetted_pos_scales(x = scales) +
-  labs(x = NULL, y = NULL)
-```
+<!-- R.: Consertei o cálculo, mas agora a diferença é mais gritante -->
 
 Em 2024, houve uma progressão majoritariamente positiva para os DETRANs. Considerando os departamentos que obtiveram notas maiores que 7, estão em destaque:
 
@@ -1244,7 +1216,7 @@ comparison_map |>
   ggplot() +
   geom_sf(aes(fill = fill)) + 
   scale_fill_manual(values = pal) +
-  theme_minimal() +
+  theme_void() +
   facet_wrap(vars(ano)) +
   labs(fill = "Nota Final")
 ```
@@ -1252,6 +1224,8 @@ comparison_map |>
 O resultado final de todas as consultas efetuadas, bem como os valores médios para cada categoria de dado acessado e a variação percentual das notas finais podem ser observados na @tbl-final, em ordem descendente das pontuações atribuídas em 2024.
 
 <!-- Aqui o calculo da porcentagem também ta errado. -->
+
+<!-- R.: Consertei também, e agora a variação é colorida por positivo/negativo (discreto) invés de forma numérica pois ficava muito gritante a diferença devido a variação de BA -->
 
 ```{r}
 #| tbl-cap: Resultados finais das consultas para 2024
@@ -1267,7 +1241,7 @@ variacao <- df_revisoes |>
     ano2020 = mean(ano2020),
     ano2024 = mean(ano2024)
   ) |>
-  mutate(var = (ano2024 - ano2020) / ano2024) |>
+  mutate(var = (ano2024-ano2020)/ano2020) |>
   arrange(desc(var)) |>
   select(uf, ano2020, var)
 
@@ -1299,7 +1273,12 @@ consulta_pre |>
   ) |>
   tab_style(style = cell_text(color = onsv_palette$blue),
             locations = cells_title()) |>
-  data_color(ano2020:var, method = "numeric", palette = pal)
+  data_color(ano2020:nota_final, method = "numeric", palette = pal) |> 
+  data_color(columns = c(var),
+             colors = col_bin(
+               bins = c(-Inf, 0, Inf),
+               palette = c(tbl_red, tbl_green)
+             ))
 ```
 
 ### Boas Práticas
