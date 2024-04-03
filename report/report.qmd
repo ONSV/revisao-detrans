@@ -174,7 +174,7 @@ consulta_pre <- df_revisoes |>
 ```
 
 ```{r}
-#| tbl-cap: Tabela de consultas preliminares
+#| tbl-cap: Consultas preliminares
 #| label: tbl-consultas
 
 consulta_pre |>
@@ -243,7 +243,7 @@ A relação destes critérios está ilustrada na @tbl-criterios:
 <!-- Falta explicar melhor esses critérios: o que significa 3 anos ou 2 anos de atraso? o que é txt? xlsx? sempre explicar tudo no texto -->
 
 ```{r}
-#| tbl-cap: Tabela de critérios de avaliação para frota, condutores habilitados, infrações e sinistros
+#| tbl-cap: Critérios de avaliação para frota, condutores habilitados, infrações e sinistros
 #| label: tbl-criterios
 
 criterio <- data.frame(
@@ -290,7 +290,7 @@ As informações sobre o **atendimento ao público**, **educação para o trâns
 <!-- O que é "atendimento por (1) e e-mail?" Explicar melhor essa tabela tambem -->
 
 ```{r}
-#| tbl-cap: Tabela de critérios de avaliação para atendimento ao público
+#| tbl-cap: Critérios de avaliação para atendimento ao público
 #| label: tbl-cri-atend
 
 tbl_atend <- data.frame(
@@ -322,7 +322,7 @@ tbl_atend
 ```
 
 ```{r}
-#| tbl-cap: Tabela de critérios de avaliação para conteúdo educativo
+#| tbl-cap: Critérios de avaliação para conteúdo educativo
 #| label: tbl-cri-educ
 
 tbl_educ <- data.frame(
@@ -344,7 +344,7 @@ tbl_educ
 ```
 
 ```{r}
-#| tbl-cap: Tabela de critérios de avaliação para informações sobre CFCs
+#| tbl-cap: Critérios de avaliação para informações sobre CFCs
 #| label: tbl-cri-cfcs
 
 tbl_cfc <- data.frame(
@@ -388,7 +388,7 @@ Primeiramente, os dados de frota de veículos, condutores habilitados, infraçõ
 A @tbl-frota aponta a qualidade dos dados estatísticos da frota veicular como fornecidos pelos portais dos DETRANs, assim como a nota média para estes critérios. A periodicidade aparenta ser o critério de melhor performance na maior parte dos departamentos para esta categoria.
 
 ```{r}
-#| tbl-cap: Resultados da categoria 'Frota de veículos'
+#| tbl-cap: Resultados da categoria "Frota de Veículos"
 #| label: tbl-frota
 
 frota |>
@@ -453,8 +453,10 @@ A @fig-map-frota aponta a nota média dos três critérios para os dados de frot
 
 <!-- Também não precisa deixar as coordenadas e nem o grid nos mapas. Deixe um fundo sem elemebros -->
 
+<!-- R.: Feito -->
+
 ```{r}
-#| fig-cap: Resultados da categoria 'Frota de Veículos'
+#| fig-cap: Resultados da categoria "Frota de Veículos"
 #| label: fig-map-frota
 
 frota_map <- 
@@ -498,7 +500,7 @@ A @tbl-condutores mostra o desempenho dos DETRANs na disponibilização de dados
 <!-- Mesma coisa vale pra tabela. Não precisa colocar no título que é uma tabela -->
 
 ```{r}
-#| tbl-cap: Resultados da categoria 'Condutores Habilitados'
+#| tbl-cap: Resultados da categoria "Condutores Habilitados"
 #| label: tbl-condutores
 
 condutores |>
@@ -560,7 +562,7 @@ condutores |>
 O mapa de notas atribuídas demonstrado na @fig-map-condutores permite observar a distribuição de informações de condutores habilitados de cada estado.
 
 ```{r}
-#| fig-cap: Resultados da categoria 'Condutores Habilitados'
+#| fig-cap: Resultados da categoria "Condutores Habilitados"
 #| label: fig-map-condutores
 
 condutores_map <- 
@@ -599,7 +601,7 @@ cfcs <- df_revisoes |>
 Devido ao fato da avaliação dos CFCs ser efetuada a partir de um único critério de avaliação, como indica a @tbl-cri-cfcs, as notas para cada estado estão ilustradas na @tbl-cfcs em pontuações qualitativas:
 
 ```{r}
-#| tbl-cap: Resultados da categoria 'CFCs'
+#| tbl-cap: Resultados da categoria "CFCs"
 #| label: tbl-cfcs
 
 cfcs |>
@@ -660,7 +662,7 @@ cfcs |>
 Observa-se na @fig-map-cfcs a predominância do desempenho intermediário nestes dados. Há também uma clara ausência de DETRANs com **Prática Inicial**:
 
 ```{r}
-#| fig-cap: Resultados da categoria 'CFCs'
+#| fig-cap: Resultados da categoria "CFCs"
 #| label: fig-map-cfcs
 
 cfcs_map <- 
@@ -704,7 +706,7 @@ infracoes <- df_revisoes |>
 A @tbl-infracoes contém os resultados das consultas de dados sobre infrações, também utilizando de classificações qualitativas relacionadas a uma nota média final. Neste caso, a desagregação considerou a divisão por artigo de infração, grupo de infração (circulação, estacionamento, etc.), natureza (grave, leve, etc.), instrumento de autuação, local de autuação, faixa etária do condutor infrator, sexo do condutor infrator, por responsável (condutor ou proprietário) e exercício de atividade remunerada ou não do infrator.
 
 ```{r}
-#| tbl-cap: Resultados da categoria 'Infrações'
+#| tbl-cap: Resultados da categoria "Infrações"
 #| label: tbl-infracoes
 
 infracoes |>
@@ -766,7 +768,7 @@ infracoes |>
 A tabela anterior e a @fig-map-infracoes demonstram uma escassez de dados especificamente nos DETRANs da Região Norte e em alguns DETRANs do Nordeste.
 
 ```{r}
-#| fig-cap: Resultados da categoria 'Infrações'
+#| fig-cap: Resultados da categoria "Infrações"
 #| label: fig-map-infracoes
 
 infracoes_map <- 
