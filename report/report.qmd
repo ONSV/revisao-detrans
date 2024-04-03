@@ -1163,6 +1163,8 @@ Além disso, é possível observar os estados que mais evoluíram em relação a
 
 <!-- João, reveja o jeito que voce fez esse cálculo. Não tem como um valor finito e positivo apresentar uma redução de 150% -->
 
+<!-- R.: Consertei o cálculo, mas agora a diferença é mais gritante -->
+
 ```{r}
 #| fig-cap: Variação percentual entre os anos de 2020 e 2024
 #| label: fig-var-percent
@@ -1177,9 +1179,8 @@ scales <- list(
     labels = label_comma(decimal.mark = ",")
   ),
   scale_x_continuous(
-    breaks = seq(-1.5, 1.5, 0.75),
-    limits = c(-1.5, 1.5),
-    labels = percent
+    labels = percent,
+    limits = c(-5.5, 5.5)
   )
 )
 
@@ -1188,7 +1189,7 @@ df_revisoes |>
   pivot_wider(values_from = nota_final,
               names_from = ano,
               names_prefix = "ano_") |>
-  mutate(difer = (ano_2024 - ano_2020) / ano_2024,
+  mutate(difer = (ano_2024/ano_2020) - 1,
          uf = reorder(uf, difer)) |>
   pivot_longer(c(ano_2020, ano_2024, difer)) |>
   mutate(
@@ -1253,6 +1254,8 @@ O resultado final de todas as consultas efetuadas, bem como os valores médios p
 
 <!-- Aqui o calculo da porcentagem também ta errado. -->
 
+<!-- R.: Consertei também, e agora a variação é colorida por positivo/negativo (discreto) invés de forma numérica pois ficava muito gritante a diferença devido a variação de BA -->
+
 ```{r}
 #| tbl-cap: Resultados finais das consultas para 2024
 #| label: tbl-final
@@ -1267,7 +1270,7 @@ variacao <- df_revisoes |>
     ano2020 = mean(ano2020),
     ano2024 = mean(ano2024)
   ) |>
-  mutate(var = (ano2024 - ano2020) / ano2024) |>
+  mutate(var = (ano2024/ano2020) - 1) |>
   arrange(desc(var)) |>
   select(uf, ano2020, var)
 
@@ -1299,7 +1302,12 @@ consulta_pre |>
   ) |>
   tab_style(style = cell_text(color = onsv_palette$blue),
             locations = cells_title()) |>
-  data_color(ano2020:var, method = "numeric", palette = pal)
+  data_color(ano2020:nota_final, method = "numeric", palette = pal) |> 
+  data_color(columns = c(var),
+             colors = col_bin(
+               bins = c(-Inf, 0, Inf),
+               palette = c(tbl_red, tbl_green)
+             ))
 ```
 
 ### Boas Práticas
