@@ -1122,9 +1122,12 @@ As pontuações finais calculadas para a avaliação das informações disponibi
 
 <!-- Reduzir o tamanho do texto no gráfico; aumentar a altura do gráfico; a palavra "centro-oeste" ficou cortada -->
 
+<!-- R.: Feito -->
+
 ```{r}
 #| fig-cap: Evolução dos resultados finais entre 2020 e 2024
 #| label: fig-dumbbell
+#| fig-height: 5
 
 df_revisoes |>
   select(uf, nota_final, ano) |> 
@@ -1152,11 +1155,12 @@ df_revisoes |>
   ) +
   scale_color_manual(values = c(onsv_palette$red, onsv_palette$green)) +
   scale_x_continuous(limits = c(0, 10)) +
-  scale_y_discrete(position = "left") +
+  scale_y_discrete(position = "left", ) +
   labs(x = NULL, y = NULL, color = NULL) +
   theme_bw() +
   facet_grid(vars(regiao), scales = "free_y", space = "free_y", switch = "y") +
-  theme(strip.text = element_text(size = 8))
+  theme(strip.text = element_text(size = 6),
+        axis.text.y = element_text(size = 6))
 ```
 
 Além disso, é possível observar os estados que mais evoluíram em relação a sua pontuação anterior observando as variações percentuais entre 2024 e 2020, como aponta a @fig-var-percent.
