@@ -222,21 +222,41 @@ consulta_pre |>
 
 A partir das categorias anteriormente discutidas, critérios de avaliação foram estabelecidos para quantificar a disponibilidade de dados e informações de cada um dos DETRANs. Assim sendo, são concedidos níveis de desempenho que equivalem a pontuações para cada um dos critérios aferidos:
 
-- **Prática Ótima** - Nota 10; 
+1. **Prática Ótima** - Nota 10; 
 
-- **Prática Intermediária** - Nota 6,7; 
+2. **Prática Intermediária** - Nota 6,7; 
 
-- **Prática Inicial** - Nota 3,3 e;
+3. **Prática Inicial** - Nota 3,3 e;
 
-- **Prática Ausente** - Nota 0.
+4. **Prática Ausente** - Nota 0.
 
-A avaliação dos dados estatísticos da **frota veicular**, **condutores habilitados**, **infrações** e **sinistros** de trânsito se baseou nos critérios de:
+A avaliação dos dados estatísticos da **frota veicular**, **condutores habilitados**, **infrações** e **sinistros** de trânsito se baseou nos critérios de periodicidade (quantidade de anos disponíveis), interatividade (tipo de arquivos ou informações disponíveis) e nível de desagregação (quantidade de variáveis disponíveis para análise).
 
--   Periodicidade: quantidade de anos disponíveis;
+A **periodicidade** foi avaliada em:
 
--   Interatividade: tipo de arquivos ou informações disponíveis e;
+- Ótima: Quando há um máximo de 2 anos de atraso em relação ao ano atual para o dado mais recente e mais de 5 anos de dados disponíves;
 
--   Nível de desagregação: quantidade de variáveis disponíveis para análise.
+- Intermediária: Máximo de 2 anos de atraso ou menos de 5 anos disponíveis e;
+
+- Inicial: 3+ anos de atraso e menos de 5 anos disponíveis.
+
+Neste contexto, para um estado ser situado como *Ótimo*, por exemplo, seria necessário ter mais de 5 anos disponíveis e seu dado mais recente ser de, no mínino, 2022.
+
+A **interatividade** foi avaliada em:
+
+- Ótima: Possui dados disponibilizados em relatórios interativos ou *dashboards* para consultas dinâmicas;
+
+- Intermediária: Dados disponibilizados em arquivos de planinhas (como `.xls`, `.xlsx` e `.ods`) de editores como Microsoft Excel, Google Sheets e LibreOffice Calc, e;
+
+- Inicial: Dados disponibilizados apenas como texto na página ou arquivos de texto (`.txt`, `.csv`, etc.).
+
+O **nível de desagregação** foi avaliado em:
+
+- Ótimo: Quantidade grande de variáveis;
+
+- Intermediário: Quantidade média de variáveis e;
+
+- Inicial: Quantidade baixa de variáveis.
 
 A relação destes critérios está ilustrada na @tbl-criterios:
 
@@ -249,11 +269,11 @@ A relação destes critérios está ilustrada na @tbl-criterios:
 criterio <- data.frame(
   notas = c(3.3, 6.7, 10),
   periodicidade = c(
-    "3 anos de atraso/ < 5 anos",
-    "2 anos de atraso/ < 5 anos",
-    "2 anos de atraso/ > 5 anos"
+    "3+ anos de atraso e < 5 anos",
+    "2 anos de atraso ou < 5 anos",
+    "2 anos de atraso e > 5 anos"
   ),
-  interatividade = c("txt", "xlsx", "Interativo"),
+  interatividade = c("Texto", "Planilha", "Interativo"),
   desagreg = c("1 a 2 desagregações", "3 a 4 desagregações", "5+ desagregações")
 )
 
@@ -296,14 +316,14 @@ As informações sobre o **atendimento ao público**, **educação para o trâns
 tbl_atend <- data.frame(
   notas = c(3.3, 6.7, 10),
   stats =  c(
-    "3 anos de atraso/ < 5 anos",
-    "2 anos de atraso/ < 5 anos",
-    "2 anos de atraso/ > 5 anos"
+    "3+ anos de atraso e < 5 anos",
+    "2 anos de atraso ou < 5 anos",
+    "2 anos de atraso e > 5 anos"
   ),
   canais = c(
     "Atendimento por telefone",
-    "Atendimento por (1) e e-mail",
-    "Atendimento por (2) e mensagem"
+    "Atendimento por telefone e e-mail",
+    "Atendimento por telefone, e-mail e mensagem"
   )
 ) |>
   relocate(stats, canais, notas) |>
@@ -1165,64 +1185,9 @@ df_revisoes |>
         axis.text.y = element_text(size = 6))
 ```
 
-Além disso, é possível observar os estados que mais evoluíram em relação a sua pontuação anterior observando as variações percentuais entre 2024 e 2020, como aponta a @fig-var-percent.
-
 <!-- João, reveja o jeito que voce fez esse cálculo. Não tem como um valor finito e positivo apresentar uma redução de 150% -->
 
 <!-- R.: Consertei o cálculo, mas agora a diferença é mais gritante -->
-
-```{r}
-#| fig-cap: Variação percentual entre os anos de 2020 e 2024
-#| label: fig-var-percent
-
-scales <- list(
-  scale_x_continuous(
-    limits = c(0, 10),
-    labels = label_comma(decimal.mark = ",")
-  ),
-  scale_x_continuous(
-    limits = c(0, 10),
-    labels = label_comma(decimal.mark = ",")
-  ),
-  scale_x_continuous(
-    labels = percent,
-    limits = c(-5.5, 5.5)
-  )
-)
-
-df_revisoes |>
-  select(uf, nota_final, ano) |>
-  pivot_wider(values_from = nota_final,
-              names_from = ano,
-              names_prefix = "ano_") |>
-  mutate(difer = (ano_2024/ano_2020) - 1,
-         uf = reorder(uf, difer)) |>
-  pivot_longer(c(ano_2020, ano_2024, difer)) |>
-  mutate(
-    fill = case_when(
-      name == "difer" & value > 0 ~ "up",
-      name == "difer" & value <= 0 ~ "down",
-      .default = "none"
-    ),
-    name = case_match(
-      name,
-      "ano_2020" ~ "2020",
-      "ano_2024" ~ "2024",
-      "difer" ~ "Variação percentual"
-    )
-  ) |>
-  ggplot(aes(value, uf, fill = fill)) +
-  geom_bar(stat = "identity") +
-  facet_wrap(vars(name), scales = "free_x") +
-  scale_fill_manual(values = c(onsv_palette$red,
-                               onsv_palette$blue,
-                               onsv_palette$green)) +
-  theme_minimal() +
-  theme(legend.position = "none",
-        panel.spacing.x = unit(0.75, "cm")) +
-  facetted_pos_scales(x = scales) +
-  labs(x = NULL, y = NULL)
-```
 
 Em 2024, houve uma progressão majoritariamente positiva para os DETRANs. Considerando os departamentos que obtiveram notas maiores que 7, estão em destaque:
 
@@ -1276,7 +1241,7 @@ variacao <- df_revisoes |>
     ano2020 = mean(ano2020),
     ano2024 = mean(ano2024)
   ) |>
-  mutate(var = (ano2024/ano2020) - 1) |>
+  mutate(var = (ano2024-ano2020)/ano2020) |>
   arrange(desc(var)) |>
   select(uf, ano2020, var)
 
