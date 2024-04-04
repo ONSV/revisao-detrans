@@ -222,7 +222,7 @@ consulta_pre |>
 
 A partir das categorias anteriormente discutidas, critérios de avaliação foram estabelecidos para quantificar a disponibilidade de dados e informações de cada um dos DETRANs. Assim sendo, são concedidos níveis de desempenho que equivalem a pontuações para cada um dos critérios aferidos:
 
-1. **Prática Ótima** - Nota 10; 
+1. **Melhor Prática** - Nota 10; 
 
 2. **Prática Intermediária** - Nota 6,7; 
 
@@ -234,17 +234,17 @@ A avaliação dos dados estatísticos da **frota veicular**, **condutores habili
 
 A **periodicidade** foi avaliada em:
 
-- Ótima: Quando há um máximo de 2 anos de atraso em relação ao ano atual para o dado mais recente e mais de 5 anos de dados disponíves;
+- Melhor: Quando há um máximo de 2 anos de atraso em relação ao ano atual para o dado mais recente e mais de 5 anos de dados disponíves;
 
 - Intermediária: Máximo de 2 anos de atraso ou menos de 5 anos disponíveis e;
 
 - Inicial: 3+ anos de atraso e menos de 5 anos disponíveis.
 
-Neste contexto, para um estado ser situado como *Ótimo*, por exemplo, seria necessário ter mais de 5 anos disponíveis e seu dado mais recente ser de, no mínino, 2022.
+Neste contexto, para um estado ser situado como *Melhor*, por exemplo, seria necessário ter mais de 5 anos disponíveis e seu dado mais recente ser de, no mínino, 2022.
 
 A **interatividade** foi avaliada em:
 
-- Ótima: Possui dados disponibilizados em relatórios interativos ou *dashboards* para consultas dinâmicas;
+- Melhor: Possui dados disponibilizados em relatórios interativos ou *dashboards* para consultas dinâmicas;
 
 - Intermediária: Dados disponibilizados em arquivos de planinhas (como `.xls`, `.xlsx` e `.ods`) de editores como Microsoft Excel, Google Sheets e LibreOffice Calc, e;
 
@@ -252,7 +252,7 @@ A **interatividade** foi avaliada em:
 
 O **nível de desagregação** foi avaliado em:
 
-- Ótimo: Quantidade grande de variáveis;
+- Melhor: Quantidade grande de variáveis;
 
 - Intermediário: Quantidade média de variáveis e;
 
@@ -416,7 +416,7 @@ frota |>
     starts_with("frota"),
     ~ case_match(
       .x,
-      10.0 ~ "Ótimo",
+      10.0 ~ "Melhor",
       6.7 ~ "Intermediário",
       3.3 ~ "Inicial",
       0 ~ "Ausente"
@@ -450,7 +450,7 @@ frota |>
   bg(
     bg = col_factor(
       palette = pal,
-      domain = c("Ótimo", "Intermediário", "Inicial", "Ausente")
+      domain = c("Melhor", "Intermediário", "Inicial", "Ausente")
     ),
     part = "body",
     j = ~ . - uf - regiao - nota_final
@@ -528,7 +528,7 @@ condutores |>
     starts_with("condutores"),
     ~ case_match(
       .x,
-      10.0 ~ "Ótimo",
+      10.0 ~ "Melhor",
       6.7 ~ "Intermediário",
       3.3 ~ "Inicial",
       0 ~ "Ausente"
@@ -562,7 +562,7 @@ condutores |>
   bg(
     bg = col_factor(
       palette = pal,
-      domain = c("Ótimo", "Intermediário", "Inicial", "Ausente")
+      domain = c("Melhor", "Intermediário", "Inicial", "Ausente")
     ),
     part = "body",
     j = ~ . - uf - regiao - nota_final
@@ -630,7 +630,7 @@ cfcs |>
     cfcs =
        case_match(
         cfcs,
-        10.0 ~ "Ótimo",
+        10.0 ~ "Melhor",
         6.7 ~ "Intermediário",
         3.3 ~ "Inicial",
         0 ~ "Ausente"
@@ -662,7 +662,7 @@ cfcs |>
   bg(
     bg = col_factor(
       palette = pal,
-      domain = c("Ótimo", "Intermediário", "Inicial", "Ausente")
+      domain = c("Melhor", "Intermediário", "Inicial", "Ausente")
     ),
     part = "body",
     j = ~ cfcs
@@ -734,7 +734,7 @@ infracoes |>
     starts_with("infracoes"),
     ~ case_match(
       .x,
-      10.0 ~ "Ótimo",
+      10.0 ~ "Melhor",
       6.7 ~ "Intermediário",
       3.3 ~ "Inicial",
       0 ~ "Ausente"
@@ -768,7 +768,7 @@ infracoes |>
   bg(
     bg = col_factor(
       palette = pal,
-      domain = c("Ótimo", "Intermediário", "Inicial", "Ausente")
+      domain = c("Melhor", "Intermediário", "Inicial", "Ausente")
     ),
     part = "body",
     j = ~ . - uf - regiao - nota_final
@@ -838,7 +838,7 @@ sinistros |>
     starts_with("sinistros"),
     ~ case_match(
       .x,
-      10.0 ~ "Ótimo",
+      10.0 ~ "Melhor",
       6.7 ~ "Intermediário",
       3.3 ~ "Inicial",
       0 ~ "Ausente"
@@ -872,7 +872,7 @@ sinistros |>
   bg(
     bg = col_factor(
       palette = pal,
-      domain = c("Ótimo", "Intermediário", "Inicial", "Ausente")
+      domain = c("Melhor", "Intermediário", "Inicial", "Ausente")
     ),
     part = "body",
     j = ~ . - uf - regiao - nota_final
@@ -942,7 +942,7 @@ educacao |>
     starts_with("educ"),
     ~ case_match(
       .x,
-      10.0 ~ "Ótimo",
+      10.0 ~ "Melhor",
       6.7 ~ "Intermediário",
       3.3 ~ "Inicial",
       0 ~ "Ausente"
@@ -975,7 +975,7 @@ educacao |>
   bg(
     bg = col_factor(
       palette = pal,
-      domain = c("Ótimo", "Intermediário", "Inicial", "Ausente")
+      domain = c("Melhor", "Intermediário", "Inicial", "Ausente")
     ),
     part = "body",
     j = ~ . - uf - regiao - nota_final
@@ -1045,7 +1045,7 @@ atendimento |>
     atendimento_canais =
       case_match(
         atendimento_canais,
-        10.0 ~ "Ótimo",
+        10.0 ~ "Melhor",
         6.7 ~ "Intermediário",
         3.3 ~ "Inicial",
         0 ~ "Ausente"
@@ -1083,7 +1083,7 @@ atendimento |>
   bg(
     bg = col_factor(
       palette = pal,
-      domain = c("Ótimo", "Intermediário", "Inicial", "Ausente")
+      domain = c("Melhor", "Intermediário", "Inicial", "Ausente")
     ),
     part = "body",
     j = ~ atendimento_canais
