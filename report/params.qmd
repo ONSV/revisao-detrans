@@ -1,0 +1,41 @@
+---
+format: 
+  onsvpub-html:
+    smooth-scroll: true
+editor: source
+author: 
+  - name: João Pedro Melani Saraiva
+    affiliation:
+    - id: onsv
+      name: Observatório Nacional de Segurança Viária
+  - name: Daniel Duque
+    affiliation: Centro de Liderança Pública
+  - name: Pedro Augusto Borges dos Santos
+    affiliation: 
+      - ref: onsv   
+date: last-modified
+title-block-banner: true
+editor_options: 
+  chunk_output_type: console
+params:
+  state: Sergipe
+  acronym: SE
+title: "Avaliação do Nível de Informações Disponibilizadas no Portal do DETRAN - `r params$acronym`"
+---
+
+```{r include=FALSE}
+params$state
+params$acronym
+
+library(tidyverse)
+library(here)
+library(onsvplot)
+
+load(here("data", "revisoes.rda"))
+```
+
+
+```{r}
+
+```
+
