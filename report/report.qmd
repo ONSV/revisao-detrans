@@ -32,16 +32,18 @@ library(onsvplot)
 library(scales)
 library(geobr)
 library(sf)
-library(ggh4x)
+library(reactable)
 library(gt)
 
 estados <- read_state()
 load(here("data", "revisoes.rda"))
 
-tbl_red <- "#df555d"
-tbl_orange <- "#da9446"
-tbl_yellow <- "#bfb232"
-tbl_green <- "#1fa149"
+font_families <- "-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif"
+
+tbl_red <- "#D7191C"
+tbl_orange <- "#FDAE61"
+tbl_yellow <- "#ABD9E9"
+tbl_green <- "#2C7BB6"
 pal <- c(tbl_red, tbl_orange, tbl_yellow, tbl_green)
 ```
 
@@ -216,6 +218,92 @@ consulta_pre |>
   line_spacing(space = 0.6, part = "header") |> 
   color(color = "white", part = "header") |> 
   bg(bg = onsv_palette$blue, part = "header")
+```
+
+```{r}
+#| label: tbl-test
+
+bi_bg_func <- function(value) {
+  if(value == "SIM") {
+    color = tbl_green
+  } else {
+    color = tbl_red
+  }
+  list(background = color, color = "white")
+}
+
+make_reactable <- function(data, ...) {
+  blue <- "#00496d"
+  font_families <- "-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif"
+  
+  data |> 
+  reactable(
+    pagination = F, 
+    defaultColDef = colDef(
+      align = "center",
+      headerStyle = list(background = blue, color = "white")
+    ),
+    theme = reactableTheme(
+      style = list(fontFamily = font_families, fontSize = "0.60rem"),
+      searchInputStyle = list(color = blue)
+    ),
+    sortable = T,
+    compact = T,
+    resizable = T,
+    wrap = F,
+    bordered = T,
+    highlight = T,
+    searchable = T,
+    ...
+  )
+}
+
+consulta_pre |>
+  mutate(across(where(is.numeric), ~ ifelse(.x == 0, "NÃO", "SIM"))) |>
+  arrange(desc(regiao)) |>
+  rename(
+    `Região` = regiao,
+    Estado = uf,
+    `Infrações` = infracoes,
+    `Educação` = educ,
+  ) |> 
+  rename_with(.fn = ~ str_to_title(.)) |> 
+  make_reactable(columns = list(
+    Frota = colDef(style = bi_bg_func),
+    Condutores = colDef(style = bi_bg_func),
+    `Infrações` = colDef(style = bi_bg_func),
+    Sinistros = colDef(style = bi_bg_func),
+    Atendimento = colDef(style = bi_bg_func),
+    `Educação` = colDef(style = bi_bg_func),
+    Cfcs = colDef(style = bi_bg_func)
+  ))
+```
+
+```{r}
+consulta_pre |>
+  mutate(across(where(is.numeric), ~ ifelse(.x == 0, "NÃO", "SIM"))) |>
+  arrange(desc(regiao)) |>
+  gt() |>
+  cols_align("center") |> 
+  cols_label_with(fn = ~ str_to_title(.)) |> 
+  cols_label(
+    regiao = "Região",
+    uf = "Estado",
+    infracoes = "Infrações",
+    educ = "Educação",
+    cfcs = "CFCs"
+  ) |> 
+  opt_table_font(font = font_families) |> 
+  tab_options(table.font.size = 9) |> 
+  opt_interactive(
+    use_pagination = F,
+    use_pagination_info = F,
+    use_compact_mode = T,
+    use_highlight = T,
+    use_resizers = T,
+    use_text_wrapping = F,
+    use_search = T
+  )
 ```
 
 ### Critérios de Avaliação
@@ -1180,9 +1268,9 @@ df_revisoes |>
   scale_y_discrete(position = "left", ) +
   labs(x = NULL, y = NULL, color = NULL) +
   theme_bw() +
-  facet_grid(vars(regiao), scales = "free_y", space = "free_y", switch = "y") +
-  theme(strip.text = element_text(size = 6),
-        axis.text.y = element_text(size = 6))
+  facet_grid(vars(regiao), scales = "free", space = "free_y", switch = "y") +
+  theme(strip.text = element_text(size = 10),
+        axis.text.y = element_text(size = 8))
 ```
 
 <!-- João, reveja o jeito que voce fez esse cálculo. Não tem como um valor finito e positivo apresentar uma redução de 150% -->
