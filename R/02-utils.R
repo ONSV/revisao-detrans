@@ -67,7 +67,19 @@ continuous_bg_func <- function(value) {
   scale <- seq(0,10,0.5)
   
   normalized <- value / 10
-  color <- 
+  color <- col_func(normalized)
+  list(background = color, color = "white")
+}
+
+quali_bg_func <- function(value) {
+  color = case_match(
+    value,
+    "Melhor" ~ tbl_green,
+    "Intermediário" ~ tbl_yellow,
+    "Inicial" ~ tbl_orange,
+    "Ausente" ~ tbl_red
+  )
+  list(background = color, color = "white")
 }
 
 make_reactable <- function(data, ...) {

@@ -27,6 +27,7 @@ csl: associacao-brasileira-de-normas-tecnicas.csl
 
 library(tidyverse)
 library(here)
+library(leaflet)
 library(flextable)
 library(onsvplot)
 library(scales)
@@ -46,6 +47,9 @@ tbl_orange <- "#f05f22"
 tbl_yellow <- "#f7951d"
 tbl_green <- "#1fa149"
 pal <- c(tbl_red, tbl_orange, tbl_yellow, tbl_green)
+col_func <-
+  function(x)
+    rgb(colorRamp(c(pal))(x), maxColorValue = 255)
 ```
 
 ### Sobre o relatório {.unnumbered}
@@ -405,8 +409,67 @@ Primeiramente, os dados de frota de veículos, condutores habilitados, infraçõ
 
 A @tbl-frota aponta a qualidade dos dados estatísticos da frota veicular como fornecidos pelos portais dos DETRANs, assim como a nota média para estes critérios. A periodicidade aparenta ser o critério de melhor performance na maior parte dos departamentos para esta categoria.
 
+<!-- ```{r} -->
+<!-- #| tbl-cap: Resultados da categoria "Frota de Veículos" -->
+<!-- #| label: tbl-frota -->
+
+<!-- frota |> -->
+<!--   mutate(across( -->
+<!--     starts_with("frota"), -->
+<!--     ~ case_match( -->
+<!--       .x, -->
+<!--       10.0 ~ "Melhor", -->
+<!--       6.7 ~ "Intermediário", -->
+<!--       3.3 ~ "Inicial", -->
+<!--       0 ~ "Ausente" -->
+<!--     ) -->
+<!--   )) |> -->
+<!--   flextable() |> -->
+<!--   merge_v(j = ~ regiao) |> -->
+<!--   set_header_labels( -->
+<!--     regiao = "Região", -->
+<!--     uf = "UF", -->
+<!--     frota_period = "Periodicidade", -->
+<!--     frota_inter = "Interatividade", -->
+<!--     frota_desagreg = "Nível de desagregação", -->
+<!--     nota_final = "Nota Média" -->
+<!--   ) |> -->
+<!--   theme_vanilla() |> -->
+<!--   align(align = "center", part = "all") |> -->
+<!--   color(color = "white", part = "header") |> -->
+<!--   color(j = ~ . - regiao - uf, -->
+<!--         color = "white", -->
+<!--         part = "body") |> -->
+<!--   bg(bg = onsv_palette$blue, part = "header") |> -->
+<!--   bg( -->
+<!--     bg = col_numeric( -->
+<!--       palette = pal, -->
+<!--       domain = c(0, 10) -->
+<!--     ), -->
+<!--     part = "body", -->
+<!--     j = ~ nota_final -->
+<!--   ) |> -->
+<!--   bg( -->
+<!--     bg = col_factor( -->
+<!--       palette = pal, -->
+<!--       domain = c("Melhor", "Intermediário", "Inicial", "Ausente") -->
+<!--     ), -->
+<!--     part = "body", -->
+<!--     j = ~ . - uf - regiao - nota_final -->
+<!--   ) |> -->
+<!--   bold(part = "body", j = ~ . - regiao - uf) |> -->
+<!--   surround( -->
+<!--     j = ~ . - regiao - uf, -->
+<!--     border.top = officer::fp_border(color = "grey90"), -->
+<!--     border.bottom = officer::fp_border(color = "grey90"), -->
+<!--   ) |> -->
+<!--   line_spacing(space = 0.4, part = "body") |> -->
+<!--   line_spacing(space = 0.6, part = "header") |> -->
+<!--   autofit() |> -->
+<!--   colformat_double(decimal.mark = ",") -->
+<!-- ``` -->
+
 ```{r}
-#| tbl-cap: Resultados da categoria "Frota de Veículos"
 #| label: tbl-frota
 
 frota |>
@@ -420,63 +483,6 @@ frota |>
       0 ~ "Ausente"
     )
   )) |>
-  flextable() |>
-  merge_v(j = ~ regiao) |>
-  set_header_labels(
-    regiao = "Região",
-    uf = "UF",
-    frota_period = "Periodicidade",
-    frota_inter = "Interatividade",
-    frota_desagreg = "Nível de desagregação",
-    nota_final = "Nota Média"
-  ) |>
-  theme_vanilla() |>
-  align(align = "center", part = "all") |>
-  color(color = "white", part = "header") |>
-  color(j = ~ . - regiao - uf,
-        color = "white",
-        part = "body") |>
-  bg(bg = onsv_palette$blue, part = "header") |>
-  bg(
-    bg = col_numeric(
-      palette = pal,
-      domain = c(0, 10)
-    ),
-    part = "body",
-    j = ~ nota_final
-  ) |>
-  bg(
-    bg = col_factor(
-      palette = pal,
-      domain = c("Melhor", "Intermediário", "Inicial", "Ausente")
-    ),
-    part = "body",
-    j = ~ . - uf - regiao - nota_final
-  ) |>
-  bold(part = "body", j = ~ . - regiao - uf) |>
-  surround(
-    j = ~ . - regiao - uf,
-    border.top = officer::fp_border(color = "grey90"),
-    border.bottom = officer::fp_border(color = "grey90"),
-  ) |>
-  line_spacing(space = 0.4, part = "body") |>
-  line_spacing(space = 0.6, part = "header") |>
-  autofit() |>
-  colformat_double(decimal.mark = ",")
-```
-
-```{r}
-frota |> 
-  mutate(across(
-    starts_with("frota"),
-    ~ case_match(
-      .x,
-      10.0 ~ "Melhor",
-      6.7 ~ "Intermediário",
-      3.3 ~ "Inicial",
-      0 ~ "Ausente"
-    )
-  )) |> 
   rename(
     `Região` = regiao,
     UF = uf,
@@ -484,8 +490,18 @@ frota |>
     Interatividade = frota_inter,
     `Nível de desagregação` = frota_desagreg,
     `Nota Média` = nota_final
-  ) |> 
-  make_reactable()
+  ) |>
+  make_reactable(
+    columns = list(
+      `Nota Média` = colDef(
+        style = continuous_bg_func,
+        format = colFormat(locales = "de-DE", digits = 1)
+      ),
+      Periodicidade = colDef(style = quali_bg_func),
+      Interatividade = colDef(style = quali_bg_func),
+      `Nível de desagregação` = colDef(style = quali_bg_func)
+    )
+  )
 ```
 
 A @fig-map-frota aponta a nota média dos três critérios para os dados de frota veicular dos departamentos de cada estado.
@@ -522,6 +538,42 @@ ggplot(frota_map) +
   theme(legend.justification = c("right", "top")) +
   labs(fill = "Nota Média", x = NULL, y = NULL)
 ```
+
+```{r}
+binned_pal <-
+  colorBin(
+    palette = pal,
+    domain = seq(0,10,0.5),
+    bins = c(0, 2.5, 5, 7.5, 10)
+  )
+
+frota_map |>
+  leaflet() |>
+  addPolygons(
+    fillColor = ~ binned_pal(nota_final),
+    weight = 1.5,
+    opacity = 1,
+    fillOpacity = 0.7,
+    color = "white",
+    dashArray = 1,
+    highlightOptions = highlightOptions(
+      weight = 3,
+      color = "white",
+      dashArray = "",
+      fillOpacity = 0.7,
+      bringToFront = TRUE
+    ),
+    label = ~ (name_state)
+  ) |>
+  addLegend(
+    pal = binned_pal,
+    values = ~ nota_final,
+    position = "bottomright",
+    title = "Nota Média",
+    opacity = 0.7
+  )
+```
+
 
 ### Condutores Habilitados
 
