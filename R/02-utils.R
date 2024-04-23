@@ -1,7 +1,7 @@
 map_preproc <- function(df) {
-  df |> 
-    rename(abbrev_state = uf) |> 
-    merge(estados) |> 
+  df |>
+    rename(abbrev_state = uf) |>
+    merge(estados) |>
     mutate(
       nudge_y_text = case_match(
         abbrev_state,
@@ -29,8 +29,45 @@ map_preproc <- function(df) {
         nota_final <= 7.5 ~ "5 - 7,5",
         nota_final <= 10 ~ "7,5 - 10"
       )
-    ) |> 
+    ) |>
+    mutate(
+      text = sprintf(
+        "<strong>%s</strong><br>%s",
+        name_state,
+        format(round(nota_final, 1), nsmall = 1)
+      ) |> lapply(htmltools::HTML)
+    ) |>
     st_as_sf()
+}
+
+make_leaflet <- function(df) {
+  df |> 
+    leaflet() |>
+    addProviderTiles(providers$CartoDB.Positron) |>
+    addPolygons(
+      fillColor = ~ binned_pal(nota_final),
+      weight = 1.5,
+      opacity = 1,
+      fillOpacity = 0.7,
+      color = "white",
+      dashArray = 1,
+      highlightOptions = highlightOptions(
+        weight = 3,
+        color = "white",
+        dashArray = "",
+        fillOpacity = 0.7,
+        bringToFront = TRUE
+      ),
+      label = ~ text,
+      labelOptions = labelOptions(textsize = 4)
+    ) |>
+    addLegend(
+      pal = binned_pal,
+      values = ~ nota_final,
+      position = "bottomright",
+      title = "Nota Média",
+      opacity = 0.7
+    )
 }
 
 get_region <- function(acronyms) {

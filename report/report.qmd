@@ -47,9 +47,14 @@ tbl_orange <- "#f05f22"
 tbl_yellow <- "#f7951d"
 tbl_green <- "#1fa149"
 pal <- c(tbl_red, tbl_orange, tbl_yellow, tbl_green)
-col_func <-
-  function(x)
-    rgb(colorRamp(c(pal))(x), maxColorValue = 255)
+col_func <- function(x) rgb(colorRamp(c(pal))(x), maxColorValue = 255)
+
+binned_pal <-
+  colorBin(
+    palette = pal,
+    domain = seq(0, 10, 0.5),
+    bins = c(0, 2.5, 5, 7.5, 10)
+  )
 ```
 
 ### Sobre o relatório {.unnumbered}
@@ -469,6 +474,10 @@ A @tbl-frota aponta a qualidade dos dados estatísticos da frota veicular como f
 <!--   colformat_double(decimal.mark = ",") -->
 <!-- ``` -->
 
+::: panel-tabset
+
+### Tabela
+
 ```{r}
 #| label: tbl-frota
 
@@ -504,7 +513,20 @@ frota |>
   )
 ```
 
-A @fig-map-frota aponta a nota média dos três critérios para os dados de frota veicular dos departamentos de cada estado.
+### Mapa
+
+```{r}
+frota_map <- 
+  frota |> 
+  map_preproc()
+
+frota_map |>
+  make_leaflet()
+```
+
+:::
+
+<!-- A @fig-map-frota aponta a nota média dos três critérios para os dados de frota veicular dos departamentos de cada estado. -->
 
 <!-- No caption das imagens, nunca colocar o objeto no título: "Mapa de nota média".  -->
 
@@ -512,68 +534,32 @@ A @fig-map-frota aponta a nota média dos três critérios para os dados de frot
 
 <!-- R.: Feito -->
 
-```{r}
-#| fig-cap: Resultados da categoria "Frota de Veículos"
-#| label: fig-map-frota
+<!-- ```{r} -->
+<!-- #| fig-cap: Resultados da categoria "Frota de Veículos" -->
+<!-- #| label: fig-map-frota -->
 
-frota_map <- 
-  frota |> 
-  map_preproc()
+<!-- frota_map <-  -->
+<!--   frota |>  -->
+<!--   map_preproc() -->
 
-ggplot(frota_map) +
-  geom_sf(aes(fill = fill)) +
-  geom_sf_text(
-    aes(label = abbrev_state),
-    size = 2,
-    color = ifelse(!(
-      frota_map$abbrev_state %in% c("PB", "PE", "AL", "SE", "ES", "RJ")
-    ),
-    "white",
-    "grey20"),
-    nudge_x = frota_map$nudge_x_text,
-    nudge_y = frota_map$nudge_y_text
-  ) +
-  scale_fill_manual(values = pal) +
-  theme_void() +
-  theme(legend.justification = c("right", "top")) +
-  labs(fill = "Nota Média", x = NULL, y = NULL)
-```
-
-```{r}
-binned_pal <-
-  colorBin(
-    palette = pal,
-    domain = seq(0,10,0.5),
-    bins = c(0, 2.5, 5, 7.5, 10)
-  )
-
-frota_map |>
-  leaflet() |>
-  addPolygons(
-    fillColor = ~ binned_pal(nota_final),
-    weight = 1.5,
-    opacity = 1,
-    fillOpacity = 0.7,
-    color = "white",
-    dashArray = 1,
-    highlightOptions = highlightOptions(
-      weight = 3,
-      color = "white",
-      dashArray = "",
-      fillOpacity = 0.7,
-      bringToFront = TRUE
-    ),
-    label = ~ (name_state)
-  ) |>
-  addLegend(
-    pal = binned_pal,
-    values = ~ nota_final,
-    position = "bottomright",
-    title = "Nota Média",
-    opacity = 0.7
-  )
-```
-
+<!-- ggplot(frota_map) + -->
+<!--   geom_sf(aes(fill = fill)) + -->
+<!--   geom_sf_text( -->
+<!--     aes(label = abbrev_state), -->
+<!--     size = 2, -->
+<!--     color = ifelse(!( -->
+<!--       frota_map$abbrev_state %in% c("PB", "PE", "AL", "SE", "ES", "RJ") -->
+<!--     ), -->
+<!--     "white", -->
+<!--     "grey20"), -->
+<!--     nudge_x = frota_map$nudge_x_text, -->
+<!--     nudge_y = frota_map$nudge_y_text -->
+<!--   ) + -->
+<!--   scale_fill_manual(values = pal) + -->
+<!--   theme_void() + -->
+<!--   theme(legend.justification = c("right", "top")) + -->
+<!--   labs(fill = "Nota Média", x = NULL, y = NULL) -->
+<!-- ``` -->
 
 ### Condutores Habilitados
 
@@ -592,8 +578,70 @@ A @tbl-condutores mostra o desempenho dos DETRANs na disponibilização de dados
 
 <!-- Mesma coisa vale pra tabela. Não precisa colocar no título que é uma tabela -->
 
+<!-- ```{r} -->
+<!-- #| tbl-cap: Resultados da categoria "Condutores Habilitados" -->
+<!-- #| label: tbl-condutores -->
+
+<!-- condutores |> -->
+<!--   mutate(across( -->
+<!--     starts_with("condutores"), -->
+<!--     ~ case_match( -->
+<!--       .x, -->
+<!--       10.0 ~ "Melhor", -->
+<!--       6.7 ~ "Intermediário", -->
+<!--       3.3 ~ "Inicial", -->
+<!--       0 ~ "Ausente" -->
+<!--     ) -->
+<!--   )) |> -->
+<!--   flextable() |> -->
+<!--   merge_v(j = ~ regiao) |> -->
+<!--   set_header_labels( -->
+<!--     regiao = "Região", -->
+<!--     uf = "UF", -->
+<!--     condutores_period = "Periodicidade", -->
+<!--     condutores_inter = "Interatividade", -->
+<!--     condutores_desagreg = "Nível de desagregação", -->
+<!--     nota_final = "Nota Média" -->
+<!--   ) |> -->
+<!--   theme_vanilla() |> -->
+<!--   align(align = "center", part = "all") |> -->
+<!--   color(color = "white", part = "header") |> -->
+<!--   color(j = ~ . - regiao - uf, -->
+<!--         color = "white", -->
+<!--         part = "body") |> -->
+<!--   bg(bg = onsv_palette$blue, part = "header") |> -->
+<!--   bg( -->
+<!--     bg = col_numeric( -->
+<!--       palette = pal, -->
+<!--       domain = c(0, 10) -->
+<!--     ), -->
+<!--     part = "body", -->
+<!--     j = ~ nota_final -->
+<!--   ) |> -->
+<!--   bg( -->
+<!--     bg = col_factor( -->
+<!--       palette = pal, -->
+<!--       domain = c("Melhor", "Intermediário", "Inicial", "Ausente") -->
+<!--     ), -->
+<!--     part = "body", -->
+<!--     j = ~ . - uf - regiao - nota_final -->
+<!--   ) |> -->
+<!--   bold(part = "body", j = ~ . - regiao - uf) |> -->
+<!--   surround( -->
+<!--     j = ~ . - regiao - uf, -->
+<!--     border.top = officer::fp_border(color = "grey90"), -->
+<!--     border.bottom = officer::fp_border(color = "grey90"), -->
+<!--   ) |> -->
+<!--   line_spacing(space = 0.4, part = "body") |> -->
+<!--   line_spacing(space = 0.6, part = "header") |> -->
+<!--   autofit() |>  -->
+<!--   colformat_double(decimal.mark = ",") -->
+<!-- ``` -->
+
+::: panel-tabset
+
+### Tabela
 ```{r}
-#| tbl-cap: Resultados da categoria "Condutores Habilitados"
 #| label: tbl-condutores
 
 condutores |>
@@ -606,54 +654,28 @@ condutores |>
       3.3 ~ "Inicial",
       0 ~ "Ausente"
     )
-  )) |>
-  flextable() |>
-  merge_v(j = ~ regiao) |>
-  set_header_labels(
-    regiao = "Região",
-    uf = "UF",
-    condutores_period = "Periodicidade",
-    condutores_inter = "Interatividade",
-    condutores_desagreg = "Nível de desagregação",
-    nota_final = "Nota Média"
-  ) |>
-  theme_vanilla() |>
-  align(align = "center", part = "all") |>
-  color(color = "white", part = "header") |>
-  color(j = ~ . - regiao - uf,
-        color = "white",
-        part = "body") |>
-  bg(bg = onsv_palette$blue, part = "header") |>
-  bg(
-    bg = col_numeric(
-      palette = pal,
-      domain = c(0, 10)
-    ),
-    part = "body",
-    j = ~ nota_final
-  ) |>
-  bg(
-    bg = col_factor(
-      palette = pal,
-      domain = c("Melhor", "Intermediário", "Inicial", "Ausente")
-    ),
-    part = "body",
-    j = ~ . - uf - regiao - nota_final
-  ) |>
-  bold(part = "body", j = ~ . - regiao - uf) |>
-  surround(
-    j = ~ . - regiao - uf,
-    border.top = officer::fp_border(color = "grey90"),
-    border.bottom = officer::fp_border(color = "grey90"),
-  ) |>
-  line_spacing(space = 0.4, part = "body") |>
-  line_spacing(space = 0.6, part = "header") |>
-  autofit() |> 
-  colformat_double(decimal.mark = ",")
+  )) |> 
+  rename(
+    `Região` = regiao,
+    UF = uf,
+    Periodicidade = condutores_period,
+    Interatividade = condutores_inter,
+    `Nível de desagregação` = condutores_desagreg,
+    `Nota Média` = nota_final
+  ) |> 
+  make_reactable(
+    columns = list(
+      `Nota Média` = colDef(
+        style = continuous_bg_func,
+        format = colFormat(locales = "de-DE", digits = 1)
+      ),
+      Periodicidade = colDef(style = quali_bg_func),
+      Interatividade = colDef(style = quali_bg_func),
+      `Nível de desagregação` = colDef(style = quali_bg_func)
+    )
+  )
 ```
-
-O mapa de notas atribuídas demonstrado na @fig-map-condutores permite observar a distribuição de informações de condutores habilitados de cada estado.
-
+### Mapa
 ```{r}
 #| fig-cap: Resultados da categoria "Condutores Habilitados"
 #| label: fig-map-condutores
@@ -662,24 +684,12 @@ condutores_map <-
   condutores |> 
   map_preproc()
 
-ggplot(condutores_map) +
-  geom_sf(aes(fill = fill)) +
-  geom_sf_text(
-    aes(label = abbrev_state),
-    size = 2,
-    color = ifelse(!(
-      frota_map$abbrev_state %in% c("PB", "PE", "AL", "SE", "ES", "RJ")
-    ),
-    "white",
-    "grey20"),
-    nudge_x = condutores_map$nudge_x_text,
-    nudge_y = condutores_map$nudge_y_text
-  ) +
-  scale_fill_manual(values = pal) +
-  theme_void() +
-  theme(legend.justification = c("right", "top")) +
-  labs(fill = "Nota Média", x = NULL, y = NULL)
+condutores_map |> 
+  make_leaflet()
 ```
+:::
+
+<!-- O mapa de notas atribuídas demonstrado na @fig-map-condutores permite observar a distribuição de informações de condutores habilitados de cada estado. -->
 
 ### CFCs
 
