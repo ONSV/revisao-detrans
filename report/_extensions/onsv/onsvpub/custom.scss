@@ -34,3 +34,7 @@ thead {
   background: $blue;
   color: $white;
 }
+
+figure.quarto-float div.leaflet-control {
+  text-align: left;
+}
