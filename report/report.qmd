@@ -35,6 +35,9 @@ library(geobr)
 library(sf)
 library(reactable)
 library(gt)
+library(plotly)
+library(leafsync)
+library(ggiraph)
 source(here("R", "02-utils.R"))
 
 estados <- read_state()
@@ -65,11 +68,11 @@ ONSV; CLP e UFPR (2024). Avaliação do Nível de Informações Disponibilizadas
 
 #### Licença de uso {.unnumbered}
 
-Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito -- DETRANs © 2024 por Observatório Nacional de Segurança Viária está licenciada sob CC BY-NC 4.0. Para ver uma cópia desta licença, acesse [https://creativecommons.org/licenses/by-nc/4.0/](https://creativecommons.org/licenses/by-nc/4.0/) .
+Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito -- DETRANs © 2024 por Observatório Nacional de Segurança Viária está licenciada sob CC BY-NC 4.0. Para ver uma cópia desta licença, acesse <https://creativecommons.org/licenses/by-nc/4.0/> .
 
 #### Código livre e aberto {.unnumbered}
 
-Todo o processo metodológico de coleta, transformação e visualização dos dados presentes nesse relatório estão disponíveis no repositório [https://github.com/ONSV/revisao-detrans](https://github.com/ONSV/revisao-detrans) .
+Todo o processo metodológico de coleta, transformação e visualização dos dados presentes nesse relatório estão disponíveis no repositório <https://github.com/ONSV/revisao-detrans> .
 
 ## Introdução
 
@@ -130,48 +133,89 @@ consulta_pre <- df_revisoes |>
 ```
 
 <!-- ```{r} -->
+
 <!-- #| tbl-cap: Consultas preliminares -->
+
 <!-- #| label: tbl-consultas -->
 
 <!-- consulta_pre |> -->
+
 <!--   mutate(across(where(is.numeric), ~ ifelse(.x == 0, "NÃO", "SIM"))) |> -->
+
 <!--   arrange(desc(regiao)) |> -->
+
 <!--   flextable() |> -->
+
 <!--   merge_v(j = ~ regiao) |> -->
+
 <!--   set_header_labels( -->
+
 <!--     regiao = "Região", -->
+
 <!--     uf = "UF", -->
+
 <!--     frota = "Frota veicular", -->
+
 <!--     condutores = "Condutores habilitados", -->
+
 <!--     infracoes = "Infrações", -->
+
 <!--     sinistros = "Sinistros", -->
+
 <!--     atendimento = "Atendimento ao público", -->
+
 <!--     educ = "Educação para o trânsito", -->
+
 <!--     cfcs = "CFC" -->
+
 <!--   ) |> -->
+
 <!--   bg( -->
+
 <!--     j = ~ . - regiao - uf, -->
+
 <!--     bg = col_factor( -->
+
 <!--       palette = c(pal[1], pal[4]), -->
+
 <!--       domain = c("SIM", "NÃO") -->
+
 <!--     ), -->
+
 <!--     part = "body" -->
+
 <!--   ) |> -->
+
 <!--   color(j = ~ . - regiao - uf, -->
+
 <!--         color = "white", -->
+
 <!--         part = "body") |> -->
+
 <!--   theme_vanilla() |> -->
+
 <!--   surround( -->
+
 <!--     j = ~ . - regiao - uf, -->
+
 <!--     border.top = officer::fp_border(color = "grey90"), -->
+
 <!--     border.bottom = officer::fp_border(color = "grey90"), -->
+
 <!--   ) |> -->
+
 <!--   align(align = "center", part = "all") |>  -->
+
 <!--   fontsize(size = 9, part = "all") |>  -->
+
 <!--   line_spacing(space = 0.55, part = "body") |>  -->
+
 <!--   line_spacing(space = 0.6, part = "header") |>  -->
+
 <!--   color(color = "white", part = "header") |>  -->
+
 <!--   bg(bg = onsv_palette$blue, part = "header") -->
+
 <!-- ``` -->
 
 ```{r}
@@ -199,71 +243,96 @@ consulta_pre |>
 ```
 
 <!-- ```{r} -->
+
 <!-- consulta_pre |> -->
+
 <!--   mutate(across(where(is.numeric), ~ ifelse(.x == 0, "NÃO", "SIM"))) |> -->
+
 <!--   arrange(desc(regiao)) |> -->
+
 <!--   gt() |> -->
+
 <!--   cols_align("center") |>  -->
+
 <!--   cols_label_with(fn = ~ str_to_title(.)) |>  -->
+
 <!--   cols_label( -->
+
 <!--     regiao = "Região", -->
+
 <!--     uf = "Estado", -->
+
 <!--     infracoes = "Infrações", -->
+
 <!--     educ = "Educação", -->
+
 <!--     cfcs = "CFCs" -->
+
 <!--   ) |>  -->
+
 <!--   opt_table_font(font = font_families) |>  -->
+
 <!--   tab_options(table.font.size = 9) |>  -->
+
 <!--   opt_interactive( -->
+
 <!--     use_pagination = F, -->
+
 <!--     use_pagination_info = F, -->
+
 <!--     use_compact_mode = T, -->
+
 <!--     use_highlight = T, -->
+
 <!--     use_resizers = T, -->
+
 <!--     use_text_wrapping = F, -->
+
 <!--     use_search = T -->
+
 <!--   ) -->
+
 <!-- ``` -->
 
 ### Critérios de Avaliação
 
 A partir das categorias anteriormente discutidas, critérios de avaliação foram estabelecidos para quantificar a disponibilidade de dados e informações de cada um dos DETRANs. Assim sendo, são concedidos níveis de desempenho que equivalem a pontuações para cada um dos critérios aferidos:
 
-1. **Melhor Prática** - Nota 10; 
+1.  **Melhor Prática** - Nota 10;
 
-2. **Prática Intermediária** - Nota 6,7; 
+2.  **Prática Intermediária** - Nota 6,7;
 
-3. **Prática Inicial** - Nota 3,3 e;
+3.  **Prática Inicial** - Nota 3,3 e;
 
-4. **Prática Ausente** - Nota 0.
+4.  **Prática Ausente** - Nota 0.
 
 A avaliação dos dados estatísticos da **frota veicular**, **condutores habilitados**, **infrações** e **sinistros** de trânsito se baseou nos critérios de periodicidade (quantidade de anos disponíveis), interatividade (tipo de arquivos ou informações disponíveis) e nível de desagregação (quantidade de variáveis disponíveis para análise).
 
 A **periodicidade** foi avaliada em:
 
-- Melhor: Quando há um máximo de 2 anos de atraso em relação ao ano atual para o dado mais recente e mais de 5 anos de dados disponíves;
+-   Melhor: Quando há um máximo de 2 anos de atraso em relação ao ano atual para o dado mais recente e mais de 5 anos de dados disponíves;
 
-- Intermediária: Máximo de 2 anos de atraso ou menos de 5 anos disponíveis e;
+-   Intermediária: Máximo de 2 anos de atraso ou menos de 5 anos disponíveis e;
 
-- Inicial: 3+ anos de atraso e menos de 5 anos disponíveis.
+-   Inicial: 3+ anos de atraso e menos de 5 anos disponíveis.
 
 Neste contexto, para um estado ser situado como *Melhor*, por exemplo, seria necessário ter mais de 5 anos disponíveis e seu dado mais recente ser de, no mínino, 2022.
 
 A **interatividade** foi avaliada em:
 
-- Melhor: Possui dados disponibilizados em relatórios interativos ou *dashboards* para consultas dinâmicas;
+-   Melhor: Possui dados disponibilizados em relatórios interativos ou *dashboards* para consultas dinâmicas;
 
-- Intermediária: Dados disponibilizados em arquivos de planinhas (como `.xls`, `.xlsx` e `.ods`) de editores como Microsoft Excel, Google Sheets e LibreOffice Calc, e;
+-   Intermediária: Dados disponibilizados em arquivos de planinhas (como `.xls`, `.xlsx` e `.ods`) de editores como Microsoft Excel, Google Sheets e LibreOffice Calc, e;
 
-- Inicial: Dados disponibilizados apenas como texto na página ou arquivos de texto (`.txt`, `.csv`, etc.).
+-   Inicial: Dados disponibilizados apenas como texto na página ou arquivos de texto (`.txt`, `.csv`, etc.).
 
 O **nível de desagregação** foi avaliado em:
 
-- Melhor: Quantidade grande de variáveis;
+-   Melhor: Quantidade grande de variáveis;
 
-- Intermediário: Quantidade média de variáveis e;
+-   Intermediário: Quantidade média de variáveis e;
 
-- Inicial: Quantidade baixa de variáveis.
+-   Inicial: Quantidade baixa de variáveis.
 
 A relação destes critérios está ilustrada na @tbl-criterios:
 
@@ -415,67 +484,122 @@ Primeiramente, os dados de frota de veículos, condutores habilitados, infraçõ
 A @tbl-frota aponta a qualidade dos dados estatísticos da frota veicular como fornecidos pelos portais dos DETRANs, assim como a nota média para estes critérios. A periodicidade aparenta ser o critério de melhor performance na maior parte dos departamentos para esta categoria.
 
 <!-- ```{r} -->
+
 <!-- #| tbl-cap: Resultados da categoria "Frota de Veículos" -->
+
 <!-- #| label: tbl-frota -->
 
 <!-- frota |> -->
+
 <!--   mutate(across( -->
+
 <!--     starts_with("frota"), -->
+
 <!--     ~ case_match( -->
+
 <!--       .x, -->
+
 <!--       10.0 ~ "Melhor", -->
+
 <!--       6.7 ~ "Intermediário", -->
+
 <!--       3.3 ~ "Inicial", -->
+
 <!--       0 ~ "Ausente" -->
+
 <!--     ) -->
+
 <!--   )) |> -->
+
 <!--   flextable() |> -->
+
 <!--   merge_v(j = ~ regiao) |> -->
+
 <!--   set_header_labels( -->
+
 <!--     regiao = "Região", -->
+
 <!--     uf = "UF", -->
+
 <!--     frota_period = "Periodicidade", -->
+
 <!--     frota_inter = "Interatividade", -->
+
 <!--     frota_desagreg = "Nível de desagregação", -->
+
 <!--     nota_final = "Nota Média" -->
+
 <!--   ) |> -->
+
 <!--   theme_vanilla() |> -->
+
 <!--   align(align = "center", part = "all") |> -->
+
 <!--   color(color = "white", part = "header") |> -->
+
 <!--   color(j = ~ . - regiao - uf, -->
+
 <!--         color = "white", -->
+
 <!--         part = "body") |> -->
+
 <!--   bg(bg = onsv_palette$blue, part = "header") |> -->
+
 <!--   bg( -->
+
 <!--     bg = col_numeric( -->
+
 <!--       palette = pal, -->
+
 <!--       domain = c(0, 10) -->
+
 <!--     ), -->
+
 <!--     part = "body", -->
+
 <!--     j = ~ nota_final -->
+
 <!--   ) |> -->
+
 <!--   bg( -->
+
 <!--     bg = col_factor( -->
+
 <!--       palette = pal, -->
+
 <!--       domain = c("Melhor", "Intermediário", "Inicial", "Ausente") -->
+
 <!--     ), -->
+
 <!--     part = "body", -->
+
 <!--     j = ~ . - uf - regiao - nota_final -->
+
 <!--   ) |> -->
+
 <!--   bold(part = "body", j = ~ . - regiao - uf) |> -->
+
 <!--   surround( -->
+
 <!--     j = ~ . - regiao - uf, -->
+
 <!--     border.top = officer::fp_border(color = "grey90"), -->
+
 <!--     border.bottom = officer::fp_border(color = "grey90"), -->
+
 <!--   ) |> -->
+
 <!--   line_spacing(space = 0.4, part = "body") |> -->
+
 <!--   line_spacing(space = 0.6, part = "header") |> -->
+
 <!--   autofit() |> -->
+
 <!--   colformat_double(decimal.mark = ",") -->
+
 <!-- ``` -->
 
 ::: panel-tabset
-
 ### Tabela
 
 ```{r}
@@ -527,7 +651,6 @@ frota_map <-
 frota_map |>
   make_leaflet()
 ```
-
 :::
 
 ### Condutores Habilitados
@@ -546,8 +669,8 @@ condutores <- df_revisoes |>
 A @tbl-condutores mostra o desempenho dos DETRANs na disponibilização de dados de condutores habilitados, visto que neste caso as variáveis de desagregação compreendem a categoria da habilitação, sexo, opção de doador, situação (provisória ou definitiva), idade do condutor e tempo de habilitação. Novamente, a periodicidade e a interatividade são os critérios com maior e menor performance geral respectivamente.
 
 ::: panel-tabset
-
 ### Tabela
+
 ```{r}
 #| label: tbl-condutores
 #| tbl-cap: Resultados da categoria "Condutores Habilitados"
@@ -583,7 +706,9 @@ condutores |>
     )
   )
 ```
+
 ### Mapa
+
 ```{r}
 #| fig-cap: Resultados da categoria "Condutores Habilitados"
 #| label: fig-map-condutores
@@ -612,8 +737,8 @@ cfcs <- df_revisoes |>
 Devido ao fato da avaliação dos CFCs ser efetuada a partir de um único critério de avaliação, como indica a @tbl-cri-cfcs, as notas para cada estado estão ilustradas na @tbl-cfcs em pontuações qualitativas:
 
 ::: panel-tabset
-
 ### Tabela
+
 ```{r}
 #| tbl-cap: Resultados da categoria "CFCs"
 #| label: tbl-cfcs
@@ -646,7 +771,9 @@ cfcs |>
     )
   )
 ```
+
 ### Mapa
+
 ```{r}
 #| fig-cap: Resultados da categoria "CFCs"
 #| label: fig-map-cfcs
@@ -660,6 +787,7 @@ cfcs_map |>
   make_leaflet()
 ```
 :::
+
 <!-- Observa-se na @fig-map-cfcs a predominância do desempenho intermediário nestes dados. Há também uma clara ausência de DETRANs com **Prática Inicial**: -->
 
 ### Infrações
@@ -678,7 +806,6 @@ infracoes <- df_revisoes |>
 A @tbl-infracoes contém os resultados das consultas de dados sobre infrações, também utilizando de classificações qualitativas relacionadas a uma nota média final. Neste caso, a desagregação considerou a divisão por artigo de infração, grupo de infração (circulação, estacionamento, etc.), natureza (grave, leve, etc.), instrumento de autuação, local de autuação, faixa etária do condutor infrator, sexo do condutor infrator, por responsável (condutor ou proprietário) e exercício de atividade remunerada ou não do infrator.
 
 ::: panel-tabset
-
 ### Tabela
 
 ```{r}
@@ -732,7 +859,6 @@ infracoes_map <-
 infracoes_map |> 
   make_leaflet()
 ```
-
 :::
 
 ### Sinistros de Trânsito
@@ -751,7 +877,6 @@ sinistros <- df_revisoes |>
 Os sinistros de trânsito são avaliados também de acordo com a @tbl-criterios, com suas classificações finais e notas médias apresentadas na @tbl-sinistros. Entende-se como variáveis para a desagregação desta categoria a gravidade do sinistro (fatal ou não), período (dia ou noite), área (urbana ou rural), natureza (atropelamento, choque, etc.), dias da semana, horário, sexo da vítima e/ou do condutor, faixa etária da vítima e/ou do condutor, tipo da vítima e/ou do condutor (ciclista, pedestre, etc.), categoria do condutor (habilitado, inabilitado, etc.), tempo de habilitação do condutor e espécie do veículo envolvido (automóvel, bicicleta, etc.).
 
 ::: panel-tabset
-
 ### Tabela
 
 ```{r}
@@ -805,7 +930,6 @@ sinistros_map <-
 sinistros_map |> 
   make_leaflet()
 ```
-
 :::
 
 ### Educação para o Trânsito
@@ -824,7 +948,6 @@ educacao <- df_revisoes |>
 ```
 
 ::: panel-tabset
-
 ### Tabela
 
 ```{r}
@@ -876,7 +999,6 @@ educacao_map <-
 educacao_map |> 
   make_leaflet()
 ```
-
 :::
 
 ### Atendimento ao público
@@ -895,7 +1017,6 @@ atendimento <- df_revisoes |>
 Os resultados das consultas sobre o atendimento ao público estão apresentados na @tbl-atendimento. É notável a ausência de estatísticas de atendimento para a maioria dos DETRANs.
 
 ::: panel-tabset
-
 ### Tabela
 
 ```{r}
@@ -955,7 +1076,6 @@ atendimento_map <-
 atendimento_map |> 
   make_leaflet()
 ```
-
 :::
 
 ### Evolução dos Resultados
@@ -971,39 +1091,137 @@ As pontuações finais calculadas para a avaliação das informações disponibi
 #| label: fig-dumbbell
 #| fig-height: 5
 
-df_revisoes |>
-  select(uf, nota_final, ano) |> 
-  mutate(regiao = get_region(uf)) |> 
+dumbbell <- df_revisoes |>
+  select(uf, nota_final, ano) |>
+  mutate(regiao = get_region(uf)) |>
   pivot_wider(names_from = ano,
               names_prefix = "ano_",
               values_from = nota_final) |>
   mutate(uf = reorder(uf, ano_2024),
-         color = if_else(ano_2020 < ano_2024, "up", "down")) |>
-  ggplot() +
-  geom_segment(
+         color = if_else(ano_2020 < ano_2024, "up", "down"))
+
+dumbbell_plot <-
+  ggplot(dumbbell) +
+  geom_segment_interactive(
     aes(
       y = uf,
       yend = uf,
       x = ano_2020,
       xend = ano_2024,
-      color = color
+      color = color,
+      tooltip = sprintf(
+        "Estado: %s<br>Nota de 2024: %.2f<br>Nota de 2020: %.2f",
+        uf,
+        ano_2024,
+        ano_2020
+      ),
+      data_id = uf
     ),
     arrow = arrow(
       length = unit(.1, "inches"),
       type = "closed",
       angle = 20
     ),
-    show.legend = F
+    hover_nearest = T,
+    show.legend = F,
+    linewidth = 0.75
   ) +
   scale_color_manual(values = c(onsv_palette$red, onsv_palette$green)) +
   scale_x_continuous(limits = c(0, 10)) +
-  scale_y_discrete(position = "left", ) +
+  scale_y_discrete(position = "left",) +
   labs(x = NULL, y = NULL, color = NULL) +
   theme_bw() +
-  facet_grid(vars(regiao), scales = "free_y", space = "free_y", switch = "y") +
+  facet_grid(vars(regiao),
+             scales = "free_y",
+             space = "free_y",
+             switch = "y") +
   theme(strip.text = element_text(size = 7),
         axis.text.y = element_text(size = 8))
+
+girafe(ggobj = dumbbell_plot)
 ```
+
+<!-- ```{r} -->
+<!-- #| height: 7 -->
+
+<!-- make_dumbbell <- function(reg) { -->
+<!--   if (reg == "Sul") { -->
+<!--     df_revisoes |> -->
+<!--     select(uf, nota_final, ano) |> -->
+<!--     mutate(regiao = get_region(uf)) |> -->
+<!--     filter(regiao == reg) |>  -->
+<!--     pivot_wider(names_from = ano, -->
+<!--                 names_prefix = "ano_", -->
+<!--                 values_from = nota_final) |> -->
+<!--     mutate(uf = reorder(uf, ano_2024), -->
+<!--            color = factor(if_else(ano_2020 < ano_2024, "up", "down"))) |>  -->
+<!--     plot_ly() |> -->
+<!--     add_markers( -->
+<!--       ~ ano_2024, -->
+<!--       ~ uf, -->
+<!--       showlegend = F, -->
+<!--       marker = list(color = tbl_green, symbol = "triangle-right") -->
+<!--     ) |> -->
+<!--     add_segments( -->
+<!--       x = ~ ano_2020, -->
+<!--       xend = ~ ano_2024, -->
+<!--       y = ~ uf, -->
+<!--       yend = ~ uf, -->
+<!--       line = list(color = tbl_green), -->
+<!--       showlegend = F -->
+<!--     ) -->
+<!--   }  -->
+<!--   else { -->
+<!--     df_revisoes |> -->
+<!--     select(uf, nota_final, ano) |> -->
+<!--     mutate(regiao = get_region(uf)) |> -->
+<!--     filter(regiao == reg) |>  -->
+<!--     pivot_wider(names_from = ano, -->
+<!--                 names_prefix = "ano_", -->
+<!--                 values_from = nota_final) |> -->
+<!--     mutate(uf = reorder(uf, ano_2024), -->
+<!--            color = factor(if_else(ano_2020 < ano_2024, "up", "down"))) |>  -->
+<!--     plot_ly() |> -->
+<!--     add_markers( -->
+<!--       ~ ano_2024, -->
+<!--       ~ uf, -->
+<!--       showlegend = F, -->
+<!--       color = ~ color, -->
+<!--       colors = rev(c(tbl_green, tbl_red)), -->
+<!--       symbol = ~ color, -->
+<!--       symbols = rev(c("triangle-right", "triangle-left")) -->
+<!--     ) |> -->
+<!--     add_segments( -->
+<!--       x = ~ ano_2020, -->
+<!--       xend = ~ ano_2024, -->
+<!--       y = ~ uf, -->
+<!--       yend = ~ uf, -->
+<!--       color = ~ color, -->
+<!--       showlegend = F, -->
+<!--       colors = c(tbl_green, tbl_red) -->
+<!--     ) -->
+<!--   } -->
+<!-- } -->
+
+<!-- norte <- make_dumbbell("Norte") -->
+<!-- nordeste <- make_dumbbell("Nordeste") -->
+<!-- centro <- make_dumbbell("Centro-Oeste") -->
+<!-- sudeste <- make_dumbbell("Sudeste") -->
+<!-- sul <- make_dumbbell("Sul") -->
+
+<!-- subplot( -->
+<!--   norte, -->
+<!--   nordeste, -->
+<!--   centro, -->
+<!--   sudeste, -->
+<!--   sul, -->
+<!--   nrows = 5, -->
+<!--   shareX = T, -->
+<!--   shareY = T, -->
+<!--   margin = 0.02, -->
+<!--   heights = c(7/27, 9/27, 4/27, 4/27, 3/27) -->
+<!-- ) -->
+<!-- ``` -->
 
 <!-- João, reveja o jeito que voce fez esse cálculo. Não tem como um valor finito e positivo apresentar uma redução de 150% -->
 
@@ -1023,33 +1241,165 @@ Em 2024, houve uma progressão majoritariamente positiva para os DETRANs. Consid
 
 A @fig-map-compare apresenta um mapa de comparação das pontuações finais de todos estados.
 
+<!-- ```{r} -->
+<!-- #| fig-cap: Notas finais para DETRANs em 2020 e 2024 -->
+<!-- #| label: fig-map-compare -->
+<!-- #| fig-height: 2.5 -->
+
+<!-- comparison_map <- -->
+<!--   df_revisoes |>  -->
+<!--   map_preproc()  -->
+
+<!-- comparison_map |> -->
+<!--   ggplot() + -->
+<!--   geom_sf(aes(fill = fill)) +  -->
+<!--   scale_fill_manual(values = pal) + -->
+<!--   theme_void() + -->
+<!--   facet_wrap(vars(ano)) + -->
+<!--   labs(fill = "Nota Final") -->
+<!-- ``` -->
+
 ```{r}
 #| fig-cap: Notas finais para DETRANs em 2020 e 2024
 #| label: fig-map-compare
-#| fig-height: 2.5
 
 comparison_map <-
   df_revisoes |> 
-  map_preproc() 
+  map_preproc()
 
-comparison_map |>
-  ggplot() +
-  geom_sf(aes(fill = fill)) + 
-  scale_fill_manual(values = pal) +
-  theme_void() +
-  facet_wrap(vars(ano)) +
-  labs(fill = "Nota Final")
+comp_map_2020 <- 
+  comparison_map[comparison_map$ano == 2020, ] |> 
+  make_leaflet()
+
+comp_map_2024 <-
+  comparison_map[comparison_map$ano == 2024, ] |> 
+  make_leaflet()
+
+sync(comp_map_2020, comp_map_2024, sync = F)
 ```
 
-O resultado final de todas as consultas efetuadas, bem como os valores médios para cada categoria de dado acessado e a variação percentual das notas finais podem ser observados na @tbl-final, em ordem descendente das pontuações atribuídas em 2024.
+O resultado final de todas as consultas efetuadas, bem como os valores médios para cada categoria de dado acessado e suas notas finais podem ser observados na @tbl-final, em ordem descendente das pontuações atribuídas em 2024.
 
 <!-- Aqui o calculo da porcentagem também ta errado. -->
 
 <!-- R.: Consertei também, e agora a variação é colorida por positivo/negativo (discreto) invés de forma numérica pois ficava muito gritante a diferença devido a variação de BA -->
 
+<!-- ```{r} -->
+
+<!-- #| tbl-cap: Resultados finais das consultas para 2024 -->
+
+<!-- #| label: tbl-final -->
+
+<!-- variacao <- df_revisoes |> -->
+
+<!--   select(uf, nota_final, ano) |> -->
+
+<!--   pivot_wider(names_from = ano, -->
+
+<!--               names_prefix = "ano", -->
+
+<!--               values_from = nota_final) |> -->
+
+<!--   summarise( -->
+
+<!--     .by = uf, -->
+
+<!--     ano2020 = mean(ano2020), -->
+
+<!--     ano2024 = mean(ano2024) -->
+
+<!--   ) |> -->
+
+<!--   mutate(var = (ano2024-ano2020)/ano2020) |> -->
+
+<!--   arrange(desc(var)) |> -->
+
+<!--   select(uf, ano2020, var) -->
+
+<!-- consulta_pre |> -->
+
+<!--   mutate(nota_final = rowMeans(across(frota:cfcs))) |> -->
+
+<!--   arrange(desc(nota_final)) |> -->
+
+<!--   select(-regiao) |> -->
+
+<!--   left_join(variacao, by = "uf") |> -->
+
+<!--   relocate(nota_final, .after = ano2020) |>  -->
+
+<!--   gt(rowname_col = "uf") |> -->
+
+<!--   fmt_number(dec_mark = ",", sep_mark = ".") |> -->
+
+<!--   fmt_percent(var, dec_mark = ",", sep_mark = ".") |> -->
+
+<!--   cols_label( -->
+
+<!--     frota = "Frota veicular", -->
+
+<!--     condutores = "Condutores habilitados", -->
+
+<!--     infracoes = "Infrações", -->
+
+<!--     sinistros = "Sinistros", -->
+
+<!--     atendimento = "Atendimento ao público", -->
+
+<!--     educ = "Educação para o trânsito", -->
+
+<!--     cfcs = "CFCs", -->
+
+<!--     nota_final = "Nota 2024", -->
+
+<!--     var = "Variação", -->
+
+<!--     ano2020 = "Nota 2020" -->
+
+<!--   ) |> -->
+
+<!--   cols_align(align = "center") |> -->
+
+<!--   tab_options( -->
+
+<!--     column_labels.background.color = onsv_palette$blue, -->
+
+<!--     column_labels.font.weight = "bold" -->
+
+<!--   ) |> -->
+
+<!--   tab_style(style = cell_text(color = onsv_palette$blue), -->
+
+<!--             locations = cells_title()) |> -->
+
+<!--   data_color(ano2020:nota_final, method = "numeric", palette = pal) |>  -->
+
+<!--   data_color(columns = c(var), -->
+
+<!--              colors = col_bin( -->
+
+<!--                bins = c(-Inf, 0, Inf), -->
+
+<!--                palette = c(tbl_red, tbl_green) -->
+
+<!--              )) -->
+
+<!-- ``` -->
+
 ```{r}
 #| tbl-cap: Resultados finais das consultas para 2024
 #| label: tbl-final
+
+coldef1 <- 
+  colDef(
+    format = colFormat(locales = "de-DE", digits = 1)
+  )
+
+coldef2 <- 
+  colDef(
+    style = continuous_bg_func,
+    format = colFormat(locales = "de-DE", digits = 1)
+  )
 
 variacao <- df_revisoes |>
   select(uf, nota_final, ano) |>
@@ -1061,9 +1411,7 @@ variacao <- df_revisoes |>
     ano2020 = mean(ano2020),
     ano2024 = mean(ano2024)
   ) |>
-  mutate(var = (ano2024-ano2020)/ano2020) |>
-  arrange(desc(var)) |>
-  select(uf, ano2020, var)
+  select(uf, ano2020)
 
 consulta_pre |>
   mutate(nota_final = rowMeans(across(frota:cfcs))) |>
@@ -1071,34 +1419,29 @@ consulta_pre |>
   select(-regiao) |>
   left_join(variacao, by = "uf") |>
   relocate(nota_final, .after = ano2020) |> 
-  gt(rowname_col = "uf") |>
-  fmt_number(dec_mark = ",", sep_mark = ".") |>
-  fmt_percent(var, dec_mark = ",", sep_mark = ".") |>
-  cols_label(
-    frota = "Frota veicular",
-    condutores = "Condutores habilitados",
-    infracoes = "Infrações",
-    sinistros = "Sinistros",
-    atendimento = "Atendimento ao público",
-    educ = "Educação para o trânsito",
-    cfcs = "CFCs",
-    nota_final = "Nota 2024",
-    var = "Variação",
-    ano2020 = "Nota 2020"
-  ) |>
-  cols_align(align = "center") |>
-  tab_options(
-    column_labels.background.color = onsv_palette$blue,
-    column_labels.font.weight = "bold"
-  ) |>
-  tab_style(style = cell_text(color = onsv_palette$blue),
-            locations = cells_title()) |>
-  data_color(ano2020:nota_final, method = "numeric", palette = pal) |> 
-  data_color(columns = c(var),
-             colors = col_bin(
-               bins = c(-Inf, 0, Inf),
-               palette = c(tbl_red, tbl_green)
-             ))
+  rename_with(.fn = str_to_title) |> 
+  rename(
+    UF = Uf,
+    `Infrações` = Infracoes,
+    `Educação` = Educ,
+    CFCs = Cfcs,
+    `2020` = Ano2020,
+    `2024` = Nota_final
+  ) |> 
+  make_reactable(
+    columns = list(
+      Frota = coldef1,
+      Condutores = coldef1,
+      `Infrações` = coldef1,
+      Sinistros = coldef1,
+      Atendimento = coldef1,
+      `Educação` = coldef1,
+      CFCs = coldef1,
+      `2020` = coldef2,
+      `2024` = coldef2
+    )
+  )
+
 ```
 
 ### Boas Práticas
@@ -1113,7 +1456,7 @@ A @fig-rj demonstra um gerenciador de tabelas disponível no portal do Detran RJ
 ![](assets/detran_rj.png)
 
 Gerenciador de Tabelas do Detran RJ.\
-Fonte: https://www.detran.rj.gov.br/_estatisticas.veiculos/index.asp
+Fonte: https://www.detran.rj.gov.br/\_estatisticas.veiculos/index.asp
 :::
 
 #### Condutores - Detran RO

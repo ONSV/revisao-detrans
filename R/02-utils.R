@@ -101,8 +101,6 @@ binary_bg_func <- function(value) {
 }
 
 continuous_bg_func <- function(value) {
-  scale <- seq(0,10,0.5)
-  
   normalized <- value / 10
   color <- col_func(normalized)
   list(background = color, color = "white")
