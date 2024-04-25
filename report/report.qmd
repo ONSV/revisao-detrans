@@ -68,11 +68,11 @@ ONSV; CLP e UFPR (2024). Avaliação do Nível de Informações Disponibilizadas
 
 #### Licença de uso {.unnumbered}
 
-Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito -- DETRANs © 2024 por Observatório Nacional de Segurança Viária está licenciada sob CC BY-NC 4.0. Para ver uma cópia desta licença, acesse <https://creativecommons.org/licenses/by-nc/4.0/> .
+Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito -- DETRANs © 2024 por Observatório Nacional de Segurança Viária está licenciada sob CC BY-NC 4.0. Para ver uma cópia desta licença, acesse <https://creativecommons.org/licenses/by-nc/4.0/>.
 
 #### Código livre e aberto {.unnumbered}
 
-Todo o processo metodológico de coleta, transformação e visualização dos dados presentes nesse relatório estão disponíveis no repositório <https://github.com/ONSV/revisao-detrans> .
+Todo o processo metodológico de coleta, transformação e visualização dos dados presentes nesse relatório estão disponíveis no repositório <https://github.com/ONSV/revisao-detrans>.
 
 ## Introdução
 
@@ -734,7 +734,7 @@ cfcs <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-Devido ao fato da avaliação dos CFCs ser efetuada a partir de um único critério de avaliação, como indica a @tbl-cri-cfcs, as notas para cada estado estão ilustradas na @tbl-cfcs em pontuações qualitativas:
+Devido ao fato da avaliação dos CFCs ser efetuada a partir de um único critério de avaliação, como indica a @tbl-cri-cfcs, as notas para cada estado estão ilustradas na @tbl-cfcs em pontuações qualitativas. Observa-se a predominância do desempenho intermediário nestes dados. Há também uma clara ausência de DETRANs com **Prática Inicial**.
 
 ::: panel-tabset
 ### Tabela
@@ -787,8 +787,6 @@ cfcs_map |>
   make_leaflet()
 ```
 :::
-
-<!-- Observa-se na @fig-map-cfcs a predominância do desempenho intermediário nestes dados. Há também uma clara ausência de DETRANs com **Prática Inicial**: -->
 
 ### Infrações
 
@@ -934,7 +932,7 @@ sinistros_map |>
 
 ### Educação para o Trânsito
 
-As consultas para informações de educação para o trânsito estão apresentadas na @tbl-educ, com pontações atribuídas conforme os critérios de avaliação da @tbl-cri-educ.
+As consultas sobre informações de educação para o trânsito estão apresentadas na @tbl-educ, com pontações atribuídas conforme os critérios de avaliação da @tbl-cri-educ.
 
 ```{r}
 educacao <- df_revisoes |>
@@ -1123,8 +1121,7 @@ dumbbell_plot <-
       angle = 20
     ),
     hover_nearest = T,
-    show.legend = F,
-    linewidth = 0.75
+    show.legend = F
   ) +
   scale_color_manual(values = c(onsv_palette$red, onsv_palette$green)) +
   scale_x_continuous(limits = c(0, 10)) +
@@ -1138,7 +1135,7 @@ dumbbell_plot <-
   theme(strip.text = element_text(size = 7),
         axis.text.y = element_text(size = 8))
 
-girafe(ggobj = dumbbell_plot)
+girafe(ggobj = dumbbell_plot, options = list(opts_toolbar(saveaspng = F)))
 ```
 
 <!-- ```{r} -->
@@ -1239,7 +1236,7 @@ Em 2024, houve uma progressão majoritariamente positiva para os DETRANs. Consid
 
 -   Rio de Janeiro - 7,7.
 
-A @fig-map-compare apresenta um mapa de comparação das pontuações finais de todos estados.
+A @fig-map-compare apresenta mapas para a comparação das pontuações finais de todos estados.
 
 <!-- ```{r} -->
 <!-- #| fig-cap: Notas finais para DETRANs em 2020 e 2024 -->
@@ -1263,17 +1260,22 @@ A @fig-map-compare apresenta um mapa de comparação das pontuações finais de 
 #| fig-cap: Notas finais para DETRANs em 2020 e 2024
 #| label: fig-map-compare
 
+title_2020 <- htmltools::tags$div(htmltools::HTML('2020'))
+title_2024 <- htmltools::tags$div(htmltools::HTML('2024'))
+
 comparison_map <-
   df_revisoes |> 
   map_preproc()
 
 comp_map_2020 <- 
   comparison_map[comparison_map$ano == 2020, ] |> 
-  make_leaflet()
+  make_leaflet() |> 
+  addControl(title_2020, position = "topright")
 
 comp_map_2024 <-
   comparison_map[comparison_map$ano == 2024, ] |> 
-  make_leaflet()
+  make_leaflet() |> 
+  addControl(title_2024, position = "topright")
 
 sync(comp_map_2020, comp_map_2024, sync = F)
 ```
