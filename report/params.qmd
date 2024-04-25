@@ -18,24 +18,152 @@ title-block-banner: true
 editor_options: 
   chunk_output_type: console
 params:
-  state: Sergipe
-  acronym: SE
+  state: SE
 title: "Avaliação do Nível de Informações Disponibilizadas no Portal do DETRAN - `r params$acronym`"
 ---
 
 ```{r include=FALSE}
 params$state
-params$acronym
 
 library(tidyverse)
 library(here)
 library(onsvplot)
+library(reactable)
+library(flextable)
+source(here("R","02-utils.R"))
 
 load(here("data", "revisoes.rda"))
 ```
 
-
 ```{r}
-
+filtered <- 
+  df_revisoes |> 
+  nest(.by = uf) |> 
+  filter(uf == params$state) |> 
+  unnest(cols = everything()) |> 
+  select(-uf)
 ```
 
+```{r}
+replace_func <- function(x) {
+  str_replace_all(
+    x,
+    c(
+      "period" = "periodicidade",
+      "inter" = "interatividade",
+      "desagreg" = "nível de desagregação",
+      "infracoes" = "infrações",
+      "estatistica" = "estatística",
+      "educ" = "educação",
+      "conteudos" = "conteúdos",
+      "divulgacao" = "divulgação",
+      "nota_final" = "nota final"
+    )
+  )
+}
+
+str_to_title_func <- function(x) {
+  x |> 
+    str_to_title() |> 
+    str_replace_all(
+      c(
+        "Cfcs" = "CFCs",
+        "De" = "de"
+      )
+    )
+}
+```
+<!-- ```{r} -->
+<!-- df_revisoes |> -->
+<!--   mutate(regiao = get_region(uf), .before = 1) |> -->
+<!--   mutate( -->
+<!--     frota = rowMeans(across(starts_with("frota"))), -->
+<!--     condutores = rowMeans(across(starts_with("condutores"))), -->
+<!--     infracoes = rowMeans(across(starts_with("infracoes"))), -->
+<!--     sinistros = rowMeans(across(starts_with("sinistros"))), -->
+<!--     atendimento = rowMeans(across(starts_with("atendimento"))), -->
+<!--     educ = rowMeans(across(starts_with("educ"))), -->
+<!--     cfcs -->
+<!--   ) |> -->
+<!--   select(uf, -->
+<!--          frota, -->
+<!--          condutores, -->
+<!--          infracoes, -->
+<!--          sinistros, -->
+<!--          atendimento, -->
+<!--          educ, -->
+<!--          cfcs, -->
+<!--          ano) |> -->
+<!--   pivot_longer(-c(uf, ano)) |> -->
+<!--   ggplot(aes(name, uf)) + -->
+<!--   geom_tile(aes(fill = value)) + -->
+<!--   geom_text(aes( -->
+<!--     label = format(value, digits = 1), -->
+<!--     color = ifelse(value >= 6, "black", "white") -->
+<!--   ), -->
+<!--   size = 3) + -->
+<!--   facet_wrap(vars(ano)) + -->
+<!--   labs(x = NULL, y = NULL) + -->
+<!--   scale_color_identity() + -->
+<!--   scale_fill_distiller() + -->
+<!--   theme_minimal() + -->
+<!--   theme(axis.text.x = element_text(angle = 90, vjust = 0.5)) -->
+<!-- ``` -->
+
+```{r}
+filtered |> 
+  mutate(
+    frota = rowMeans(across(starts_with("frota"))),
+    condutores = rowMeans(across(starts_with("condutores"))),
+    infracoes = rowMeans(across(starts_with("infracoes"))),
+    sinistros = rowMeans(across(starts_with("sinistros"))),
+    atendimento = rowMeans(across(starts_with("atendimento"))),
+    educ = rowMeans(across(starts_with("educ"))),
+    cfcs
+  ) |> 
+  select(cfcs:last_col()) |> 
+  filter(ano == 2024) |> 
+  select(-c(ano, nota_final)) |> 
+  pivot_longer(everything(), names_to = "Categoria", values_to = "Situação") |> 
+  mutate(across(2, ~ ifelse(.x == 0, "NÃO", "SIM")),
+         across(1, ~ str_to_title_func(replace_func(.))))
+```
+
+
+```{r}
+filtered |> 
+  pivot_longer(-c(ano, nota_final), names_to = "categoria") |>
+  mutate(across(categoria, ~ replace_func( .x)),
+         ano = as.integer(ano)) |> 
+  separate(categoria, into = c("categoria", "criterio"), sep = "_") |> 
+  mutate(criterio = coalesce(criterio, categoria),
+         across(categoria:criterio, str_to_title_func)) |> 
+  relocate(c(nota_final, ano), .after = last_col()) |> 
+  flextable() |> 
+  merge_v(j = c("categoria", "ano", "nota_final")) |>
+  merge_h() |> 
+  autofit() |>
+  color(color = "white", part = "header") |>
+  bg(bg = onsv_palette$blue, part = "header") |> 
+  colformat_double(decimal.mark = ",", big.mark = "") |> 
+  colformat_int(big.mark = "") |> 
+  set_header_labels(
+    categoria = "Categoria",
+    criterio = "Critério",
+    value = "Nota Específica",
+    nota_final = "Nota Final",
+    ano = "Ano"
+  ) |> 
+  line_spacing(space = 0.4, part = "body") |> 
+  theme_box() |> 
+  align(align = "center", part = "head") |> 
+  bg(
+    j = c("value", "nota_final"),
+    bg = scales::col_numeric(
+      palette = rev(c(onsv_palette$green, onsv_palette$red)),
+      domain = c(0, 10)
+    )
+  ) |> 
+  color(j = c("value", "nota_final"), color = "white") |> 
+  bold(j = c("value", "nota_final"))
+```
