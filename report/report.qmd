@@ -13,7 +13,9 @@ author:
     affiliation: Centro de Liderança Pública
   - name: Pedro Augusto Borges dos Santos
     affiliation: 
-      - ref: onsv   
+      - ref: onsv
+  - name: Dr. Jorge Tiago Bastos
+    affiliation: Universidade Federal do Paraná   
 date: last-modified
 title-block-banner: true
 editor_options: 
@@ -64,7 +66,7 @@ binned_pal <-
 
 #### Como citar {.unnumbered}
 
-ONSV; CLP e UFPR (2024). Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito -- DETRANs. Observatório Nacional de Segurança Viária, Centro de Liderança Pública e Universidade Federal do Paraná. Disponível em: \_\_\_\_ .
+ONSV; CLP e UFPR (2024). Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito -- DETRANs. Observatório Nacional de Segurança Viária, Centro de Liderança Pública e Universidade Federal do Paraná. Disponível em: <https://onsv.org.br> .
 
 #### Licença de uso {.unnumbered}
 
@@ -220,6 +222,7 @@ consulta_pre <- df_revisoes |>
 
 ```{r}
 #| label: tbl-consultas
+#| tbl-cap: Consultas preliminares
 
 consulta_pre |>
   mutate(across(where(is.numeric), ~ ifelse(.x == 0, "NÃO", "SIM"))) |>
@@ -306,7 +309,7 @@ A partir das categorias anteriormente discutidas, critérios de avaliação fora
 
 4.  **Prática Ausente** - Nota 0.
 
-A avaliação dos dados estatísticos da **frota veicular**, **condutores habilitados**, **infrações** e **sinistros** de trânsito se baseou nos critérios de periodicidade (quantidade de anos disponíveis), interatividade (tipo de arquivos ou informações disponíveis) e nível de desagregação (quantidade de variáveis disponíveis para análise).
+A avaliação dos dados estatísticos da **frota de veículos**, **condutores habilitados**, **infrações** e **sinistros** de trânsito se baseou nos critérios de periodicidade (quantidade de anos disponíveis), interatividade (tipo de arquivos ou informações disponíveis) e nível de desagregação (quantidade de variáveis disponíveis para análise).
 
 A **periodicidade** foi avaliada em:
 
