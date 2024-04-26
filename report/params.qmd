@@ -18,7 +18,7 @@ title-block-banner: true
 editor_options: 
   chunk_output_type: console
 params:
-  state: SP
+  state: RO
 title: "Avaliação do Nível de Informações Disponibilizadas no Portal do DETRAN - `r params$acronym`"
 ---
 
@@ -28,8 +28,9 @@ params$state
 library(tidyverse)
 library(here)
 library(onsvplot)
-library(reactable)
 library(flextable)
+library(patchwork)
+
 source(here("R","02-utils.R"))
 
 load(here("data", "revisoes.rda"))
@@ -125,25 +126,22 @@ preliminar <-
 ```
 
 ```{r}
-nota_final_2024 <- preliminar[preliminar$ano == 2024,]$nota_final
-
-preliminar |>
+plot <- 
+  preliminar |>
   relocate(nota_final, .after = last_col()) |>
   pivot_longer(-c(ano, nota_final)) |>
   mutate(across(ano, as.factor),
          across(name, ~ str_to_title_func(replace_func(.)))) |>
   ggplot(aes(value, name, fill = ano)) +
   geom_col(position = "dodge") +
-  geom_vline(aes(xintercept = nota_final_2024,
-                 color = ano),
-             linewidth = 0.75) +
-  theme_minimal() +
-  scale_fill_manual(values = unname(unlist(onsv_palette))) + 
-  labs(fill = NULL, y = NULL, x = NULL, color = NULL)
+  theme_onsv() +
+  scale_fill_manual(values = unname(unlist(onsv_palette))) +
+  labs(fill = NULL, y = NULL, x = NULL)
 ```
 
 ```{r}
-preliminar |>
+prelim_tbl <-
+  preliminar |>
   filter(ano == 2024) |> 
   select(-c(ano, nota_final)) |> 
   pivot_longer(everything(), names_to = "Categoria", values_to = "Situação") |> 
@@ -163,9 +161,13 @@ preliminar |>
     )
   ) |> 
   color(j = "Situação", color = "white") |> 
-  bold(j = "Situação")
+  bold(j = "Situação") |> 
+  gen_grob()
 ```
 
+```{r}
+plot + prelim_tbl
+```
 
 ```{r}
 filtered |> 
