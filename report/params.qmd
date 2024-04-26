@@ -28,10 +28,17 @@ params$state
 library(tidyverse)
 library(here)
 library(onsvplot)
-library(flextable)
+library(gt)
 library(patchwork)
 
 source(here("R","02-utils.R"))
+
+tbl_blue <- "#99B6C5"
+tbl_red <- "#D7191C"
+tbl_orange <- "#f05f22"
+tbl_yellow <- "#f7951d"
+tbl_green <- "#1fa149"
+pal <- c(tbl_red, tbl_orange, tbl_yellow, tbl_green)
 
 load(here("data", "revisoes.rda"))
 ```
@@ -72,6 +79,29 @@ str_to_title_func <- function(x) {
         "De" = "de"
       )
     )
+}
+
+tbl_styles <- function(gt) {
+  gt |> 
+    tab_style(
+    style = cell_text(align = "center"),
+    locations = cells_stubhead()) |> 
+  tab_style(
+    style = "vertical-align:middle",
+    locations = cells_column_labels()
+  ) |>
+  tab_style(
+    style = cell_fill(color = tbl_blue),
+    locations = cells_row_groups()
+  ) |> 
+  tab_style(
+    style = "vertical-align:middle",
+    locations = cells_row_groups()
+  ) |> 
+  tab_options(
+    column_labels.background.color = onsv_palette$blue,
+    column_labels.font.weight = "bold"
+  )
 }
 ```
 <!-- ```{r} -->
@@ -126,84 +156,44 @@ preliminar <-
 ```
 
 ```{r}
-plot <- 
-  preliminar |>
-  relocate(nota_final, .after = last_col()) |>
-  pivot_longer(-c(ano, nota_final)) |>
-  mutate(across(ano, as.factor),
-         across(name, ~ str_to_title_func(replace_func(.)))) |>
-  ggplot(aes(value, name, fill = ano)) +
-  geom_col(position = "dodge") +
-  theme_onsv() +
-  scale_fill_manual(values = unname(unlist(onsv_palette))) +
-  labs(fill = NULL, y = NULL, x = NULL)
+preliminar |>
+  pivot_longer(-ano) |>
+  filter(ano == 2024) |>
+  select(-ano) |>
+  mutate(name = str_to_title_func(replace_func(name)),
+         value = factor(
+           if_else(value == 0, "Ausente", "Presente"),
+           levels = c("Presente", "Ausente")
+         )) |> 
+  gt() |> 
+  data_color(columns = 2, palette = c(tbl_green, tbl_red)) |> 
+  cols_label(
+    name = "Categoria", 
+    value = "Situação"
+  ) |> 
+  tbl_styles()
 ```
 
 ```{r}
-prelim_tbl <-
-  preliminar |>
-  filter(ano == 2024) |> 
-  select(-c(ano, nota_final)) |> 
-  pivot_longer(everything(), names_to = "Categoria", values_to = "Situação") |> 
-  mutate(across(2, ~ ifelse(.x == 0, "Ausente", "Presente")),
-         across(1, ~ str_to_title_func(replace_func(.)))) |> 
-  flextable() |> 
-  line_spacing(space = 0.4, part = "body") |> 
-  theme_box() |> 
-  color(color = "white", part = "header") |>
-  bg(bg = onsv_palette$blue, part = "header") |> 
-  align(align = "center", part = "head") |> 
-  bg(
-    j = c("Situação"), 
-    bg = scales::col_factor(
-      palette = rev(c(onsv_palette$green, onsv_palette$red)),
-      domain = c("Ausente", "Presente")
-    )
-  ) |> 
-  color(j = "Situação", color = "white") |> 
-  bold(j = "Situação") |> 
-  gen_grob()
-```
-
-```{r}
-plot + prelim_tbl
-```
-
-```{r}
-filtered |> 
-  pivot_longer(-c(ano, nota_final), names_to = "categoria") |>
-  mutate(across(categoria, ~ replace_func( .x)),
-         ano = as.integer(ano)) |> 
-  separate(categoria, into = c("categoria", "criterio"), sep = "_") |> 
-  mutate(criterio = coalesce(criterio, categoria),
-         across(categoria:criterio, str_to_title_func)) |> 
-  relocate(c(nota_final, ano), .after = last_col()) |> 
-  flextable() |> 
-  merge_v(j = c("categoria", "ano", "nota_final")) |>
-  merge_h() |> 
-  autofit() |>
-  color(color = "white", part = "header") |>
-  bg(bg = onsv_palette$blue, part = "header") |> 
-  colformat_double(decimal.mark = ",", big.mark = "", j = 3) |> 
-  colformat_double(decimal.mark = ",", big.mark = "", j = 4, digits = 2) |> 
-  colformat_int(big.mark = "") |> 
-  set_header_labels(
-    categoria = "Categoria",
-    criterio = "Critério",
-    value = "Nota Específica",
-    nota_final = "Nota Final",
-    ano = "Ano"
-  ) |> 
-  line_spacing(space = 0.4, part = "body") |> 
-  theme_box() |> 
-  align(align = "center", part = "head") |> 
-  bg(
-    j = c("value", "nota_final"),
-    bg = scales::col_numeric(
-      palette = rev(c(onsv_palette$green, onsv_palette$red)),
-      domain = c(0, 10)
-    )
-  ) |> 
-  color(j = c("value", "nota_final"), color = "white") |> 
-  bold(j = c("value", "nota_final"))
+filtered |>
+  pivot_longer(-ano) |>
+  pivot_wider(names_from = ano, values_from = value) |>
+  mutate(name = replace_func(name)) |>
+  separate(name,
+           into = c("categoria", "criterio"),
+           sep = "_") |>
+  mutate(across(categoria:criterio, str_to_title_func),
+         criterio = coalesce(criterio, categoria)) |>
+  gt(groupname_col = "categoria") |>
+  tab_options(row_group.as_column = T) |>
+  sub_missing(missing_text = "") |>
+  data_color(
+    columns = 3:4,
+    palette = pal,
+    domain = c(0, 10)
+  ) |>
+  cols_label(criterio = "Critério") |>
+  fmt_number(decimals = 1) |> 
+  tab_spanner(columns = 3:4, label = "Ano") |> 
+  tbl_styles()
 ```
