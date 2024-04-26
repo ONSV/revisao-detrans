@@ -27,22 +27,37 @@ csl: associacao-brasileira-de-normas-tecnicas.csl
 
 library(tidyverse)
 library(here)
+library(leaflet)
 library(flextable)
 library(onsvplot)
 library(scales)
 library(geobr)
 library(sf)
-library(ggh4x)
+library(reactable)
 library(gt)
+library(plotly)
+library(leafsync)
+library(ggiraph)
+source(here("R", "02-utils.R"))
 
 estados <- read_state()
 load(here("data", "revisoes.rda"))
 
-tbl_red <- "#df555d"
-tbl_orange <- "#da9446"
-tbl_yellow <- "#bfb232"
+font_families <- "-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif"
+
+tbl_red <- "#D7191C"
+tbl_orange <- "#f05f22"
+tbl_yellow <- "#f7951d"
 tbl_green <- "#1fa149"
 pal <- c(tbl_red, tbl_orange, tbl_yellow, tbl_green)
+col_func <- function(x) rgb(colorRamp(c(pal))(x), maxColorValue = 255)
+
+binned_pal <-
+  colorBin(
+    palette = pal,
+    domain = seq(0, 10, 0.5),
+    bins = c(0, 2.5, 5, 7.5, 10)
+  )
 ```
 
 ### Sobre o relatório {.unnumbered}
@@ -53,11 +68,11 @@ ONSV; CLP e UFPR (2024). Avaliação do Nível de Informações Disponibilizadas
 
 #### Licença de uso {.unnumbered}
 
-Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito -- DETRANs © 2024 por Observatório Nacional de Segurança Viária está licenciada sob CC BY-NC 4.0. Para ver uma cópia desta licença, acesse [https://creativecommons.org/licenses/by-nc/4.0/](https://creativecommons.org/licenses/by-nc/4.0/) .
+Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito -- DETRANs © 2024 por Observatório Nacional de Segurança Viária está licenciada sob CC BY-NC 4.0. Para ver uma cópia desta licença, acesse <https://creativecommons.org/licenses/by-nc/4.0/>.
 
 #### Código livre e aberto {.unnumbered}
 
-Todo o processo metodológico de coleta, transformação e visualização dos dados presentes nesse relatório estão disponíveis no repositório [https://github.com/ONSV/revisao-detrans](https://github.com/ONSV/revisao-detrans) .
+Todo o processo metodológico de coleta, transformação e visualização dos dados presentes nesse relatório estão disponíveis no repositório <https://github.com/ONSV/revisao-detrans>.
 
 ## Introdução
 
@@ -94,62 +109,6 @@ O estudo foi realizado por meio do acesso dos *sites* dos DETRANs de cada estado
 ```{r}
 #| include: false
 
-map_preproc <- function(df) {
-  df |> 
-  rename(abbrev_state = uf) |> 
-  merge(estados) |> 
-  mutate(
-    nudge_y_text = case_match(
-      abbrev_state,
-      "DF" ~ 1,
-      "RN" ~ 0.25,
-      "SE" ~ -0.6,
-      "AL" ~ -0.4,
-      "RJ" ~ -1,
-      "AC" ~ 0.5,
-      .default = 0
-    ),
-    nudge_x_text = case_match(
-      abbrev_state,
-      "PB" ~ 3,
-      "PE" ~ 3.9,
-      "AL" ~ 1.75,
-      "ES" ~ 1.60,
-      "SE" ~ 1,
-      "RJ" ~ 1,
-      .default = 0
-    ),
-    fill = case_when(
-      nota_final <= 2.5 ~ "0 - 2,5",
-      nota_final <= 5 ~ "2,5 - 5",
-      nota_final <= 7.5 ~ "5 - 7,5",
-      nota_final <= 10 ~ "7,5 - 10"
-    )
-  ) |> 
-  st_as_sf()
-}
-
-get_region <- function(acronyms) {
-  region_map <- list(
-    "Norte" = c("AC", "AM", "AP", "PA", "RO", "RR", "TO"),
-    "Nordeste" = c("AL", "BA", "CE", "MA", "PB", "PE", "PI", "RN", "SE"),
-    "Centro-Oeste" = c("GO", "MT", "MS", "DF"),
-    "Sudeste" = c("ES", "MG", "RJ", "SP"),
-    "Sul" = c("PR", "RS", "SC")
-  )
-  
-  region <- sapply(acronyms, function(acronym) {
-    for (r in names(region_map)) {
-      if (acronym %in% region_map[[r]]) {
-        return(r)
-      }
-    }
-    return("Not found")
-  })
-
-  return(region)
-}
-
 consulta_pre <- df_revisoes |>
   mutate(regiao = get_region(uf), .before = 1) |>
   filter(ano == 2024) |>
@@ -170,93 +129,210 @@ consulta_pre <- df_revisoes |>
          sinistros,
          atendimento,
          educ,
-         cfcs) 
+         cfcs)
 ```
 
+<!-- ```{r} -->
+
+<!-- #| tbl-cap: Consultas preliminares -->
+
+<!-- #| label: tbl-consultas -->
+
+<!-- consulta_pre |> -->
+
+<!--   mutate(across(where(is.numeric), ~ ifelse(.x == 0, "NÃO", "SIM"))) |> -->
+
+<!--   arrange(desc(regiao)) |> -->
+
+<!--   flextable() |> -->
+
+<!--   merge_v(j = ~ regiao) |> -->
+
+<!--   set_header_labels( -->
+
+<!--     regiao = "Região", -->
+
+<!--     uf = "UF", -->
+
+<!--     frota = "Frota veicular", -->
+
+<!--     condutores = "Condutores habilitados", -->
+
+<!--     infracoes = "Infrações", -->
+
+<!--     sinistros = "Sinistros", -->
+
+<!--     atendimento = "Atendimento ao público", -->
+
+<!--     educ = "Educação para o trânsito", -->
+
+<!--     cfcs = "CFC" -->
+
+<!--   ) |> -->
+
+<!--   bg( -->
+
+<!--     j = ~ . - regiao - uf, -->
+
+<!--     bg = col_factor( -->
+
+<!--       palette = c(pal[1], pal[4]), -->
+
+<!--       domain = c("SIM", "NÃO") -->
+
+<!--     ), -->
+
+<!--     part = "body" -->
+
+<!--   ) |> -->
+
+<!--   color(j = ~ . - regiao - uf, -->
+
+<!--         color = "white", -->
+
+<!--         part = "body") |> -->
+
+<!--   theme_vanilla() |> -->
+
+<!--   surround( -->
+
+<!--     j = ~ . - regiao - uf, -->
+
+<!--     border.top = officer::fp_border(color = "grey90"), -->
+
+<!--     border.bottom = officer::fp_border(color = "grey90"), -->
+
+<!--   ) |> -->
+
+<!--   align(align = "center", part = "all") |>  -->
+
+<!--   fontsize(size = 9, part = "all") |>  -->
+
+<!--   line_spacing(space = 0.55, part = "body") |>  -->
+
+<!--   line_spacing(space = 0.6, part = "header") |>  -->
+
+<!--   color(color = "white", part = "header") |>  -->
+
+<!--   bg(bg = onsv_palette$blue, part = "header") -->
+
+<!-- ``` -->
+
 ```{r}
-#| tbl-cap: Consultas preliminares
 #| label: tbl-consultas
 
 consulta_pre |>
   mutate(across(where(is.numeric), ~ ifelse(.x == 0, "NÃO", "SIM"))) |>
   arrange(desc(regiao)) |>
-  flextable() |>
-  merge_v(j = ~ regiao) |>
-  set_header_labels(
-    regiao = "Região",
-    uf = "UF",
-    frota = "Frota veicular",
-    condutores = "Condutores habilitados",
-    infracoes = "Infrações",
-    sinistros = "Sinistros",
-    atendimento = "Atendimento ao público",
-    educ = "Educação para o trânsito",
-    cfcs = "CFC"
-  ) |>
-  bg(
-    j = ~ . - regiao - uf,
-    bg = col_factor(
-      palette = c(pal[1], pal[4]),
-      domain = c("SIM", "NÃO")
-    ),
-    part = "body"
-  ) |>
-  color(j = ~ . - regiao - uf,
-        color = "white",
-        part = "body") |>
-  theme_vanilla() |>
-  surround(
-    j = ~ . - regiao - uf,
-    border.top = officer::fp_border(color = "grey90"),
-    border.bottom = officer::fp_border(color = "grey90"),
-  ) |>
-  align(align = "center", part = "all") |> 
-  fontsize(size = 9, part = "all") |> 
-  line_spacing(space = 0.55, part = "body") |> 
-  line_spacing(space = 0.6, part = "header") |> 
-  color(color = "white", part = "header") |> 
-  bg(bg = onsv_palette$blue, part = "header")
+  rename(
+    `Região` = regiao,
+    UF = uf,
+    `Infrações` = infracoes,
+    `Educação` = educ,
+  ) |> 
+  rename_with(.fn = ~ str_to_title(.)) |> 
+  make_reactable(columns = list(
+    Frota = colDef(style = binary_bg_func),
+    Condutores = colDef(style = binary_bg_func),
+    `Infrações` = colDef(style = binary_bg_func),
+    Sinistros = colDef(style = binary_bg_func),
+    Atendimento = colDef(style = binary_bg_func),
+    `Educação` = colDef(style = binary_bg_func),
+    Cfcs = colDef(style = binary_bg_func)
+  ))
 ```
+
+<!-- ```{r} -->
+
+<!-- consulta_pre |> -->
+
+<!--   mutate(across(where(is.numeric), ~ ifelse(.x == 0, "NÃO", "SIM"))) |> -->
+
+<!--   arrange(desc(regiao)) |> -->
+
+<!--   gt() |> -->
+
+<!--   cols_align("center") |>  -->
+
+<!--   cols_label_with(fn = ~ str_to_title(.)) |>  -->
+
+<!--   cols_label( -->
+
+<!--     regiao = "Região", -->
+
+<!--     uf = "Estado", -->
+
+<!--     infracoes = "Infrações", -->
+
+<!--     educ = "Educação", -->
+
+<!--     cfcs = "CFCs" -->
+
+<!--   ) |>  -->
+
+<!--   opt_table_font(font = font_families) |>  -->
+
+<!--   tab_options(table.font.size = 9) |>  -->
+
+<!--   opt_interactive( -->
+
+<!--     use_pagination = F, -->
+
+<!--     use_pagination_info = F, -->
+
+<!--     use_compact_mode = T, -->
+
+<!--     use_highlight = T, -->
+
+<!--     use_resizers = T, -->
+
+<!--     use_text_wrapping = F, -->
+
+<!--     use_search = T -->
+
+<!--   ) -->
+
+<!-- ``` -->
 
 ### Critérios de Avaliação
 
 A partir das categorias anteriormente discutidas, critérios de avaliação foram estabelecidos para quantificar a disponibilidade de dados e informações de cada um dos DETRANs. Assim sendo, são concedidos níveis de desempenho que equivalem a pontuações para cada um dos critérios aferidos:
 
-1. **Melhor Prática** - Nota 10; 
+1.  **Melhor Prática** - Nota 10;
 
-2. **Prática Intermediária** - Nota 6,7; 
+2.  **Prática Intermediária** - Nota 6,7;
 
-3. **Prática Inicial** - Nota 3,3 e;
+3.  **Prática Inicial** - Nota 3,3 e;
 
-4. **Prática Ausente** - Nota 0.
+4.  **Prática Ausente** - Nota 0.
 
 A avaliação dos dados estatísticos da **frota veicular**, **condutores habilitados**, **infrações** e **sinistros** de trânsito se baseou nos critérios de periodicidade (quantidade de anos disponíveis), interatividade (tipo de arquivos ou informações disponíveis) e nível de desagregação (quantidade de variáveis disponíveis para análise).
 
 A **periodicidade** foi avaliada em:
 
-- Melhor: Quando há um máximo de 2 anos de atraso em relação ao ano atual para o dado mais recente e mais de 5 anos de dados disponíves;
+-   Melhor: Quando há um máximo de 2 anos de atraso em relação ao ano atual para o dado mais recente e mais de 5 anos de dados disponíves;
 
-- Intermediária: Máximo de 2 anos de atraso ou menos de 5 anos disponíveis e;
+-   Intermediária: Máximo de 2 anos de atraso ou menos de 5 anos disponíveis e;
 
-- Inicial: 3+ anos de atraso e menos de 5 anos disponíveis.
+-   Inicial: 3+ anos de atraso e menos de 5 anos disponíveis.
 
 Neste contexto, para um estado ser situado como *Melhor*, por exemplo, seria necessário ter mais de 5 anos disponíveis e seu dado mais recente ser de, no mínino, 2022.
 
 A **interatividade** foi avaliada em:
 
-- Melhor: Possui dados disponibilizados em relatórios interativos ou *dashboards* para consultas dinâmicas;
+-   Melhor: Possui dados disponibilizados em relatórios interativos ou *dashboards* para consultas dinâmicas;
 
-- Intermediária: Dados disponibilizados em arquivos de planinhas (como `.xls`, `.xlsx` e `.ods`) de editores como Microsoft Excel, Google Sheets e LibreOffice Calc, e;
+-   Intermediária: Dados disponibilizados em arquivos de planinhas (como `.xls`, `.xlsx` e `.ods`) de editores como Microsoft Excel, Google Sheets e LibreOffice Calc, e;
 
-- Inicial: Dados disponibilizados apenas como texto na página ou arquivos de texto (`.txt`, `.csv`, etc.).
+-   Inicial: Dados disponibilizados apenas como texto na página ou arquivos de texto (`.txt`, `.csv`, etc.).
 
 O **nível de desagregação** foi avaliado em:
 
-- Melhor: Quantidade grande de variáveis;
+-   Melhor: Quantidade grande de variáveis;
 
-- Intermediário: Quantidade média de variáveis e;
+-   Intermediário: Quantidade média de variáveis e;
 
-- Inicial: Quantidade baixa de variáveis.
+-   Inicial: Quantidade baixa de variáveis.
 
 A relação destes critérios está ilustrada na @tbl-criterios:
 
@@ -407,9 +483,128 @@ Primeiramente, os dados de frota de veículos, condutores habilitados, infraçõ
 
 A @tbl-frota aponta a qualidade dos dados estatísticos da frota veicular como fornecidos pelos portais dos DETRANs, assim como a nota média para estes critérios. A periodicidade aparenta ser o critério de melhor performance na maior parte dos departamentos para esta categoria.
 
+<!-- ```{r} -->
+
+<!-- #| tbl-cap: Resultados da categoria "Frota de Veículos" -->
+
+<!-- #| label: tbl-frota -->
+
+<!-- frota |> -->
+
+<!--   mutate(across( -->
+
+<!--     starts_with("frota"), -->
+
+<!--     ~ case_match( -->
+
+<!--       .x, -->
+
+<!--       10.0 ~ "Melhor", -->
+
+<!--       6.7 ~ "Intermediário", -->
+
+<!--       3.3 ~ "Inicial", -->
+
+<!--       0 ~ "Ausente" -->
+
+<!--     ) -->
+
+<!--   )) |> -->
+
+<!--   flextable() |> -->
+
+<!--   merge_v(j = ~ regiao) |> -->
+
+<!--   set_header_labels( -->
+
+<!--     regiao = "Região", -->
+
+<!--     uf = "UF", -->
+
+<!--     frota_period = "Periodicidade", -->
+
+<!--     frota_inter = "Interatividade", -->
+
+<!--     frota_desagreg = "Nível de desagregação", -->
+
+<!--     nota_final = "Nota Média" -->
+
+<!--   ) |> -->
+
+<!--   theme_vanilla() |> -->
+
+<!--   align(align = "center", part = "all") |> -->
+
+<!--   color(color = "white", part = "header") |> -->
+
+<!--   color(j = ~ . - regiao - uf, -->
+
+<!--         color = "white", -->
+
+<!--         part = "body") |> -->
+
+<!--   bg(bg = onsv_palette$blue, part = "header") |> -->
+
+<!--   bg( -->
+
+<!--     bg = col_numeric( -->
+
+<!--       palette = pal, -->
+
+<!--       domain = c(0, 10) -->
+
+<!--     ), -->
+
+<!--     part = "body", -->
+
+<!--     j = ~ nota_final -->
+
+<!--   ) |> -->
+
+<!--   bg( -->
+
+<!--     bg = col_factor( -->
+
+<!--       palette = pal, -->
+
+<!--       domain = c("Melhor", "Intermediário", "Inicial", "Ausente") -->
+
+<!--     ), -->
+
+<!--     part = "body", -->
+
+<!--     j = ~ . - uf - regiao - nota_final -->
+
+<!--   ) |> -->
+
+<!--   bold(part = "body", j = ~ . - regiao - uf) |> -->
+
+<!--   surround( -->
+
+<!--     j = ~ . - regiao - uf, -->
+
+<!--     border.top = officer::fp_border(color = "grey90"), -->
+
+<!--     border.bottom = officer::fp_border(color = "grey90"), -->
+
+<!--   ) |> -->
+
+<!--   line_spacing(space = 0.4, part = "body") |> -->
+
+<!--   line_spacing(space = 0.6, part = "header") |> -->
+
+<!--   autofit() |> -->
+
+<!--   colformat_double(decimal.mark = ",") -->
+
+<!-- ``` -->
+
+::: panel-tabset
+### Tabela
+
 ```{r}
-#| tbl-cap: Resultados da categoria "Frota de Veículos"
 #| label: tbl-frota
+#| tbl-cap: Resultados da categoria "Frota de Veículos"
 
 frota |>
   mutate(across(
@@ -422,58 +617,28 @@ frota |>
       0 ~ "Ausente"
     )
   )) |>
-  flextable() |>
-  merge_v(j = ~ regiao) |>
-  set_header_labels(
-    regiao = "Região",
-    uf = "UF",
-    frota_period = "Periodicidade",
-    frota_inter = "Interatividade",
-    frota_desagreg = "Nível de desagregação",
-    nota_final = "Nota Média"
+  rename(
+    `Região` = regiao,
+    UF = uf,
+    Periodicidade = frota_period,
+    Interatividade = frota_inter,
+    `Nível de desagregação` = frota_desagreg,
+    `Nota Média` = nota_final
   ) |>
-  theme_vanilla() |>
-  align(align = "center", part = "all") |>
-  color(color = "white", part = "header") |>
-  color(j = ~ . - regiao - uf,
-        color = "white",
-        part = "body") |>
-  bg(bg = onsv_palette$blue, part = "header") |>
-  bg(
-    bg = col_numeric(
-      palette = pal,
-      domain = c(0, 10)
-    ),
-    part = "body",
-    j = ~ nota_final
-  ) |>
-  bg(
-    bg = col_factor(
-      palette = pal,
-      domain = c("Melhor", "Intermediário", "Inicial", "Ausente")
-    ),
-    part = "body",
-    j = ~ . - uf - regiao - nota_final
-  ) |>
-  bold(part = "body", j = ~ . - regiao - uf) |>
-  surround(
-    j = ~ . - regiao - uf,
-    border.top = officer::fp_border(color = "grey90"),
-    border.bottom = officer::fp_border(color = "grey90"),
-  ) |>
-  line_spacing(space = 0.4, part = "body") |>
-  line_spacing(space = 0.6, part = "header") |>
-  autofit() |>
-  colformat_double(decimal.mark = ",")
+  make_reactable(
+    columns = list(
+      `Nota Média` = colDef(
+        style = continuous_bg_func,
+        format = colFormat(locales = "de-DE", digits = 1)
+      ),
+      Periodicidade = colDef(style = quali_bg_func),
+      Interatividade = colDef(style = quali_bg_func),
+      `Nível de desagregação` = colDef(style = quali_bg_func)
+    )
+  )
 ```
 
-A @fig-map-frota aponta a nota média dos três critérios para os dados de frota veicular dos departamentos de cada estado.
-
-<!-- No caption das imagens, nunca colocar o objeto no título: "Mapa de nota média".  -->
-
-<!-- Também não precisa deixar as coordenadas e nem o grid nos mapas. Deixe um fundo sem elemebros -->
-
-<!-- R.: Feito -->
+### Mapa
 
 ```{r}
 #| fig-cap: Resultados da categoria "Frota de Veículos"
@@ -483,24 +648,10 @@ frota_map <-
   frota |> 
   map_preproc()
 
-ggplot(frota_map) +
-  geom_sf(aes(fill = fill)) +
-  geom_sf_text(
-    aes(label = abbrev_state),
-    size = 2,
-    color = ifelse(!(
-      frota_map$abbrev_state %in% c("PB", "PE", "AL", "SE", "ES", "RJ")
-    ),
-    "white",
-    "grey20"),
-    nudge_x = frota_map$nudge_x_text,
-    nudge_y = frota_map$nudge_y_text
-  ) +
-  scale_fill_manual(values = pal) +
-  theme_void() +
-  theme(legend.justification = c("right", "top")) +
-  labs(fill = "Nota Média", x = NULL, y = NULL)
+frota_map |>
+  make_leaflet()
 ```
+:::
 
 ### Condutores Habilitados
 
@@ -517,11 +668,12 @@ condutores <- df_revisoes |>
 
 A @tbl-condutores mostra o desempenho dos DETRANs na disponibilização de dados de condutores habilitados, visto que neste caso as variáveis de desagregação compreendem a categoria da habilitação, sexo, opção de doador, situação (provisória ou definitiva), idade do condutor e tempo de habilitação. Novamente, a periodicidade e a interatividade são os critérios com maior e menor performance geral respectivamente.
 
-<!-- Mesma coisa vale pra tabela. Não precisa colocar no título que é uma tabela -->
+::: panel-tabset
+### Tabela
 
 ```{r}
-#| tbl-cap: Resultados da categoria "Condutores Habilitados"
 #| label: tbl-condutores
+#| tbl-cap: Resultados da categoria "Condutores Habilitados"
 
 condutores |>
   mutate(across(
@@ -533,53 +685,29 @@ condutores |>
       3.3 ~ "Inicial",
       0 ~ "Ausente"
     )
-  )) |>
-  flextable() |>
-  merge_v(j = ~ regiao) |>
-  set_header_labels(
-    regiao = "Região",
-    uf = "UF",
-    condutores_period = "Periodicidade",
-    condutores_inter = "Interatividade",
-    condutores_desagreg = "Nível de desagregação",
-    nota_final = "Nota Média"
-  ) |>
-  theme_vanilla() |>
-  align(align = "center", part = "all") |>
-  color(color = "white", part = "header") |>
-  color(j = ~ . - regiao - uf,
-        color = "white",
-        part = "body") |>
-  bg(bg = onsv_palette$blue, part = "header") |>
-  bg(
-    bg = col_numeric(
-      palette = pal,
-      domain = c(0, 10)
-    ),
-    part = "body",
-    j = ~ nota_final
-  ) |>
-  bg(
-    bg = col_factor(
-      palette = pal,
-      domain = c("Melhor", "Intermediário", "Inicial", "Ausente")
-    ),
-    part = "body",
-    j = ~ . - uf - regiao - nota_final
-  ) |>
-  bold(part = "body", j = ~ . - regiao - uf) |>
-  surround(
-    j = ~ . - regiao - uf,
-    border.top = officer::fp_border(color = "grey90"),
-    border.bottom = officer::fp_border(color = "grey90"),
-  ) |>
-  line_spacing(space = 0.4, part = "body") |>
-  line_spacing(space = 0.6, part = "header") |>
-  autofit() |> 
-  colformat_double(decimal.mark = ",")
+  )) |> 
+  rename(
+    `Região` = regiao,
+    UF = uf,
+    Periodicidade = condutores_period,
+    Interatividade = condutores_inter,
+    `Nível de desagregação` = condutores_desagreg,
+    `Nota Média` = nota_final
+  ) |> 
+  make_reactable(
+    columns = list(
+      `Nota Média` = colDef(
+        style = continuous_bg_func,
+        format = colFormat(locales = "de-DE", digits = 1)
+      ),
+      Periodicidade = colDef(style = quali_bg_func),
+      Interatividade = colDef(style = quali_bg_func),
+      `Nível de desagregação` = colDef(style = quali_bg_func)
+    )
+  )
 ```
 
-O mapa de notas atribuídas demonstrado na @fig-map-condutores permite observar a distribuição de informações de condutores habilitados de cada estado.
+### Mapa
 
 ```{r}
 #| fig-cap: Resultados da categoria "Condutores Habilitados"
@@ -589,24 +717,12 @@ condutores_map <-
   condutores |> 
   map_preproc()
 
-ggplot(condutores_map) +
-  geom_sf(aes(fill = fill)) +
-  geom_sf_text(
-    aes(label = abbrev_state),
-    size = 2,
-    color = ifelse(!(
-      frota_map$abbrev_state %in% c("PB", "PE", "AL", "SE", "ES", "RJ")
-    ),
-    "white",
-    "grey20"),
-    nudge_x = condutores_map$nudge_x_text,
-    nudge_y = condutores_map$nudge_y_text
-  ) +
-  scale_fill_manual(values = pal) +
-  theme_void() +
-  theme(legend.justification = c("right", "top")) +
-  labs(fill = "Nota Média", x = NULL, y = NULL)
+condutores_map |> 
+  make_leaflet()
 ```
+:::
+
+<!-- O mapa de notas atribuídas demonstrado na @fig-map-condutores permite observar a distribuição de informações de condutores habilitados de cada estado. -->
 
 ### CFCs
 
@@ -618,7 +734,10 @@ cfcs <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-Devido ao fato da avaliação dos CFCs ser efetuada a partir de um único critério de avaliação, como indica a @tbl-cri-cfcs, as notas para cada estado estão ilustradas na @tbl-cfcs em pontuações qualitativas:
+Devido ao fato da avaliação dos CFCs ser efetuada a partir de um único critério de avaliação, como indica a @tbl-cri-cfcs, as notas para cada estado estão ilustradas na @tbl-cfcs em pontuações qualitativas. Observa-se a predominância do desempenho intermediário nestes dados. Há também uma clara ausência de DETRANs com **Prática Inicial**.
+
+::: panel-tabset
+### Tabela
 
 ```{r}
 #| tbl-cap: Resultados da categoria "CFCs"
@@ -636,50 +755,24 @@ cfcs |>
         0 ~ "Ausente"
       )
   ) |>
-  flextable() |>
-  merge_v(j = ~ regiao) |>
-  set_header_labels(
-    regiao = "Região",
-    uf = "UF",
-    cfcs = "Lista de CFCs",
-    nota = "Nota Média"
-  ) |>
-  theme_vanilla() |>
-  align(align = "center", part = "all") |>
-  color(color = "white", part = "header") |>
-  color(j = ~ . - regiao - uf,
-        color = "white",
-        part = "body") |>
-  bg(bg = onsv_palette$blue, part = "header") |>
-  bg(
-    bg = col_numeric(
-      palette = pal,
-      domain = c(0, 10)
-    ),
-    part = "body",
-    j = ~ nota
-  ) |>
-  bg(
-    bg = col_factor(
-      palette = pal,
-      domain = c("Melhor", "Intermediário", "Inicial", "Ausente")
-    ),
-    part = "body",
-    j = ~ cfcs
-  ) |>
-  bold(part = "body", j = ~ . - regiao - uf) |>
-  surround(
-    j = ~ . - regiao - uf,
-    border.top = officer::fp_border(color = "grey90"),
-    border.bottom = officer::fp_border(color = "grey90"),
-  ) |>
-  line_spacing(space = 0.4, part = "body") |>
-  line_spacing(space = 0.6, part = "header") |>
-  autofit() |> 
-  colformat_double(decimal.mark = ",")
+  rename(
+    `Região` = regiao,
+    UF = uf,
+    `Lista de CFCs` = cfcs,
+    `Nota Média` = nota
+  ) |> 
+  make_reactable(
+    columns = list(
+      `Nota Média` = colDef(
+        style = continuous_bg_func,
+        format = colFormat(locales = "de-DE", digits = 1)
+      ),
+      `Lista de CFCs` = colDef(style = quali_bg_func)
+    )
+  )
 ```
 
-Observa-se na @fig-map-cfcs a predominância do desempenho intermediário nestes dados. Há também uma clara ausência de DETRANs com **Prática Inicial**:
+### Mapa
 
 ```{r}
 #| fig-cap: Resultados da categoria "CFCs"
@@ -688,27 +781,12 @@ Observa-se na @fig-map-cfcs a predominância do desempenho intermediário nestes
 cfcs_map <- 
   cfcs |> 
   rename(nota_final = cfcs) |> 
-  map_preproc() |> 
-  bind_rows(list(fill = "2,5 - 5"))
+  map_preproc()
 
-ggplot(cfcs_map) +
-  geom_sf(aes(fill = fill)) +
-  geom_sf_text(
-    aes(label = abbrev_state),
-    size = 2,
-    color = ifelse(!(
-      cfcs_map$abbrev_state %in% c("PB", "PE", "AL", "SE", "ES", "RJ")
-    ),
-    "white",
-    "grey20"),
-    nudge_x = cfcs_map$nudge_x_text,
-    nudge_y = cfcs_map$nudge_y_text
-  ) +
-  scale_fill_manual(values = pal) + 
-  theme_void() +
-  theme(legend.justification = c("right", "top")) +
-  labs(fill = "Nota Média", x = NULL, y = NULL)
+cfcs_map |> 
+  make_leaflet()
 ```
+:::
 
 ### Infrações
 
@@ -725,6 +803,9 @@ infracoes <- df_revisoes |>
 
 A @tbl-infracoes contém os resultados das consultas de dados sobre infrações, também utilizando de classificações qualitativas relacionadas a uma nota média final. Neste caso, a desagregação considerou a divisão por artigo de infração, grupo de infração (circulação, estacionamento, etc.), natureza (grave, leve, etc.), instrumento de autuação, local de autuação, faixa etária do condutor infrator, sexo do condutor infrator, por responsável (condutor ou proprietário) e exercício de atividade remunerada ou não do infrator.
 
+::: panel-tabset
+### Tabela
+
 ```{r}
 #| tbl-cap: Resultados da categoria "Infrações"
 #| label: tbl-infracoes
@@ -740,52 +821,30 @@ infracoes |>
       0 ~ "Ausente"
     )
   )) |>
-  flextable() |>
-  merge_v(j = ~ regiao) |>
-  set_header_labels(
-    regiao = "Região",
-    uf = "UF",
-    infracoes_period = "Periodicidade",
-    infracoes_inter = "Interatividade",
-    infracoes_desagreg = "Nível de desagregação",
-    nota_final = "Nota Média"
-  ) |>
-  theme_vanilla() |>
-  align(align = "center", part = "all") |>
-  color(color = "white", part = "header") |>
-  color(j = ~ . - regiao - uf,
-        color = "white",
-        part = "body") |>
-  bg(bg = onsv_palette$blue, part = "header") |>
-  bg(
-    bg = col_numeric(
-      palette = pal,
-      domain = c(0, 10)
-    ),
-    part = "body",
-    j = ~ nota_final
-  ) |>
-  bg(
-    bg = col_factor(
-      palette = pal,
-      domain = c("Melhor", "Intermediário", "Inicial", "Ausente")
-    ),
-    part = "body",
-    j = ~ . - uf - regiao - nota_final
-  ) |>
-  bold(part = "body", j = ~ . - regiao - uf) |>
-  surround(
-    j = ~ . - regiao - uf,
-    border.top = officer::fp_border(color = "grey90"),
-    border.bottom = officer::fp_border(color = "grey90"),
-  ) |>
-  line_spacing(space = 0.4, part = "body") |>
-  line_spacing(space = 0.6, part = "header") |>
-  autofit() |> 
-  colformat_double(decimal.mark = ",")
+  rename(
+    `Região` = regiao,
+    UF = uf,
+    Periodicidade = infracoes_period,
+    Interatividade = infracoes_inter,
+    `Nível de desagregação` = infracoes_desagreg,
+    `Nota Média` = nota_final
+  ) |> 
+  make_reactable(
+    columns = list(
+      `Nota Média` = colDef(
+        style = continuous_bg_func,
+        format = colFormat(locales = "de-DE", digits = 1)
+      ),
+      Periodicidade = colDef(style = quali_bg_func),
+      Interatividade = colDef(style = quali_bg_func),
+      `Nível de desagregação` = colDef(style = quali_bg_func)
+    )
+  )
 ```
 
-A tabela anterior e a @fig-map-infracoes demonstram uma escassez de dados especificamente nos DETRANs da Região Norte e em alguns DETRANs do Nordeste.
+<!-- A tabela anterior e a @fig-map-infracoes demonstram uma escassez de dados especificamente nos DETRANs da Região Norte e em alguns DETRANs do Nordeste. -->
+
+### Mapa
 
 ```{r}
 #| fig-cap: Resultados da categoria "Infrações"
@@ -795,24 +854,10 @@ infracoes_map <-
   infracoes |> 
   map_preproc()
 
-ggplot(infracoes_map) +
-  geom_sf(aes(fill = fill)) +
-  geom_sf_text(
-    aes(label = abbrev_state),
-    size = 2,
-    color = ifelse(!(
-      infracoes_map$abbrev_state %in% c("PB", "PE", "AL", "SE", "ES", "RJ")
-    ),
-    "white",
-    "grey20"),
-    nudge_x = infracoes_map$nudge_x_text,
-    nudge_y = infracoes_map$nudge_y_text
-  ) +
-  scale_fill_manual(values = pal) +
-  theme_void() +
-  theme(legend.justification = c("right", "top")) +
-  labs(fill = "Nota Média", x = NULL, y = NULL)
+infracoes_map |> 
+  make_leaflet()
 ```
+:::
 
 ### Sinistros de Trânsito
 
@@ -829,6 +874,9 @@ sinistros <- df_revisoes |>
 
 Os sinistros de trânsito são avaliados também de acordo com a @tbl-criterios, com suas classificações finais e notas médias apresentadas na @tbl-sinistros. Entende-se como variáveis para a desagregação desta categoria a gravidade do sinistro (fatal ou não), período (dia ou noite), área (urbana ou rural), natureza (atropelamento, choque, etc.), dias da semana, horário, sexo da vítima e/ou do condutor, faixa etária da vítima e/ou do condutor, tipo da vítima e/ou do condutor (ciclista, pedestre, etc.), categoria do condutor (habilitado, inabilitado, etc.), tempo de habilitação do condutor e espécie do veículo envolvido (automóvel, bicicleta, etc.).
 
+::: panel-tabset
+### Tabela
+
 ```{r}
 #| tbl-cap: Resultados da categoria "Sinistros"
 #| label: tbl-sinistros
@@ -844,52 +892,30 @@ sinistros |>
       0 ~ "Ausente"
     )
   )) |>
-  flextable() |>
-  merge_v(j = ~ regiao) |>
-  set_header_labels(
-    regiao = "Região",
-    uf = "UF",
-    sinistros_period = "Periodicidade",
-    sinistros_inter = "Interatividade",
-    sinistros_desagreg = "Nível de desagregação",
-    nota_final = "Nota Média"
-  ) |>
-  theme_vanilla() |>
-  align(align = "center", part = "all") |>
-  color(color = "white", part = "header") |>
-  color(j = ~ . - regiao - uf,
-        color = "white",
-        part = "body") |>
-  bg(bg = onsv_palette$blue, part = "header") |>
-  bg(
-    bg = col_numeric(
-      palette = pal,
-      domain = c(0, 10)
-    ),
-    part = "body",
-    j = ~ nota_final
-  ) |>
-  bg(
-    bg = col_factor(
-      palette = pal,
-      domain = c("Melhor", "Intermediário", "Inicial", "Ausente")
-    ),
-    part = "body",
-    j = ~ . - uf - regiao - nota_final
-  ) |>
-  bold(part = "body", j = ~ . - regiao - uf) |>
-  surround(
-    j = ~ . - regiao - uf,
-    border.top = officer::fp_border(color = "grey90"),
-    border.bottom = officer::fp_border(color = "grey90"),
-  ) |>
-  line_spacing(space = 0.4, part = "body") |>
-  line_spacing(space = 0.6, part = "header") |>
-  autofit() |> 
-  colformat_double(decimal.mark = ",")
+  rename(
+    `Região` = regiao,
+    UF = uf,
+    Periodicidade = sinistros_period,
+    Interatividade = sinistros_inter,
+    `Nível de desagregação` = sinistros_desagreg,
+    `Nota Média` = nota_final
+  ) |> 
+  make_reactable(
+    columns = list(
+      `Nota Média` = colDef(
+        style = continuous_bg_func,
+        format = colFormat(locales = "de-DE", digits = 1)
+      ),
+      Periodicidade = colDef(style = quali_bg_func),
+      Interatividade = colDef(style = quali_bg_func),
+      `Nível de desagregação` = colDef(style = quali_bg_func)
+    )
+  )
 ```
 
-A @fig-map-sinistros demonstra uma carência de informações de sinistros em uma grande parcela dos departamentos, sendo a categoria de dado estatístico com maior déficit nos portais de acesso à informação.
+<!-- A @fig-map-sinistros demonstra uma carência de informações de sinistros em uma grande parcela dos departamentos, sendo a categoria de dado estatístico com maior déficit nos portais de acesso à informação. -->
+
+### Mapa
 
 ```{r}
 #| fig-cap: Resultados da categoria "Sinistros"
@@ -899,28 +925,14 @@ sinistros_map <-
   sinistros |> 
   map_preproc()
 
-ggplot(sinistros_map) +
-  geom_sf(aes(fill = fill)) +
-  geom_sf_text(
-    aes(label = abbrev_state),
-    size = 2,
-    color = ifelse(!(
-      sinistros_map$abbrev_state %in% c("PB", "PE", "AL", "SE", "ES", "RJ")
-    ),
-    "white",
-    "grey20"),
-    nudge_x = sinistros_map$nudge_x_text,
-    nudge_y = sinistros_map$nudge_y_text
-  ) +
-  scale_fill_manual(values = pal) +
-  theme_void() +
-  theme(legend.justification = c("right", "top")) +
-  labs(fill = "Nota Média", x = NULL, y = NULL)
+sinistros_map |> 
+  make_leaflet()
 ```
+:::
 
 ### Educação para o Trânsito
 
-As consultas para informações de educação para o trânsito estão apresentadas na @tbl-educ, com pontações atribuídas conforme os critérios de avaliação da @tbl-cri-educ.
+As consultas sobre informações de educação para o trânsito estão apresentadas na @tbl-educ, com pontações atribuídas conforme os critérios de avaliação da @tbl-cri-educ.
 
 ```{r}
 educacao <- df_revisoes |>
@@ -932,6 +944,9 @@ educacao <- df_revisoes |>
   )), 2)) |>
   arrange(desc(regiao))
 ```
+
+::: panel-tabset
+### Tabela
 
 ```{r}
 #| tbl-cap: Resultados da categoria "Educação para o Trânsito"
@@ -948,51 +963,28 @@ educacao |>
       0 ~ "Ausente"
     )
   )) |>
-  flextable() |>
-  merge_v(j = ~ regiao) |>
-  set_header_labels(
-    regiao = "Região",
-    uf = "UF",
-    educ_conteudos = "Conteúdos didáticos",
-    educ_divulgacao = "Divulgação de atividades",
-    nota_final = "Nota Média"
-  ) |>
-  theme_vanilla() |>
-  align(align = "center", part = "all") |>
-  color(color = "white", part = "header") |>
-  color(j = ~ . - regiao - uf,
-        color = "white",
-        part = "body") |>
-  bg(bg = onsv_palette$blue, part = "header") |>
-  bg(
-    bg = col_numeric(
-      palette = pal,
-      domain = c(0, 10)
-    ),
-    part = "body",
-    j = ~ nota_final
-  ) |>
-  bg(
-    bg = col_factor(
-      palette = pal,
-      domain = c("Melhor", "Intermediário", "Inicial", "Ausente")
-    ),
-    part = "body",
-    j = ~ . - uf - regiao - nota_final
-  ) |>
-  bold(part = "body", j = ~ . - regiao - uf) |>
-  surround(
-    j = ~ . - regiao - uf,
-    border.top = officer::fp_border(color = "grey90"),
-    border.bottom = officer::fp_border(color = "grey90"),
-  ) |>
-  line_spacing(space = 0.4, part = "body") |>
-  line_spacing(space = 0.6, part = "header") |>
-  autofit() |> 
-  colformat_double(decimal.mark = ",")
+  rename(
+    `Região` = regiao,
+    UF = uf,
+    `Conteúdos didáticos` = educ_conteudos,
+    `Divulgação de atividades` = educ_divulgacao,
+    `Nota Média` = nota_final
+  ) |> 
+  make_reactable(
+    columns = list(
+      `Nota Média` = colDef(
+        style = continuous_bg_func,
+        format = colFormat(locales = "de-DE", digits = 1)
+      ),
+      `Conteúdos didáticos` = colDef(style = quali_bg_func),
+      `Divulgação de atividades` = colDef(style = quali_bg_func)
+    )
+  )
 ```
 
-A @fig-map-educ demonstra como a maioria dos departamentos estaduais possui disponibilidade adequada de conteúdos didáticos e atividades educativas para o trânsito.
+<!-- A @fig-map-educ demonstra como a maioria dos departamentos estaduais possui disponibilidade adequada de conteúdos didáticos e atividades educativas para o trânsito. -->
+
+### Mapa
 
 ```{r}
 #| fig-cap: Resultados da categoria "Educação para o Trânsito"
@@ -1002,24 +994,10 @@ educacao_map <-
   educacao |>
   map_preproc()
 
-ggplot(educacao_map) +
-  geom_sf(aes(fill = fill)) +
-  geom_sf_text(
-    aes(label = abbrev_state),
-    size = 2,
-    color = ifelse(!(
-      educacao_map$abbrev_state %in% c("PB", "PE", "AL", "SE", "ES", "RJ")
-    ),
-    "white",
-    "grey20"),
-    nudge_x = educacao_map$nudge_x_text,
-    nudge_y = educacao_map$nudge_y_text
-  ) +
-  scale_fill_manual(values = pal) +
-  theme_void() +
-  theme(legend.justification = c("right", "top")) +
-  labs(fill = "Nota Média", x = NULL, y = NULL)
+educacao_map |> 
+  make_leaflet()
 ```
+:::
 
 ### Atendimento ao público
 
@@ -1036,6 +1014,9 @@ atendimento <- df_revisoes |>
 
 Os resultados das consultas sobre o atendimento ao público estão apresentados na @tbl-atendimento. É notável a ausência de estatísticas de atendimento para a maioria dos DETRANs.
 
+::: panel-tabset
+### Tabela
+
 ```{r}
 #| tbl-cap: Resultados da categoria "Atendimento ao Público"
 #| label: tbl-atendimento
@@ -1051,64 +1032,36 @@ atendimento |>
         0 ~ "Ausente"
       ),
     atendimento_estatistica =
-      case_match(atendimento_estatistica,
-                 10.0 ~ "Presente",
-                 0 ~ "Ausente"
+      case_match(
+        atendimento_estatistica,
+        10.0 ~ "Melhor",
+        6.7 ~ "Intermediário",
+        3.3 ~ "Inicial",
+        0 ~ "Ausente"
       )
   ) |>
-  flextable() |>
-  merge_v(j = ~ regiao) |>
-  set_header_labels(
-    regiao = "Região",
-    uf = "UF",
-    atendimento_canais = "Canais de atendimento",
-    atendimento_estatistica = "Estatísticas de atendimento",
-    nota_final = "Nota Média"
+  rename(
+    `Região` = regiao,
+    UF = uf,
+    `Estatísticas de atendimento` = atendimento_estatistica,
+    `Canais de atendimento` = atendimento_canais,
+    `Nota Média` = nota_final
   ) |>
-  theme_vanilla() |>
-  align(align = "center", part = "all") |>
-  color(color = "white", part = "header") |>
-  color(j = ~ . - regiao - uf,
-        color = "white",
-        part = "body") |>
-  bg(bg = onsv_palette$blue, part = "header") |>
-  bg(
-    bg = col_numeric(
-      palette = pal,
-      domain = c(0, 10)
-    ),
-    part = "body",
-    j = ~ nota_final
-  ) |>
-  bg(
-    bg = col_factor(
-      palette = pal,
-      domain = c("Melhor", "Intermediário", "Inicial", "Ausente")
-    ),
-    part = "body",
-    j = ~ atendimento_canais
-  ) |>
-  bg(
-    bg = col_factor(
-      palette = pal,
-      domain = c("Presente", "Ausente")
-    ),
-    part = "body",
-    j = ~ atendimento_estatistica
-  ) |> 
-  bold(part = "body", j = ~ . - regiao - uf) |>
-  surround(
-    j = ~ . - regiao - uf,
-    border.top = officer::fp_border(color = "grey90"),
-    border.bottom = officer::fp_border(color = "grey90"),
-  ) |>
-  line_spacing(space = 0.4, part = "body") |>
-  line_spacing(space = 0.6, part = "header") |>
-  autofit() |> 
-  colformat_double(decimal.mark = ",")
+  make_reactable(
+    columns = list(
+      `Nota Média` = colDef(
+        style = continuous_bg_func,
+        format = colFormat(locales = "de-DE", digits = 1)
+      ),
+      `Estatísticas de atendimento` = colDef(style = quali_bg_func),
+      `Canais de atendimento` = colDef(style = quali_bg_func)
+    )
+  )
 ```
 
-A @fig-map-atend apresenta as notas médias para todos os estados em relação ao atendimento ao público.
+<!-- A @fig-map-atend apresenta as notas médias para todos os estados em relação ao atendimento ao público. -->
+
+### Mapa
 
 ```{r}
 #| fig-cap: Resultados da categoria "Atendimento ao Público"
@@ -1116,27 +1069,12 @@ A @fig-map-atend apresenta as notas médias para todos os estados em relação a
 
 atendimento_map <- 
   atendimento |> 
-  map_preproc() |> 
-  bind_rows(list(fill = "5 - 7,5"))
+  map_preproc()
 
-ggplot(atendimento_map) +
-  geom_sf(aes(fill = fill)) +
-  geom_sf_text(
-    aes(label = abbrev_state),
-    size = 2,
-    color = ifelse(!(
-      atendimento_map$abbrev_state %in% c("PB", "PE", "AL", "SE", "ES", "RJ")
-    ),
-    "white",
-    "grey20"),
-    nudge_x = atendimento_map$nudge_x_text,
-    nudge_y = atendimento_map$nudge_y_text
-  ) +
-  scale_fill_manual(values = pal) +
-  theme_void() +
-  theme(legend.justification = c("right", "top")) +
-  labs(fill = "Nota Média", x = NULL, y = NULL)
+atendimento_map |> 
+  make_leaflet()
 ```
+:::
 
 ### Evolução dos Resultados
 
@@ -1151,39 +1089,136 @@ As pontuações finais calculadas para a avaliação das informações disponibi
 #| label: fig-dumbbell
 #| fig-height: 5
 
-df_revisoes |>
-  select(uf, nota_final, ano) |> 
-  mutate(regiao = get_region(uf)) |> 
+dumbbell <- df_revisoes |>
+  select(uf, nota_final, ano) |>
+  mutate(regiao = get_region(uf)) |>
   pivot_wider(names_from = ano,
               names_prefix = "ano_",
               values_from = nota_final) |>
   mutate(uf = reorder(uf, ano_2024),
-         color = if_else(ano_2020 < ano_2024, "up", "down")) |>
-  ggplot() +
-  geom_segment(
+         color = if_else(ano_2020 < ano_2024, "up", "down"))
+
+dumbbell_plot <-
+  ggplot(dumbbell) +
+  geom_segment_interactive(
     aes(
       y = uf,
       yend = uf,
       x = ano_2020,
       xend = ano_2024,
-      color = color
+      color = color,
+      tooltip = sprintf(
+        "Estado: %s<br>Nota de 2024: %.2f<br>Nota de 2020: %.2f",
+        uf,
+        ano_2024,
+        ano_2020
+      ),
+      data_id = uf
     ),
     arrow = arrow(
       length = unit(.1, "inches"),
       type = "closed",
       angle = 20
     ),
+    hover_nearest = T,
     show.legend = F
   ) +
   scale_color_manual(values = c(onsv_palette$red, onsv_palette$green)) +
   scale_x_continuous(limits = c(0, 10)) +
-  scale_y_discrete(position = "left", ) +
+  scale_y_discrete(position = "left",) +
   labs(x = NULL, y = NULL, color = NULL) +
   theme_bw() +
-  facet_grid(vars(regiao), scales = "free_y", space = "free_y", switch = "y") +
-  theme(strip.text = element_text(size = 6),
-        axis.text.y = element_text(size = 6))
+  facet_grid(vars(regiao),
+             scales = "free_y",
+             space = "free_y",
+             switch = "y") +
+  theme(strip.text = element_text(size = 7),
+        axis.text.y = element_text(size = 8))
+
+girafe(ggobj = dumbbell_plot, options = list(opts_toolbar(saveaspng = F)))
 ```
+
+<!-- ```{r} -->
+<!-- #| height: 7 -->
+
+<!-- make_dumbbell <- function(reg) { -->
+<!--   if (reg == "Sul") { -->
+<!--     df_revisoes |> -->
+<!--     select(uf, nota_final, ano) |> -->
+<!--     mutate(regiao = get_region(uf)) |> -->
+<!--     filter(regiao == reg) |>  -->
+<!--     pivot_wider(names_from = ano, -->
+<!--                 names_prefix = "ano_", -->
+<!--                 values_from = nota_final) |> -->
+<!--     mutate(uf = reorder(uf, ano_2024), -->
+<!--            color = factor(if_else(ano_2020 < ano_2024, "up", "down"))) |>  -->
+<!--     plot_ly() |> -->
+<!--     add_markers( -->
+<!--       ~ ano_2024, -->
+<!--       ~ uf, -->
+<!--       showlegend = F, -->
+<!--       marker = list(color = tbl_green, symbol = "triangle-right") -->
+<!--     ) |> -->
+<!--     add_segments( -->
+<!--       x = ~ ano_2020, -->
+<!--       xend = ~ ano_2024, -->
+<!--       y = ~ uf, -->
+<!--       yend = ~ uf, -->
+<!--       line = list(color = tbl_green), -->
+<!--       showlegend = F -->
+<!--     ) -->
+<!--   }  -->
+<!--   else { -->
+<!--     df_revisoes |> -->
+<!--     select(uf, nota_final, ano) |> -->
+<!--     mutate(regiao = get_region(uf)) |> -->
+<!--     filter(regiao == reg) |>  -->
+<!--     pivot_wider(names_from = ano, -->
+<!--                 names_prefix = "ano_", -->
+<!--                 values_from = nota_final) |> -->
+<!--     mutate(uf = reorder(uf, ano_2024), -->
+<!--            color = factor(if_else(ano_2020 < ano_2024, "up", "down"))) |>  -->
+<!--     plot_ly() |> -->
+<!--     add_markers( -->
+<!--       ~ ano_2024, -->
+<!--       ~ uf, -->
+<!--       showlegend = F, -->
+<!--       color = ~ color, -->
+<!--       colors = rev(c(tbl_green, tbl_red)), -->
+<!--       symbol = ~ color, -->
+<!--       symbols = rev(c("triangle-right", "triangle-left")) -->
+<!--     ) |> -->
+<!--     add_segments( -->
+<!--       x = ~ ano_2020, -->
+<!--       xend = ~ ano_2024, -->
+<!--       y = ~ uf, -->
+<!--       yend = ~ uf, -->
+<!--       color = ~ color, -->
+<!--       showlegend = F, -->
+<!--       colors = c(tbl_green, tbl_red) -->
+<!--     ) -->
+<!--   } -->
+<!-- } -->
+
+<!-- norte <- make_dumbbell("Norte") -->
+<!-- nordeste <- make_dumbbell("Nordeste") -->
+<!-- centro <- make_dumbbell("Centro-Oeste") -->
+<!-- sudeste <- make_dumbbell("Sudeste") -->
+<!-- sul <- make_dumbbell("Sul") -->
+
+<!-- subplot( -->
+<!--   norte, -->
+<!--   nordeste, -->
+<!--   centro, -->
+<!--   sudeste, -->
+<!--   sul, -->
+<!--   nrows = 5, -->
+<!--   shareX = T, -->
+<!--   shareY = T, -->
+<!--   margin = 0.02, -->
+<!--   heights = c(7/27, 9/27, 4/27, 4/27, 3/27) -->
+<!-- ) -->
+<!-- ``` -->
 
 <!-- João, reveja o jeito que voce fez esse cálculo. Não tem como um valor finito e positivo apresentar uma redução de 150% -->
 
@@ -1201,35 +1236,172 @@ Em 2024, houve uma progressão majoritariamente positiva para os DETRANs. Consid
 
 -   Rio de Janeiro - 7,7.
 
-A @fig-map-compare apresenta um mapa de comparação das pontuações finais de todos estados.
+A @fig-map-compare apresenta mapas para a comparação das pontuações finais de todos estados.
+
+<!-- ```{r} -->
+<!-- #| fig-cap: Notas finais para DETRANs em 2020 e 2024 -->
+<!-- #| label: fig-map-compare -->
+<!-- #| fig-height: 2.5 -->
+
+<!-- comparison_map <- -->
+<!--   df_revisoes |>  -->
+<!--   map_preproc()  -->
+
+<!-- comparison_map |> -->
+<!--   ggplot() + -->
+<!--   geom_sf(aes(fill = fill)) +  -->
+<!--   scale_fill_manual(values = pal) + -->
+<!--   theme_void() + -->
+<!--   facet_wrap(vars(ano)) + -->
+<!--   labs(fill = "Nota Final") -->
+<!-- ``` -->
 
 ```{r}
 #| fig-cap: Notas finais para DETRANs em 2020 e 2024
 #| label: fig-map-compare
-#| fig-height: 2.5
+
+title_2020 <- htmltools::tags$div(htmltools::HTML('2020'))
+title_2024 <- htmltools::tags$div(htmltools::HTML('2024'))
 
 comparison_map <-
   df_revisoes |> 
-  map_preproc() 
+  map_preproc()
 
-comparison_map |>
-  ggplot() +
-  geom_sf(aes(fill = fill)) + 
-  scale_fill_manual(values = pal) +
-  theme_void() +
-  facet_wrap(vars(ano)) +
-  labs(fill = "Nota Final")
+comp_map_2020 <- 
+  comparison_map[comparison_map$ano == 2020, ] |> 
+  make_leaflet() |> 
+  addControl(title_2020, position = "topright")
+
+comp_map_2024 <-
+  comparison_map[comparison_map$ano == 2024, ] |> 
+  make_leaflet() |> 
+  addControl(title_2024, position = "topright")
+
+sync(comp_map_2020, comp_map_2024, sync = F)
 ```
 
-O resultado final de todas as consultas efetuadas, bem como os valores médios para cada categoria de dado acessado e a variação percentual das notas finais podem ser observados na @tbl-final, em ordem descendente das pontuações atribuídas em 2024.
+O resultado final de todas as consultas efetuadas, bem como os valores médios para cada categoria de dado acessado e suas notas finais podem ser observados na @tbl-final, em ordem descendente das pontuações atribuídas em 2024.
 
 <!-- Aqui o calculo da porcentagem também ta errado. -->
 
 <!-- R.: Consertei também, e agora a variação é colorida por positivo/negativo (discreto) invés de forma numérica pois ficava muito gritante a diferença devido a variação de BA -->
 
+<!-- ```{r} -->
+
+<!-- #| tbl-cap: Resultados finais das consultas para 2024 -->
+
+<!-- #| label: tbl-final -->
+
+<!-- variacao <- df_revisoes |> -->
+
+<!--   select(uf, nota_final, ano) |> -->
+
+<!--   pivot_wider(names_from = ano, -->
+
+<!--               names_prefix = "ano", -->
+
+<!--               values_from = nota_final) |> -->
+
+<!--   summarise( -->
+
+<!--     .by = uf, -->
+
+<!--     ano2020 = mean(ano2020), -->
+
+<!--     ano2024 = mean(ano2024) -->
+
+<!--   ) |> -->
+
+<!--   mutate(var = (ano2024-ano2020)/ano2020) |> -->
+
+<!--   arrange(desc(var)) |> -->
+
+<!--   select(uf, ano2020, var) -->
+
+<!-- consulta_pre |> -->
+
+<!--   mutate(nota_final = rowMeans(across(frota:cfcs))) |> -->
+
+<!--   arrange(desc(nota_final)) |> -->
+
+<!--   select(-regiao) |> -->
+
+<!--   left_join(variacao, by = "uf") |> -->
+
+<!--   relocate(nota_final, .after = ano2020) |>  -->
+
+<!--   gt(rowname_col = "uf") |> -->
+
+<!--   fmt_number(dec_mark = ",", sep_mark = ".") |> -->
+
+<!--   fmt_percent(var, dec_mark = ",", sep_mark = ".") |> -->
+
+<!--   cols_label( -->
+
+<!--     frota = "Frota veicular", -->
+
+<!--     condutores = "Condutores habilitados", -->
+
+<!--     infracoes = "Infrações", -->
+
+<!--     sinistros = "Sinistros", -->
+
+<!--     atendimento = "Atendimento ao público", -->
+
+<!--     educ = "Educação para o trânsito", -->
+
+<!--     cfcs = "CFCs", -->
+
+<!--     nota_final = "Nota 2024", -->
+
+<!--     var = "Variação", -->
+
+<!--     ano2020 = "Nota 2020" -->
+
+<!--   ) |> -->
+
+<!--   cols_align(align = "center") |> -->
+
+<!--   tab_options( -->
+
+<!--     column_labels.background.color = onsv_palette$blue, -->
+
+<!--     column_labels.font.weight = "bold" -->
+
+<!--   ) |> -->
+
+<!--   tab_style(style = cell_text(color = onsv_palette$blue), -->
+
+<!--             locations = cells_title()) |> -->
+
+<!--   data_color(ano2020:nota_final, method = "numeric", palette = pal) |>  -->
+
+<!--   data_color(columns = c(var), -->
+
+<!--              colors = col_bin( -->
+
+<!--                bins = c(-Inf, 0, Inf), -->
+
+<!--                palette = c(tbl_red, tbl_green) -->
+
+<!--              )) -->
+
+<!-- ``` -->
+
 ```{r}
 #| tbl-cap: Resultados finais das consultas para 2024
 #| label: tbl-final
+
+coldef1 <- 
+  colDef(
+    format = colFormat(locales = "de-DE", digits = 1)
+  )
+
+coldef2 <- 
+  colDef(
+    style = continuous_bg_func,
+    format = colFormat(locales = "de-DE", digits = 1)
+  )
 
 variacao <- df_revisoes |>
   select(uf, nota_final, ano) |>
@@ -1241,9 +1413,7 @@ variacao <- df_revisoes |>
     ano2020 = mean(ano2020),
     ano2024 = mean(ano2024)
   ) |>
-  mutate(var = (ano2024-ano2020)/ano2020) |>
-  arrange(desc(var)) |>
-  select(uf, ano2020, var)
+  select(uf, ano2020)
 
 consulta_pre |>
   mutate(nota_final = rowMeans(across(frota:cfcs))) |>
@@ -1251,34 +1421,29 @@ consulta_pre |>
   select(-regiao) |>
   left_join(variacao, by = "uf") |>
   relocate(nota_final, .after = ano2020) |> 
-  gt(rowname_col = "uf") |>
-  fmt_number(dec_mark = ",", sep_mark = ".") |>
-  fmt_percent(var, dec_mark = ",", sep_mark = ".") |>
-  cols_label(
-    frota = "Frota veicular",
-    condutores = "Condutores habilitados",
-    infracoes = "Infrações",
-    sinistros = "Sinistros",
-    atendimento = "Atendimento ao público",
-    educ = "Educação para o trânsito",
-    cfcs = "CFCs",
-    nota_final = "Nota 2024",
-    var = "Variação",
-    ano2020 = "Nota 2020"
-  ) |>
-  cols_align(align = "center") |>
-  tab_options(
-    column_labels.background.color = onsv_palette$blue,
-    column_labels.font.weight = "bold"
-  ) |>
-  tab_style(style = cell_text(color = onsv_palette$blue),
-            locations = cells_title()) |>
-  data_color(ano2020:nota_final, method = "numeric", palette = pal) |> 
-  data_color(columns = c(var),
-             colors = col_bin(
-               bins = c(-Inf, 0, Inf),
-               palette = c(tbl_red, tbl_green)
-             ))
+  rename_with(.fn = str_to_title) |> 
+  rename(
+    UF = Uf,
+    `Infrações` = Infracoes,
+    `Educação` = Educ,
+    CFCs = Cfcs,
+    `2020` = Ano2020,
+    `2024` = Nota_final
+  ) |> 
+  make_reactable(
+    columns = list(
+      Frota = coldef1,
+      Condutores = coldef1,
+      `Infrações` = coldef1,
+      Sinistros = coldef1,
+      Atendimento = coldef1,
+      `Educação` = coldef1,
+      CFCs = coldef1,
+      `2020` = coldef2,
+      `2024` = coldef2
+    )
+  )
+
 ```
 
 ### Boas Práticas
@@ -1293,7 +1458,7 @@ A @fig-rj demonstra um gerenciador de tabelas disponível no portal do Detran RJ
 ![](assets/detran_rj.png)
 
 Gerenciador de Tabelas do Detran RJ.\
-Fonte: https://www.detran.rj.gov.br/_estatisticas.veiculos/index.asp
+Fonte: https://www.detran.rj.gov.br/\_estatisticas.veiculos/index.asp
 :::
 
 #### Condutores - Detran RO
@@ -1387,45 +1552,6 @@ Os *links* de acesso às informações consultadas estão disponíves na @tbl-li
 #| label: tbl-links
 
 load(here("data/links.rda"))
-
-get_state_name <- function(acronym) {
-  state_map <- list(
-    "AC" = "Acre",
-    "AL" = "Alagoas",
-    "AP" = "Amapá",
-    "AM" = "Amazonas",
-    "BA" = "Bahia",
-    "CE" = "Ceará",
-    "DF" = "Distrito Federal",
-    "ES" = "Espírito Santo",
-    "GO" = "Goiás",
-    "MA" = "Maranhão",
-    "MT" = "Mato Grosso",
-    "MS" = "Mato Grosso do Sul",
-    "MG" = "Minas Gerais",
-    "PA" = "Pará",
-    "PB" = "Paraíba",
-    "PR" = "Paraná",
-    "PE" = "Pernambuco",
-    "PI" = "Piauí",
-    "RJ" = "Rio de Janeiro",
-    "RN" = "Rio Grande do Norte",
-    "RS" = "Rio Grande do Sul",
-    "RO" = "Rondônia",
-    "RR" = "Roraima",
-    "SC" = "Santa Catarina",
-    "SP" = "São Paulo",
-    "SE" = "Sergipe",
-    "TO" = "Tocantins"
-  )
-
-  return(state_map[[acronym]])
-}
-
-get_state_names <- function(acronyms) {
-  state_names <- sapply(acronyms, get_state_name)
-  return(state_names)
-}
 
 tbl_links |>
   rename(
