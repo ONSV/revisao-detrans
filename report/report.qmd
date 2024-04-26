@@ -66,7 +66,7 @@ binned_pal <-
 
 #### Como citar {.unnumbered}
 
-ONSV; CLP e UFPR (2024). Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito -- DETRANs. Observatório Nacional de Segurança Viária, Centro de Liderança Pública e Universidade Federal do Paraná. Disponível em: <https://onsv.org.br> .
+ONSV; CLP e UFPR (2024). Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito -- DETRANs. Observatório Nacional de Segurança Viária, Centro de Liderança Pública e Universidade Federal do Paraná. Disponível em: <https://onsv.org.br>.
 
 #### Licença de uso {.unnumbered}
 
