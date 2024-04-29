@@ -317,8 +317,8 @@ tbl_educ
 
 tbl_cfc <- data.frame(
   lista = c(
-    "Quantidade de CFCs no estado",
-    "Lista completa dos CFCs",
+    "Quantidade de CFCs credenciados no estado",
+    "Lista completa dos CFCs no estado",
     "Informações adicionais sobre o índice de aprovação dos alunos, quais CFCs possuem simuladores de direção, número de habilitados e informações sobre o credenciamento."
   ),
   notas = c(3.3, 6.7, 10)
@@ -327,7 +327,7 @@ tbl_cfc <- data.frame(
   cols_label(lista = "Lista sobre CFCs credenciados", notas = "Notas") |> 
   tbl_styles() |> 
   cols_align("center") |> 
-  cols_width(everything() ~ pct(30))
+  cols_width(everything() ~ pct(50))
 
 tbl_cfc
 ```
@@ -346,12 +346,34 @@ sentido <- case_when(
 )
 ```
 
-A pontuação final de 2024 para o estado em destaque é de `r round(filter(preliminar, ano == 2024)$nota_final, 2)`, o que representa `r if(dif == 0) {paste("uma", sentido)} else {paste("um", sentido)}` em relação à 2020.
 
-O resultado final das consultas, efetuadas em 2020 e 2024, sobre as categorias e critérios considerados para a avaliação da disponibilidade de dados no portal do DETRAN-`r params$state` está disponível na @tbl-final. A nota final é 
+A fim de analisar quantitativamente os índices atribuídos para cada tipo de informação consultada, os dados de 2020 e 2024 são reunidos e a nova versão versão do estudo é comparada à anterior. A nota resultante para cada categoria de dado considerada é calculada por meio da média das pontuações de seus critérios, como aponta @tbl-media.  
 
 ```{r}
-#| tbl-cap: Resultados finais das consultas para 2024
+#| label: tbl-media
+#| tbl-cap: Notas médias para cada categoria
+
+preliminar |> 
+  select(-nota_final) |>
+  rename_with(~ str_to_title_func(replace_func(.))) |> 
+  gt(groupname_col = "Ano") |> 
+  tab_options(row_group.as_column = T) |> 
+  fmt_number(decimals = 1, dec_mark = ",") |> 
+  tbl_styles() |> 
+  data_color(
+    columns = everything(),
+    palette = pal,
+    domain = c(0, 10)
+  ) |> 
+  cols_align("center")
+```
+
+A pontuação final de 2024 para o estado em destaque foi computada por meio da média destas notas, atingindo um valor de **`r round(filter(preliminar, ano == 2024)$nota_final, 2)`**, o que representa `r if(dif == 0) {paste("uma", sentido)} else {paste("um", sentido)}` em relação a 2020.
+
+O resultado final das consultas, efetuadas em 2020 e 2024, sobre todas as categorias e critérios considerados para a avaliação da disponibilidade de dados no portal do DETRAN-`r params$state` está disponível na @tbl-final.
+
+```{r}
+#| tbl-cap: Resultados finais das consultas
 #| label: tbl-final
 
 filtered |>
@@ -372,7 +394,23 @@ filtered |>
     domain = c(0, 10)
   ) |>
   cols_label(criterio = "Critério") |>
-  fmt_number(decimals = 1) |> 
+  fmt_number(decimals = 1, dec_mark = ",") |> 
   tab_spanner(columns = 3:4, label = "Ano") |> 
-  tbl_styles()
+  tbl_styles() |> 
+  cols_align("center")
 ```
+
+## Conclusão
+
+```{r}
+max_values <- preliminar |> 
+  filter(ano == 2024) |> 
+  select(-c(ano, nota_final)) |> 
+  pivot_longer(everything()) |> 
+  filter(value == max(value))
+
+max_values_len <- nrow(max_values)
+```
+Em síntese, a`r if(max_values_len > 1) {paste0("s")}` categoria`r if(max_values_len > 1) {paste0("s")}` de melhor desempenho para o DETRAN `r if(params$state %in% c("BA","PB")) {paste("da", get_state_name(params$state))} else {paste("de", get_state_name(params$state))}` `r if(max_values_len <= 1) {paste("foi a de")} else {paste("foram as de")}` `r knitr::combine_words(str_to_title_func(replace_func(max_values$name)), and = " e ", oxford_comma = F)`, com uma pontuação de .
+
+## Referências
