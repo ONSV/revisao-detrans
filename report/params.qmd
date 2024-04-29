@@ -24,7 +24,7 @@ title-block-banner: true
 editor_options: 
   chunk_output_type: console
 params:
-  state: SP
+  state: BA
 title: "Avaliação do Nível de Informações Disponibilizadas no Portal do DETRAN - `r params$state`"
 bibliography: references.bib
 ---
@@ -113,7 +113,7 @@ tbl_styles <- function(gt) {
 
 ### Objetivo
 
-O presente documento tem por objetivo apresentar uma avaliação do nível de informações disponibilizadas no portal (sítio eletrônics) do DETRAN (Departamento Estadual de Trânsito) `r if(params$state %in% c("BA","PB")) {paste("da", get_state_name(params$state))} else {paste("de", get_state_name(params$state))}`.
+O presente documento tem por objetivo apresentar uma avaliação do nível de informações disponibilizadas no portal (sítio eletrônico) do DETRAN (Departamento Estadual de Trânsito) `r if(params$state %in% c("BA","PB")) {paste("da", get_state_name(params$state))} else {paste("de", get_state_name(params$state))}`.
 
 Os DETRANs, por sua atuação, trabalham com um grande número de informações relevantes para a gestão do trânsito no país, tendo muitas delas, além do teor formal e burocrático, uma grande utilidade para avaliações no âmbito da segurança viária, tais como: infrações de trânsito, sinistros de trânsito, e habilitação, entre outros.
 
@@ -368,7 +368,7 @@ preliminar |>
   cols_align("center")
 ```
 
-A pontuação final de 2024 para o estado em destaque foi computada por meio da média destas notas, atingindo um valor de **`r round(filter(preliminar, ano == 2024)$nota_final, 2)`**, o que representa `r if(dif == 0) {paste("uma", sentido)} else {paste("um", sentido)}` em relação a 2020.
+A pontuação final de 2024 para o estado em destaque foi computada por meio da média destas notas, atingindo um valor de **`r format(round(filter(preliminar, ano == 2024)$nota_final, 2), decimal.mark = ",")`**, o que representa `r if(dif == 0) {paste("uma", sentido)} else {paste("um", sentido)}` em relação a 2020.
 
 O resultado final das consultas, efetuadas em 2020 e 2024, sobre todas as categorias e critérios considerados para a avaliação da disponibilidade de dados no portal do DETRAN-`r params$state` está disponível na @tbl-final.
 
@@ -410,7 +410,17 @@ max_values <- preliminar |>
   filter(value == max(value))
 
 max_values_len <- nrow(max_values)
+
+min_values <- preliminar |> 
+  filter(ano == 2024) |> 
+  select(-c(ano, nota_final)) |> 
+  pivot_longer(everything()) |> 
+  filter(value == min(value))
+
+min_values_len <- nrow(min_values)
 ```
-Em síntese, a`r if(max_values_len > 1) {paste0("s")}` categoria`r if(max_values_len > 1) {paste0("s")}` de melhor desempenho para o DETRAN `r if(params$state %in% c("BA","PB")) {paste("da", get_state_name(params$state))} else {paste("de", get_state_name(params$state))}` `r if(max_values_len <= 1) {paste("foi a de")} else {paste("foram as de")}` `r knitr::combine_words(str_to_title_func(replace_func(max_values$name)), and = " e ", oxford_comma = F)`, com uma pontuação de .
+Em síntese, o presente trabalho pretende avaliar de forma quantitativa a performance do portal virtual do departamento consultado em disponibilizar ao público informações estatísticas pertinentes à segurança viária do respectivo estado. Desta maneira, a`r if(max_values_len > 1) {paste0("s")}` categoria`r if(max_values_len > 1) {paste0("s")}` de melhor desempenho para o DETRAN `r if(params$state %in% c("BA","PB")) {paste("da", get_state_name(params$state))} else {paste("de", get_state_name(params$state))}` `r if(max_values_len <= 1) {paste("foi a de")} else {paste("foram as de")}` `r knitr::combine_words(str_to_title_func(replace_func(max_values$name)), and = " e ", oxford_comma = F)`, com nota igual a `r format(unique(max_values$value), decimal.mark = ",")`. 
+
+Em contrapartida, a`r if(min_values_len > 1) {paste0("s")}` categoria`r if(min_values_len > 1) {paste0("s")}` de pior desempenho `r if(min_values_len <= 1) {paste("foi a de")} else {paste("foram as de")}` `r knitr::combine_words(str_to_title_func(replace_func(min_values$name)), and = " e ", oxford_comma = F)`, com nota `r format(unique(min_values$value), decimal.mark = ",")`. Estes resultados podem auxiliar na orientação de melhorias para o sítio eletrônico, visando aumentar a qualidade e disponibilidade dos dados fornecidos em conformidade às suas atribuições. 
 
 ## Referências
