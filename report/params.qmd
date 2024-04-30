@@ -1,7 +1,11 @@
 ---
 format: 
-  onsvpub-html:
+  onsvpub-pdf:
     smooth-scroll: true
+    cite-method: citeproc
+    citeproc: true
+    csl: associacao-brasileira-de-normas-tecnicas.csl
+    toc: false
 editor: source
 author: 
   - name: João Pedro Melani Saraiva
@@ -13,13 +17,16 @@ author:
   - name: Pedro Augusto Borges dos Santos
     affiliation: 
       - ref: onsv   
+  - name: Dr. Jorge Tiago Bastos
+    affiliation: Universidade Federal do Paraná 
 date: last-modified
 title-block-banner: true
 editor_options: 
   chunk_output_type: console
 params:
-  state: SP
-title: "Avaliação do Nível de Informações Disponibilizadas no Portal do DETRAN - `r params$acronym`"
+  state: BA
+title: "Avaliação do Nível de Informações Disponibilizadas no Portal do DETRAN - `r params$state`"
+bibliography: references.bib
 ---
 
 ```{r include=FALSE}
@@ -28,9 +35,17 @@ params$state
 library(tidyverse)
 library(here)
 library(onsvplot)
-library(reactable)
+library(gt)
 library(flextable)
+
 source(here("R","02-utils.R"))
+
+tbl_blue <- "#99B6C5"
+tbl_red <- "#D7191C"
+tbl_orange <- "#f05f22"
+tbl_yellow <- "#f7951d"
+tbl_green <- "#1fa149"
+pal <- c(tbl_red, tbl_orange, tbl_yellow, tbl_green)
 
 load(here("data", "revisoes.rda"))
 ```
@@ -72,47 +87,63 @@ str_to_title_func <- function(x) {
       )
     )
 }
+
+tbl_styles <- function(gt) {
+  gt |> 
+    tab_style(
+    style = cell_text(align = "center"),
+    locations = cells_stubhead()) |> 
+  tab_style(
+    style = "vertical-align:middle",
+    locations = cells_column_labels()
+  ) |> 
+  tab_style(
+    style = "vertical-align:middle",
+    locations = cells_row_groups()
+  ) |> 
+  tab_options(
+    column_labels.background.color = onsv_palette$blue,
+    column_labels.font.weight = "bold",
+    quarto.disable_processing = T
+  )
+}
 ```
-<!-- ```{r} -->
-<!-- df_revisoes |> -->
-<!--   mutate(regiao = get_region(uf), .before = 1) |> -->
-<!--   mutate( -->
-<!--     frota = rowMeans(across(starts_with("frota"))), -->
-<!--     condutores = rowMeans(across(starts_with("condutores"))), -->
-<!--     infracoes = rowMeans(across(starts_with("infracoes"))), -->
-<!--     sinistros = rowMeans(across(starts_with("sinistros"))), -->
-<!--     atendimento = rowMeans(across(starts_with("atendimento"))), -->
-<!--     educ = rowMeans(across(starts_with("educ"))), -->
-<!--     cfcs -->
-<!--   ) |> -->
-<!--   select(uf, -->
-<!--          frota, -->
-<!--          condutores, -->
-<!--          infracoes, -->
-<!--          sinistros, -->
-<!--          atendimento, -->
-<!--          educ, -->
-<!--          cfcs, -->
-<!--          ano) |> -->
-<!--   pivot_longer(-c(uf, ano)) |> -->
-<!--   ggplot(aes(name, uf)) + -->
-<!--   geom_tile(aes(fill = value)) + -->
-<!--   geom_text(aes( -->
-<!--     label = format(value, digits = 1), -->
-<!--     color = ifelse(value >= 6, "black", "white") -->
-<!--   ), -->
-<!--   size = 3) + -->
-<!--   facet_wrap(vars(ano)) + -->
-<!--   labs(x = NULL, y = NULL) + -->
-<!--   scale_color_identity() + -->
-<!--   scale_fill_distiller() + -->
-<!--   theme_minimal() + -->
-<!--   theme(axis.text.x = element_text(angle = 90, vjust = 0.5)) -->
-<!-- ``` -->
+
+## Introdução
+
+### Objetivo
+
+O presente documento tem por objetivo apresentar uma avaliação do nível de informações disponibilizadas no portal (sítio eletrônico) do DETRAN (Departamento Estadual de Trânsito) `r if(params$state %in% c("BA","PB")) {paste("da", get_state_name(params$state))} else {paste("de", get_state_name(params$state))}`.
+
+Os DETRANs, por sua atuação, trabalham com um grande número de informações relevantes para a gestão do trânsito no país, tendo muitas delas, além do teor formal e burocrático, uma grande utilidade para avaliações no âmbito da segurança viária, tais como: infrações de trânsito, sinistros de trânsito, e habilitação, entre outros.
+
+Nesse sentido, este documento busca apresentar uma análise da situação deste DETRAN, permitindo obter um panorama de como esta instituições disponibiliza informações de interesse social. Além da introdução, o documento compõe-se das seguintes seções: @sec-metodos, com as consultas preliminares, pontuação e critérios estabelecidos; e @sec-resultados, com a pontuação geral em cada categoria analisada, com a evolução das notas resultantes ao longo dos anos e com os exemplos de boas práticas encontradas nos sítios eletrônicos.
+
+### Atribuições do DETRAN
+
+De acordo com o CTB (Código de Trânsito Brasileiro), são competências do DETRAN o planejamento, coordenação, execução e controle relacionados às seguintes áreas: habilitação de condutores, veículos, fiscalização de trânsito, estatísticas e educação para o trânsito.
+
+Na habilitação de condutores, cabe ao DETRAN realizar e controlar o processo de formação, reciclagem e suspensão dos condutores, assim como a expedição e cassação da Licença de Aprendizagem, Permissão para Dirigir e CNH.
+
+Em relação aos veículos, compete ao DETRAN o seu registro, emplacamento, licenciamento e a expedição do seu Certificado de Registro e Licenciamento Anual.
+
+Na área de fiscalização, o DETRAN deve fazer cumprir a legislação e as normas de trânsito, sendo responsável pela autuação e aplicação de medidas administrativas cabíveis pelas infrações previstas no Código de Trânsito Brasileiro.
+
+Em relação a educação para o trânsito, é responsabilidade do DETRAN a promoção e participação de projetos de educação e segurança no trânsito. Por fim, coleta de dados estatísticos e a elaboração de estudos sobre acidentes de trânsito e suas causas também devem ser cumpridos pelo DETRAN.
+
+### Versão anterior
+
+Este trabalho faz parte da segunda versão do relatório anteriormente publicado em 2020 pelo Observatório Nacional de Segurança Viária, que virou uma comunicação técnica publicada no segundo Simpósio de Transportes do Paraná (STPR), também em 2020 [@santos2020]. A elaboração de uma nova versão ira possibilitar a evolução dos portais dos DETRANs de cada estado.
+
+## Métodos {#sec-metodos}
+
+### Consultas Preliminares
+
+O estudo foi realizado por meio do acesso do *sites* do DETRAN-`r params$state` a fim de averiguar a existência de dados estatíticos sobre a frota veicular, condutores habilitados, infrações e sinistros de trânsito. Também foram avaliados a existência de informações relacionadas à educação para o trânsito (campanhas, material educativo, regras de trânsito, etc.), dados quantitivos do atendimento ao público pelo departamento, disponibilidade de canais de atendimento e dados informativos sobre os centros de formação de condutores do estado em questão. A @tbl-consultas demonstra os resultados de uma consulta preliminar destes portais:
 
 ```{r}
-preliminar <- 
-  filtered |> 
+preliminar <-
+  filtered |>
   mutate(
     frota = rowMeans(across(starts_with("frota"))),
     condutores = rowMeans(across(starts_with("condutores"))),
@@ -120,88 +151,277 @@ preliminar <-
     sinistros = rowMeans(across(starts_with("sinistros"))),
     atendimento = rowMeans(across(starts_with("atendimento"))),
     educ = rowMeans(across(starts_with("educ")))
-  ) |> 
+  ) |>
   select(cfcs:last_col())
 ```
 
 ```{r}
-nota_final_2024 <- preliminar[preliminar$ano == 2024,]$nota_final
+#| label: tbl-consultas
+#| tbl-cap: Consultas preliminares
 
 preliminar |>
-  relocate(nota_final, .after = last_col()) |>
-  pivot_longer(-c(ano, nota_final)) |>
-  mutate(across(ano, as.factor),
-         across(name, ~ str_to_title_func(replace_func(.)))) |>
-  ggplot(aes(value, name, fill = ano)) +
-  geom_col(position = "dodge") +
-  geom_vline(aes(xintercept = nota_final_2024,
-                 color = ano),
-             linewidth = 0.75) +
-  theme_minimal() +
-  scale_fill_manual(values = unname(unlist(onsv_palette))) + 
-  labs(fill = NULL, y = NULL, x = NULL, color = NULL)
+  pivot_longer(-ano) |>
+  filter(ano == 2024) |>
+  select(-ano) |>
+  mutate(name = str_to_title_func(replace_func(name)),
+         value = factor(
+           if_else(value == 0, "Ausente", "Presente"),
+           levels = c("Presente", "Ausente")
+         )) |>
+  gt() |>
+  data_color(columns = 2, palette = c(tbl_green, tbl_red)) |>
+  cols_label(
+    name = "Categoria",
+    value = "Situação"
+  ) |>
+  tbl_styles()
+```
+
+### Critérios de Avaliação
+
+A partir das categorias anteriormente discutidas, critérios de avaliação foram estabelecidos para quantificar a disponibilidade de dados e informações de cada um dos DETRANs. Assim sendo, são concedidos níveis de desempenho que equivalem a pontuações para cada um dos critérios aferidos:
+
+1.  **Melhor Prática** - Nota 10;
+
+2.  **Prática Intermediária** - Nota 6,7;
+
+3.  **Prática Inicial** - Nota 3,3 e;
+
+4.  **Prática Ausente** - Nota 0.
+
+A avaliação dos dados estatísticos da **frota veicular**, **condutores habilitados**, **infrações** e **sinistros** de trânsito se baseou nos critérios de periodicidade (quantidade de anos disponíveis), interatividade (tipo de arquivos ou informações disponíveis) e nível de desagregação (quantidade de variáveis disponíveis para análise).
+
+\break
+
+A **periodicidade** foi avaliada em:
+
+-   Melhor: Quando há um máximo de 2 anos de atraso em relação ao ano atual para o dado mais recente e mais de 5 anos de dados disponíves;
+
+-   Intermediária: Máximo de 2 anos de atraso ou menos de 5 anos disponíveis e;
+
+-   Inicial: 3+ anos de atraso e menos de 5 anos disponíveis.
+
+Neste contexto, para um estado ser situado como *Melhor*, por exemplo, seria necessário ter mais de 5 anos disponíveis e seu dado mais recente ser de, no mínino, 2022.
+
+A **interatividade** foi avaliada em:
+
+-   Melhor: Possui dados disponibilizados em relatórios interativos ou *dashboards* para consultas dinâmicas;
+
+-   Intermediária: Dados disponibilizados em arquivos de planinhas (como `.xls`, `.xlsx` e `.ods`) de editores como Microsoft Excel, Google Sheets e LibreOffice Calc, e;
+
+-   Inicial: Dados disponibilizados apenas como texto na página ou arquivos de texto (`.txt`, `.csv`, etc.).
+
+O **nível de desagregação** foi avaliado em:
+
+-   Melhor: Quantidade grande de variáveis;
+
+-   Intermediário: Quantidade média de variáveis e;
+
+-   Inicial: Quantidade baixa de variáveis.
+
+A relação destes critérios está ilustrada na @tbl-criterios:
+
+```{r}
+#| tbl-cap: Critérios de avaliação para frota, condutores habilitados, infrações e sinistros
+#| label: tbl-criterios
+
+criterio <- data.frame(
+  notas = c(3.3, 6.7, 10),
+  periodicidade = c(
+    "3+ anos de atraso e < 5 anos",
+    "2 anos de atraso ou < 5 anos",
+    "2 anos de atraso e > 5 anos"
+  ),
+  interatividade = c("Texto", "Planilha", "Interativo"),
+  desagreg = c("1 a 2 desagregações", "3 a 4 desagregações", "5+ desagregações")
+)
+
+rbind(
+  mutate(criterio, categoria = "frota"),
+  mutate(criterio, categoria = "condutores"),
+  mutate(
+    criterio,
+    categoria = "infrações",
+    desagreg = c("1 desagregação", "2 desagregações", "3+ desagregações")
+  ),
+  mutate(
+    criterio,
+    categoria = "sinistros",
+    desagreg = c("1 a 5 desagregações", "6 a 10 desagregações", "11+ desagregações")
+  )
+) |>
+  relocate(categoria, periodicidade, interatividade, desagreg, notas) |>
+  mutate(categoria = str_to_title(categoria)) |>
+  rename_with(str_to_title) |>
+  rename(`Nível de desagregação` = Desagreg) |> 
+  gt(groupname_col = "Categoria") |> 
+  tbl_styles() |> 
+  tab_options(row_group.as_column = T) |> 
+  cols_align("center")
+```
+
+As informações sobre o **atendimento ao público**, **educação para o trânsito** e **CFCs** foram aferidas com outros critérios mais específicos por não se tratarem de dados estritamente estatísticos, exigindo uma mudança na abordagem de avaliação. As Tabelas [-@tbl-cri-atend], [-@tbl-cri-educ] e [-@tbl-cri-cfcs] demonstram os critérios para cada um destes casos:
+
+```{r}
+#| tbl-cap: Critérios de avaliação para atendimento ao público
+#| label: tbl-cri-atend
+
+tbl_atend <- data.frame(
+  notas = c(3.3, 6.7, 10),
+  stats =  c(
+    "3+ anos de atraso e < 5 anos",
+    "2 anos de atraso ou < 5 anos",
+    "2 anos de atraso e > 5 anos"
+  ),
+  canais = c(
+    "Atendimento por telefone",
+    "Atendimento por telefone e e-mail",
+    "Atendimento por telefone, e-mail e mensagem"
+  )
+) |>
+  relocate(stats, canais, notas) |>
+  gt() |>
+  tbl_styles() |>
+  cols_label(stats = "Periodicidade",
+             canais = "Canais de Atendimento",
+             notas = "Notas") |> 
+  cols_align("center") |> 
+  cols_width(everything() ~ pct(30))
+
+tbl_atend
 ```
 
 ```{r}
-preliminar |>
+#| tbl-cap: Critérios de avaliação para conteúdo educativo
+#| label: tbl-cri-educ
+
+tbl_educ <- data.frame(
+  conteudo = c(
+    "Dicas, sugestões de leitura, cartilhas, orientações gerais e cadernos pedagógicos."
+  ),
+  divulgacao = c("Cursos, palestras, ações, projetos e campanhas.")
+) |>
+  gt() |>
+  tbl_styles() |>
+  cols_label(conteudo = "Conteúdos didáticos",
+             divulgacao = "Divulgação de atividade") |> 
+  cols_align("center") |> 
+  cols_width(everything() ~ pct(30))
+
+tbl_educ
+```
+
+```{r}
+#| tbl-cap: Critérios de avaliação para informações sobre CFCs
+#| label: tbl-cri-cfcs
+
+tbl_cfc <- data.frame(
+  lista = c(
+    "Quantidade de CFCs credenciados no estado",
+    "Lista completa dos CFCs no estado",
+    "Informações adicionais sobre o índice de aprovação dos alunos, quais CFCs possuem simuladores de direção, número de habilitados e informações sobre o credenciamento."
+  ),
+  notas = c(3.3, 6.7, 10)
+) |>
+  gt() |> 
+  cols_label(lista = "Lista sobre CFCs credenciados", notas = "Notas") |> 
+  tbl_styles() |> 
+  cols_align("center") |> 
+  cols_width(everything() ~ pct(50))
+
+tbl_cfc
+```
+
+## Resultados {#sec-resultados}
+
+```{r}
+dif <-
+  filter(preliminar, ano == 2024)$nota_final - 
+  filter(preliminar, ano == 2020)$nota_final
+
+sentido <- case_when(
+  dif > 0 ~ "progresso",
+  dif < 0 ~ "regresso",
+  dif == 0 ~ "mesma nota"
+)
+```
+
+
+A fim de analisar quantitativamente os índices atribuídos para cada tipo de informação consultada, os dados de 2020 e 2024 são reunidos e a nova versão versão do estudo é comparada à anterior. A nota resultante para cada categoria de dado considerada é calculada por meio da média das pontuações de seus critérios, como aponta @tbl-media.  
+
+```{r}
+#| label: tbl-media
+#| tbl-cap: Notas médias para cada categoria
+
+preliminar |> 
+  select(-nota_final) |>
+  rename_with(~ str_to_title_func(replace_func(.))) |> 
+  gt(groupname_col = "Ano") |> 
+  tab_options(row_group.as_column = T) |> 
+  fmt_number(decimals = 1, dec_mark = ",") |> 
+  tbl_styles() |> 
+  data_color(
+    columns = everything(),
+    palette = pal,
+    domain = c(0, 10)
+  ) |> 
+  cols_align("center")
+```
+
+A pontuação final de 2024 para o estado em destaque foi computada por meio da média destas notas, atingindo um valor de **`r format(round(filter(preliminar, ano == 2024)$nota_final, 2), decimal.mark = ",")`**, o que representa `r if(dif == 0) {paste("uma", sentido)} else {paste("um", sentido)}` em relação a 2020.
+
+O resultado final das consultas, efetuadas em 2020 e 2024, sobre todas as categorias e critérios considerados para a avaliação da disponibilidade de dados no portal do DETRAN-`r params$state` está disponível na @tbl-final.
+
+```{r}
+#| tbl-cap: Resultados finais das consultas
+#| label: tbl-final
+
+filtered |>
+  pivot_longer(-ano) |>
+  pivot_wider(names_from = ano, values_from = value) |>
+  mutate(name = replace_func(name)) |>
+  separate(name,
+           into = c("categoria", "criterio"),
+           sep = "_") |>
+  mutate(across(categoria:criterio, str_to_title_func),
+         criterio = coalesce(criterio, categoria)) |>
+  gt(groupname_col = "categoria") |>
+  tab_options(row_group.as_column = T) |>
+  sub_missing(missing_text = "") |>
+  data_color(
+    columns = 3:4,
+    palette = pal,
+    domain = c(0, 10)
+  ) |>
+  cols_label(criterio = "Critério") |>
+  fmt_number(decimals = 1, dec_mark = ",") |> 
+  tab_spanner(columns = 3:4, label = "Ano") |> 
+  tbl_styles() |> 
+  cols_align("center")
+```
+
+## Conclusão
+
+```{r}
+max_values <- preliminar |> 
   filter(ano == 2024) |> 
   select(-c(ano, nota_final)) |> 
-  pivot_longer(everything(), names_to = "Categoria", values_to = "Situação") |> 
-  mutate(across(2, ~ ifelse(.x == 0, "Ausente", "Presente")),
-         across(1, ~ str_to_title_func(replace_func(.)))) |> 
-  flextable() |> 
-  line_spacing(space = 0.4, part = "body") |> 
-  theme_box() |> 
-  color(color = "white", part = "header") |>
-  bg(bg = onsv_palette$blue, part = "header") |> 
-  align(align = "center", part = "head") |> 
-  bg(
-    j = c("Situação"), 
-    bg = scales::col_factor(
-      palette = rev(c(onsv_palette$green, onsv_palette$red)),
-      domain = c("Ausente", "Presente")
-    )
-  ) |> 
-  color(j = "Situação", color = "white") |> 
-  bold(j = "Situação")
+  pivot_longer(everything()) |> 
+  filter(value == max(value))
+
+max_values_len <- nrow(max_values)
+
+min_values <- preliminar |> 
+  filter(ano == 2024) |> 
+  select(-c(ano, nota_final)) |> 
+  pivot_longer(everything()) |> 
+  filter(value == min(value))
+
+min_values_len <- nrow(min_values)
 ```
 
+O presente trabalho pretende avaliar de forma quantitativa a performance do portal virtual do departamento consultado em disponibilizar ao público informações estatísticas pertinentes à segurança viária do respectivo estado. Desta maneira, a`r if(max_values_len > 1) {paste0("s")}` categoria`r if(max_values_len > 1) {paste0("s")}` de melhor desempenho para o DETRAN `r if(params$state %in% c("BA","PB")) {paste("da", get_state_name(params$state))} else {paste("de", get_state_name(params$state))}` `r if(max_values_len <= 1) {paste("foi a de")} else {paste("foram as de")}` `r knitr::combine_words(str_to_title_func(replace_func(max_values$name)), and = " e ", oxford_comma = F)`, com nota igual a `r format(unique(max_values$value), decimal.mark = ",")`. Em contraparte, a`r if(min_values_len > 1) {paste0("s")}` categoria`r if(min_values_len > 1) {paste0("s")}` de pior desempenho `r if(min_values_len <= 1) {paste("foi a de")} else {paste("foram as de")}` `r knitr::combine_words(str_to_title_func(replace_func(min_values$name)), and = " e ", oxford_comma = F)`, com nota `r format(unique(min_values$value), decimal.mark = ",")`. 
 
-```{r}
-filtered |> 
-  pivot_longer(-c(ano, nota_final), names_to = "categoria") |>
-  mutate(across(categoria, ~ replace_func( .x)),
-         ano = as.integer(ano)) |> 
-  separate(categoria, into = c("categoria", "criterio"), sep = "_") |> 
-  mutate(criterio = coalesce(criterio, categoria),
-         across(categoria:criterio, str_to_title_func)) |> 
-  relocate(c(nota_final, ano), .after = last_col()) |> 
-  flextable() |> 
-  merge_v(j = c("categoria", "ano", "nota_final")) |>
-  merge_h() |> 
-  autofit() |>
-  color(color = "white", part = "header") |>
-  bg(bg = onsv_palette$blue, part = "header") |> 
-  colformat_double(decimal.mark = ",", big.mark = "", j = 3) |> 
-  colformat_double(decimal.mark = ",", big.mark = "", j = 4, digits = 2) |> 
-  colformat_int(big.mark = "") |> 
-  set_header_labels(
-    categoria = "Categoria",
-    criterio = "Critério",
-    value = "Nota Específica",
-    nota_final = "Nota Final",
-    ano = "Ano"
-  ) |> 
-  line_spacing(space = 0.4, part = "body") |> 
-  theme_box() |> 
-  align(align = "center", part = "head") |> 
-  bg(
-    j = c("value", "nota_final"),
-    bg = scales::col_numeric(
-      palette = rev(c(onsv_palette$green, onsv_palette$red)),
-      domain = c(0, 10)
-    )
-  ) |> 
-  color(j = c("value", "nota_final"), color = "white") |> 
-  bold(j = c("value", "nota_final"))
-```
+Os resultados discutidos nesta análise visam não apenas mensurar o desempenho do fornecimento de dados, mas também auxiliar na instrução de possíveis melhorias para o sítio eletrônico estudado, visando agregar à qualidade e disponibilidade das informações providenciadas pelo DETRAN-`r params$state` em conformidade às suas atribuições. 
+
+## Referências
