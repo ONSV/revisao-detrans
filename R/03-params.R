@@ -37,3 +37,7 @@ purrr::walk(
     output_file = glue::glue("params_{.x}.pdf")
   )
 )
+
+files <- list.files(pattern = "params_")
+file.copy(from = files, to = "report/individuais/")
+file.remove(files)
