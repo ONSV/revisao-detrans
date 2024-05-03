@@ -6,6 +6,16 @@ format:
     citeproc: true
     csl: associacao-brasileira-de-normas-tecnicas.csl
     toc: false
+    keep-tex: true
+    template-partials: 
+      - title.tex
+    include-in-header: 
+      text: |
+        \usepackage[noblocks]{authblk}
+        \renewcommand*{\Authsep}{, }
+        \renewcommand*{\Authand}{, }
+        \renewcommand*{\Authands}{, }
+        \renewcommand\Affilfont{\small}
 editor: source
 
 author: 
