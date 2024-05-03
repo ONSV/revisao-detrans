@@ -6,25 +6,42 @@ format:
     citeproc: true
     csl: associacao-brasileira-de-normas-tecnicas.csl
     toc: false
+    keep-tex: true
+    template-partials: 
+      - title.tex
+    include-in-header: 
+      text: |
+        \usepackage[noblocks]{authblk}
+        \renewcommand*{\Authsep}{, }
+        \renewcommand*{\Authand}{, }
+        \renewcommand*{\Authands}{, }
+        \renewcommand\Affilfont{\small}
 editor: source
+
 author: 
   - name: João Pedro Melani Saraiva
-    affiliation:
-    - id: onsv
-      name: Observatório Nacional de Segurança Viária
+    affil-id: 1
   - name: Daniel Duque
-    affiliation: Centro de Liderança Pública
+    affil-id: 2
   - name: Pedro Augusto Borges dos Santos
-    affiliation: 
-      - ref: onsv   
+    affil-id: 1   
   - name: Dr. Jorge Tiago Bastos
-    affiliation: Universidade Federal do Paraná 
+    affil-id: 3
+    
+affiliations:
+  - id: 1
+    name: Observatório Nacional de Segurança Viária
+  - id: 2
+    name: Centro de Liderança Pública
+  - id: 3
+    name: Universidade Federal do Paraná
+    
 date: last-modified
 title-block-banner: true
 editor_options: 
   chunk_output_type: console
 params:
-  state: BA
+  state: PA
 title: "Avaliação do Nível de Informações Disponibilizadas no Portal do DETRAN - `r params$state`"
 bibliography: references.bib
 ---
@@ -60,6 +77,10 @@ filtered <-
 ```
 
 ```{r}
+estados <- c("AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO")
+preposicoes_de <- c("do", "de", "do", "do", "da", "do", "do", "do", "de", "do", "do", "do", "de", "do", "da", "do", "de", "do", "do", "do", "do", "do", "de", "de", "de", "de", "do")
+df_estados <- data.frame(Acronimo = estados, Preposicao_De = preposicoes_de)
+
 replace_func <- function(x) {
   str_replace_all(
     x,
@@ -107,13 +128,19 @@ tbl_styles <- function(gt) {
     quarto.disable_processing = T
   )
 }
+
+preposicao <- function(uf) { filter(df_estados, estados == uf)$Preposicao_De }
 ```
+
+## Sobre o relatório
+
+Este trabalho é uma iniciativa do Observatório Nacional de Segurança Viária, elaborado em parceria com o Centro de Liderança Pública e a Universidade Federal do Paraná. O relatório ainda está em desenvolvimento e as informações presentes estão sujeitas a mudanças. Elaborou-se um documento individual para cada Departamento Estadual de Trânsito, a fim de expor os resultados de forma preliminar para cada instituição.
 
 ## Introdução
 
 ### Objetivo
 
-O presente documento tem por objetivo apresentar uma avaliação do nível de informações disponibilizadas no portal (sítio eletrônico) do DETRAN (Departamento Estadual de Trânsito) `r if(params$state %in% c("BA","PB")) {paste("da", get_state_name(params$state))} else {paste("de", get_state_name(params$state))}`.
+O presente documento tem por objetivo apresentar uma avaliação do nível de informações disponibilizadas no portal (sítio eletrônico) do DETRAN (Departamento Estadual de Trânsito) `r paste(preposicao(params$state), get_state_name(params$state))`.
 
 Os DETRANs, por sua atuação, trabalham com um grande número de informações relevantes para a gestão do trânsito no país, tendo muitas delas, além do teor formal e burocrático, uma grande utilidade para avaliações no âmbito da segurança viária, tais como: infrações de trânsito, sinistros de trânsito, e habilitação, entre outros.
 
@@ -139,7 +166,7 @@ Este trabalho faz parte da segunda versão do relatório anteriormente publicado
 
 ### Consultas Preliminares
 
-O estudo foi realizado por meio do acesso do *sites* do DETRAN-`r params$state` a fim de averiguar a existência de dados estatíticos sobre a frota veicular, condutores habilitados, infrações e sinistros de trânsito. Também foram avaliados a existência de informações relacionadas à educação para o trânsito (campanhas, material educativo, regras de trânsito, etc.), dados quantitivos do atendimento ao público pelo departamento, disponibilidade de canais de atendimento e dados informativos sobre os centros de formação de condutores do estado em questão. A @tbl-consultas demonstra os resultados de uma consulta preliminar destes portais:
+O estudo foi realizado por meio do acesso ao *site* do DETRAN-`r params$state` a fim de averiguar a existência de dados estatíticos sobre a frota veicular, condutores habilitados, infrações e sinistros de trânsito. Também foram avaliados a existência de informações relacionadas à educação para o trânsito (campanhas, material educativo, regras de trânsito, etc.), dados quantitivos do atendimento ao público pelo departamento, disponibilidade de canais de atendimento e dados informativos sobre os centros de formação de condutores do estado em questão. A @tbl-consultas demonstra os resultados de uma consulta preliminar destes portais:
 
 ```{r}
 preliminar <-
@@ -191,8 +218,6 @@ A partir das categorias anteriormente discutidas, critérios de avaliação fora
 
 A avaliação dos dados estatísticos da **frota veicular**, **condutores habilitados**, **infrações** e **sinistros** de trânsito se baseou nos critérios de periodicidade (quantidade de anos disponíveis), interatividade (tipo de arquivos ou informações disponíveis) e nível de desagregação (quantidade de variáveis disponíveis para análise).
 
-\break
-
 A **periodicidade** foi avaliada em:
 
 -   Melhor: Quando há um máximo de 2 anos de atraso em relação ao ano atual para o dado mais recente e mais de 5 anos de dados disponíves;
@@ -220,6 +245,8 @@ O **nível de desagregação** foi avaliado em:
 -   Inicial: Quantidade baixa de variáveis.
 
 A relação destes critérios está ilustrada na @tbl-criterios:
+
+\break
 
 ```{r}
 #| tbl-cap: Critérios de avaliação para frota, condutores habilitados, infrações e sinistros
@@ -420,7 +447,7 @@ min_values <- preliminar |>
 min_values_len <- nrow(min_values)
 ```
 
-O presente trabalho pretende avaliar de forma quantitativa a performance do portal virtual do departamento consultado em disponibilizar ao público informações estatísticas pertinentes à segurança viária do respectivo estado. Desta maneira, a`r if(max_values_len > 1) {paste0("s")}` categoria`r if(max_values_len > 1) {paste0("s")}` de melhor desempenho para o DETRAN `r if(params$state %in% c("BA","PB")) {paste("da", get_state_name(params$state))} else {paste("de", get_state_name(params$state))}` `r if(max_values_len <= 1) {paste("foi a de")} else {paste("foram as de")}` `r knitr::combine_words(str_to_title_func(replace_func(max_values$name)), and = " e ", oxford_comma = F)`, com nota igual a `r format(unique(max_values$value), decimal.mark = ",")`. Em contraparte, a`r if(min_values_len > 1) {paste0("s")}` categoria`r if(min_values_len > 1) {paste0("s")}` de pior desempenho `r if(min_values_len <= 1) {paste("foi a de")} else {paste("foram as de")}` `r knitr::combine_words(str_to_title_func(replace_func(min_values$name)), and = " e ", oxford_comma = F)`, com nota `r format(unique(min_values$value), decimal.mark = ",")`. 
+O presente trabalho pretende avaliar de forma quantitativa a performance do portal virtual do departamento consultado em disponibilizar ao público informações estatísticas pertinentes à segurança viária do respectivo estado. Desta maneira, a`r if(max_values_len > 1) {paste0("s")}` categoria`r if(max_values_len > 1) {paste0("s")}` de melhor desempenho para o DETRAN `r paste(preposicao(params$state), get_state_name(params$state))` `r if(max_values_len <= 1) {paste("foi a de")} else {paste("foram as de")}` `r knitr::combine_words(str_to_title_func(replace_func(max_values$name)), and = " e ", oxford_comma = F)`, com nota igual a `r format(unique(max_values$value), decimal.mark = ",")`. Em contraparte, a`r if(min_values_len > 1) {paste0("s")}` categoria`r if(min_values_len > 1) {paste0("s")}` de pior desempenho `r if(min_values_len <= 1) {paste("foi a de")} else {paste("foram as de")}` `r knitr::combine_words(str_to_title_func(replace_func(min_values$name)), and = " e ", oxford_comma = F)`, com nota `r format(unique(min_values$value), decimal.mark = ",")`. 
 
 Os resultados discutidos nesta análise visam não apenas mensurar o desempenho do fornecimento de dados, mas também auxiliar na instrução de possíveis melhorias para o sítio eletrônico estudado, visando agregar à qualidade e disponibilidade das informações providenciadas pelo DETRAN-`r params$state` em conformidade às suas atribuições. 
 
