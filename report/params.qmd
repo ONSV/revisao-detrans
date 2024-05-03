@@ -218,8 +218,6 @@ A partir das categorias anteriormente discutidas, critérios de avaliação fora
 
 A avaliação dos dados estatísticos da **frota veicular**, **condutores habilitados**, **infrações** e **sinistros** de trânsito se baseou nos critérios de periodicidade (quantidade de anos disponíveis), interatividade (tipo de arquivos ou informações disponíveis) e nível de desagregação (quantidade de variáveis disponíveis para análise).
 
-\break
-
 A **periodicidade** foi avaliada em:
 
 -   Melhor: Quando há um máximo de 2 anos de atraso em relação ao ano atual para o dado mais recente e mais de 5 anos de dados disponíves;
@@ -247,6 +245,8 @@ O **nível de desagregação** foi avaliado em:
 -   Inicial: Quantidade baixa de variáveis.
 
 A relação destes critérios está ilustrada na @tbl-criterios:
+
+\break
 
 ```{r}
 #| tbl-cap: Critérios de avaliação para frota, condutores habilitados, infrações e sinistros
