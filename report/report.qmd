@@ -869,17 +869,19 @@ dumbbell_plot <-
 girafe(ggobj = dumbbell_plot, options = list(opts_toolbar(saveaspng = F)))
 ```
 
-Em 2024, houve uma progressão majoritariamente positiva para os DETRANs. Considerando os departamentos que obtiveram notas maiores que 7, estão em destaque:
+```{r}
+acima_de_7 <-
+  df_revisoes |>
+  filter(ano == 2024, nota_final >= 7) |>
+  mutate(text = paste(get_state_names(uf), "-", 
+                      format(round(nota_final, 2),decimal.mark = ","))) |> 
+  arrange(-nota_final) |> 
+  pull(text)
+```
 
--   Sergipe - 9,61;
+Em 2024, houve uma progressão majoritariamente positiva para os DETRANs. Considerando os departamentos que obtiveram notas maiores que 7, estão em destaque: 
 
--   São Paulo - 8,98;
-
--   Rio Grande do Sul - 8,74;
-
--   Paraná - 7,85 e;
-
--   Rio de Janeiro - 7,7.
+`r knitr::combine_words(acima_de_7, sep = ";\\\n", oxford_comma = F, and = ", e;\\\n", before = "\\\t\U25CF ", after = "")`;
 
 A @fig-map-compare apresenta mapas para a comparação das pontuações finais de todos estados.
 
@@ -972,6 +974,34 @@ consulta_pre |>
 ### Considerações Finais
 
 O propósito da avaliação dos portais eletrônicos dos DETRANs é investigar o presente cenário da disponibilidade de informações e dados estatísticos nacionais no tocante à segurança viária. Desta forma, a qualidade destes portais pode ser quantitativamente mensurada pelas métricas previamente estabelecidas.
+
+```{r}
+top_5 <-
+  consulta_pre |> 
+  mutate(nota_final = rowMeans(across(frota:cfcs))) |> 
+  slice_max(nota_final, n = 5)
+
+bottom_5 <-
+  consulta_pre |> 
+  mutate(nota_final = rowMeans(across(frota:cfcs))) |> 
+  slice_min(nota_final, n = 5)
+```
+
+Entre os departamentos com as cinco maiores notas para 2024, estão:
+
+- `r get_state_name(top_5[1, ]$uf)` - `r format(round(top_5[1, ]$nota_final, 2), decimal.mark  = ",")`;
+- `r get_state_name(top_5[2, ]$uf)` - `r format(round(top_5[2, ]$nota_final, 2), decimal.mark  = ",")`;
+- `r get_state_name(top_5[3, ]$uf)` - `r format(round(top_5[3, ]$nota_final, 2), decimal.mark  = ",")`;
+- `r get_state_name(top_5[4, ]$uf)` - `r format(round(top_5[4, ]$nota_final, 2), decimal.mark  = ",")`, e;
+- `r get_state_name(top_5[5, ]$uf)` - `r format(round(top_5[5, ]$nota_final, 2), decimal.mark  = ",")`.
+
+De forma análoga, os departamentos com as cinco menores notas são:
+
+- `r get_state_name(bottom_5[1, ]$uf)` - `r format(round(bottom_5[1, ]$nota_final, 2), decimal.mark  = ",")`;
+- `r get_state_name(bottom_5[2, ]$uf)` - `r format(round(bottom_5[2, ]$nota_final, 2), decimal.mark  = ",")`;
+- `r get_state_name(bottom_5[3, ]$uf)` - `r format(round(bottom_5[3, ]$nota_final, 2), decimal.mark  = ",")`;
+- `r get_state_name(bottom_5[4, ]$uf)` - `r format(round(bottom_5[4, ]$nota_final, 2), decimal.mark  = ",")`, e;
+- `r get_state_name(bottom_5[5, ]$uf)` - `r format(round(bottom_5[5, ]$nota_final, 2), decimal.mark  = ",")`.
 
 Os resultados encontrados por meio deste estudo denotam como a maior parte dos estados progrediu, visto que obtiveram pontuações finais maiores em 2024 em relação à avaliação de 2020 sob os mesmos critérios de avaliação. O conjunto de evidências geradas corroboram à conclusão de que, em geral, houve uma evolução nos sistemas estaduais de fornecimento de dados sobre o trânsito.
 
