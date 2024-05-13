@@ -971,9 +971,9 @@ consulta_pre |>
 
 ### Considerações Finais
 
-O propósito da avaliação dos portais eletrônicos dos DETRANs é investigar o presente cenário da disponibilidade de informações e dados estatísticos sobre a segurança viária nacional. Os resultados encontrados por meio deste estudo denotam como a maior parte dos estados progrediu, visto que obtiveram pontuações finais maiores em 2024 em relação à avaliação de 2020 sob os mesmos critérios de avaliação. 
+O propósito da avaliação dos portais eletrônicos dos DETRANs é investigar o presente cenário da disponibilidade de informações e dados estatísticos nacionais no tocante à segurança viária. Desta forma, a qualidade destes portais pode ser quantitativamente mensurada pelas métricas previamente estabelecidas.
 
-A qualidade destes portais pode ser quantitativamente mensurada pelas métricas previamente estabelecidas, e o conjunto de evidências geradas corroboram à conclusão de que, em geral, o fornecimento de dados estaduais de trânsito evoluiu.
+Os resultados encontrados por meio deste estudo denotam como a maior parte dos estados progrediu, visto que obtiveram pontuações finais maiores em 2024 em relação à avaliação de 2020 sob os mesmos critérios de avaliação. O conjunto de evidências geradas corroboram à conclusão de que, em geral, houve uma evolução nos sistemas estaduais de fornecimento de dados sobre o trânsito.
 
 ### Boas Práticas
 
