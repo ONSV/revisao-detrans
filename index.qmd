@@ -1,0 +1,39 @@
+# Apresentação {.unnumbered}
+
+<!-- Este relatório é um dos produtos do acordo de cooperação técnica entre o Observatório Nacional de Segurança Viária (ONSV) e a Associação Brasileira de Engenharia Automotiva (AEA). O acordo tem como principal objetivo avaliar a performance dos equipamentos de segurança veicular no contexto brasileiro, pretendendo investigar e elucidar a eficiência destas tecnologias e dispositivos em prol da segurança viária.
+
+A primeira etapa - Diagnóstico dos equipamentos veiculares de segurança na Primeira Década de Ação pela Segurança no Trânsito (2011 - 2020) - tem como objetivo elaborar um diagnóstico dos equipamentos veiculares de segurança no período entre 2011 a 2020. Esse diagnóstico será feito com base nos dados disponibilizados pela Polícia Rodoviária Federal (PRF), que apresenta informações sobre os sinistros e suas vítimas em rodovias federais do Brasil. -->
+
+# Highlights
+
+Aqui estão os principais resultados do trabalho.
+
+# Sobre
+
+## Como citar
+
+> SARAIVA, J.P.M.; DUQUE, D.V.A.; SANTOS, P.A.B. e BASTOS, J.T. Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito - Detrans. Observatório Nacional de Segurança Viária, Centro de Liderança Pública e Universidade Federal do Paraná. 2024. Disponível em: <https://onsv.org.br>.
+
+## Licença de uso
+
+Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito - Detrans © 2024 por Observatório Nacional de Segurança Viária está licenciada sob CC BY-NC 4.0. Para ver uma cópia desta licença, acesse <https://creativecommons.org/licenses/by-nc/4.0/>.
+
+## Código livre e aberto
+
+Todo o processo metodológico de coleta, transformação e visualização dos dados presentes nesse relatório estão disponíveis no repositório <https://github.com/ONSV/revisao-detrans>.
+
+:::{layout-ncol=2}
+
+:::{.left}
+
+![](logo/onsv_logo_main.png)
+
+:::
+
+:::{.right}
+
+![](logo/aea-logo.png)
+
+:::
+
+:::

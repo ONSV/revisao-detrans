@@ -1,0 +1,19 @@
+# Resultados {#sec-results}
+
+## Resultados por Categoria {#sec-results-cat}
+
+### Frota de Veículos {#sec-results-frota}
+
+### Condutores Habilitados {#sec-results-drivers}
+
+### Centro de Formação de Condutores {#sec-results-cfc}
+
+### Infrações {#sec-results-infracoes}
+
+### Sinistros de Trânsito {#sec-results-sinistros}
+
+### Educação para o Trânsito {#sec-results-educ}
+
+### Atendimento ao Público {#sec-results-atend}
+
+## Evolução dos Resultados {#sec-results-evo}

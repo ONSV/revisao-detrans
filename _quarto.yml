@@ -1,0 +1,50 @@
+project:
+  type: book
+  output-dir: docs
+
+execute: 
+  freeze: auto
+
+language:
+  section-title-appendices: "Apêndices"
+
+book:
+  title: "Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito - Detrans"
+  author: 
+  - name: João Pedro Melani Saraiva
+    affiliation:
+    - id: onsv
+      name: Observatório Nacional de Segurança Viária
+  - name: Daniel Vasconcellos Archer Duque
+    affiliation: Centro de Liderança Pública
+    orcid: 0000-0001-7090-1224
+  - name: Pedro Augusto Borges dos Santos
+    affiliation: 
+      - ref: onsv
+    orcid: 0000-0003-0550-4251
+  - name: Dr. Jorge Tiago Bastos
+    affiliation: Universidade Federal do Paraná
+    orcid: 0000-0001-6447-1504
+  date: last-modified
+  chapters:
+    - index.qmd
+    - 01-intro.qmd
+    - 02-metodos.qmd
+    - 03-resultados.qmd
+    - 04-conclusao.qmd
+    - 99-referencias.qmd
+  appendices:
+    - 9a-praticas.qmd
+    - 9b-links.qmd
+  twitter-card: true
+  repo-url: https://www.github.com/onsv/revisao-detrans
+  # cover-image: cover-test.png
+  language: pt-BR
+  favicon: logo/onsv_fav.ico
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: [cosmo, custom.scss]
+    lang: pt-BR

@@ -1,0 +1,5 @@
+# Métodos {#sec-method}
+
+## Consultas Preliminares {#sec-method-consult}
+
+## Critérios de Avaliação {#sec-method-crit}
