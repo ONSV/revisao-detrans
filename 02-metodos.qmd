@@ -1,0 +1,258 @@
+```{r}
+#| include: false
+#| label: setup
+
+source(here::here("R", "_common.R"))
+```
+
+# Métodos {#sec-method}
+
+## Consultas Preliminares {#sec-method-consult}
+
+O estudo foi realizado por meio do acesso dos *sites* dos Detrans de cada estado brasileiro a fim de averiguar a existência de dados estatísticos sobre a frota veicular, condutores habilitados, infrações e sinistros de trânsito. Também foram avaliados a existência de informações relacionadas à educação para o trânsito (campanhas, material educativo, regras de trânsito, etc.), dados quantitativos do atendimento ao público pelo departamento, disponibilidade de canais de atendimento e dados informativos sobre os centros de formação de condutores do estado em questão. A @tbl-consultas demonstra os resultados de uma consulta preliminar destes portais:
+
+```{r}
+#| include: false
+
+consulta_pre <- df_revisoes |>
+  mutate(regiao = get_region(uf), .before = 1) |>
+  filter(ano == 2024) |>
+  mutate(
+    frota = rowMeans(across(starts_with("frota"))),
+    condutores = rowMeans(across(starts_with("condutores"))),
+    infracoes = rowMeans(across(starts_with("infracoes"))),
+    sinistros = rowMeans(across(starts_with("sinistros"))),
+    atendimento = rowMeans(across(starts_with("atendimento"))),
+    educ = rowMeans(across(starts_with("educ"))),
+    cfcs
+  ) |>
+  select(regiao,
+         uf,
+         frota,
+         condutores,
+         infracoes,
+         sinistros,
+         atendimento,
+         educ,
+         cfcs)
+```
+
+```{r}
+#| label: tbl-consultas
+#| tbl-cap: Consultas preliminares
+#| echo: false
+
+consulta_pre |>
+  mutate(across(where(is.numeric), ~ ifelse(.x == 0, "NÃO", "SIM"))) |>
+  arrange(desc(regiao)) |>
+  rename(
+    `Região` = regiao,
+    UF = uf,
+    `Infrações` = infracoes,
+    `Educação` = educ,
+  ) |> 
+  rename_with(.fn = ~ str_to_title(.)) |> 
+  make_reactable(columns = list(
+    Frota = colDef(style = binary_bg_func),
+    Condutores = colDef(style = binary_bg_func),
+    `Infrações` = colDef(style = binary_bg_func),
+    Sinistros = colDef(style = binary_bg_func),
+    Atendimento = colDef(style = binary_bg_func),
+    `Educação` = colDef(style = binary_bg_func),
+    Cfcs = colDef(style = binary_bg_func)
+  ))
+```
+
+## Critérios de Avaliação {#sec-method-crit}
+
+A partir das categorias anteriormente discutidas, critérios de avaliação foram estabelecidos para quantificar a disponibilidade de dados e informações de cada um dos DETRANs. Assim sendo, são concedidos níveis de desempenho que equivalem a pontuações para cada um dos critérios aferidos:
+
+1.  **Melhor Prática** - Nota 10;
+
+2.  **Prática Intermediária** - Nota 6,7;
+
+3.  **Prática Inicial** - Nota 3,3 e;
+
+4.  **Prática Ausente** - Nota 0.
+
+A avaliação dos dados estatísticos da **frota de veículos**, **condutores habilitados**, **infrações** e **sinistros** de trânsito se baseou nos critérios de periodicidade (quantidade de anos disponíveis), interatividade (tipo de arquivos ou informações disponíveis) e nível de desagregação (quantidade de variáveis disponíveis para análise).
+
+A **periodicidade** foi avaliada em:
+
+-   Melhor: Quando há um máximo de 2 anos de atraso em relação ao ano atual para o dado mais recente e mais de 5 anos de dados disponíveis;
+
+-   Intermediária: Máximo de 2 anos de atraso ou menos de 5 anos disponíveis e;
+
+-   Inicial: 3+ anos de atraso e menos de 5 anos disponíveis.
+
+Neste contexto, para um estado ser situado como *Melhor*, por exemplo, seria necessário ter mais de 5 anos disponíveis e seu dado mais recente ser de, no mínimo, 2022.
+
+A **interatividade** foi avaliada em:
+
+-   Melhor: Possui dados disponibilizados em relatórios interativos ou *dashboards* para consultas dinâmicas;
+
+-   Intermediária: Dados disponibilizados em arquivos de planinhas (como `.xls`, `.xlsx` e `.ods`) de editores como Microsoft Excel, Google Sheets e LibreOffice Calc, e;
+
+-   Inicial: Dados disponibilizados apenas como texto na página ou arquivos de texto (`.txt`, `.csv`, etc.).
+
+O **nível de desagregação** foi avaliado em:
+
+-   Melhor: Quantidade grande de variáveis;
+
+-   Intermediário: Quantidade média de variáveis e;
+
+-   Inicial: Quantidade baixa de variáveis.
+
+A relação destes critérios está ilustrada na @tbl-criterios:
+
+```{r}
+#| tbl-cap: Critérios de avaliação para frota, condutores habilitados, infrações e sinistros
+#| label: tbl-criterios
+
+criterio <- data.frame(
+  notas = c(3.3, 6.7, 10),
+  periodicidade = c(
+    "3+ anos de atraso e < 5 anos",
+    "2 anos de atraso ou < 5 anos",
+    "2 anos de atraso e > 5 anos"
+  ),
+  interatividade = c("Texto", "Planilha", "Interativo"),
+  desagreg = c("1 a 2 desagregações", "3 a 4 desagregações", "5+ desagregações")
+)
+
+criterio_df <- rbind(
+  mutate(criterio, categoria = "Frota de veículos"),
+  mutate(criterio, categoria = "Condutores"),
+  mutate(
+    criterio,
+    categoria = "Infrações",
+    desagreg = c("1 desagregação", "2 desagregações", "3+ desagregações")
+  ),
+  mutate(
+    criterio,
+    categoria = "Sinistros",
+    desagreg = c("1 a 5 desagregações", "6 a 10 desagregações", "11+ desagregações")
+  )
+)
+
+report_gt_style = function(gt) {
+  gt |> 
+    tab_style(
+      style = list(
+        cell_fill(color = onsv_palette$blue),
+        cell_text(weight = "bold", color = "white")
+      ),
+      locations = cells_column_labels()
+    ) |> 
+    tab_style(
+      style = list(
+        cell_text(weight = "bold")
+      ),
+      locations = cells_row_groups()
+    )
+}
+
+criterio_df |> 
+  select(periodicidade, interatividade, desagreg, notas, categoria) |> 
+  gt(groupname_col = "categoria") |> 
+  cols_label(
+    notas = "Notas",
+    interatividade = "Interatividade",
+    desagreg = "Nível de desagregação",
+    periodicidade = "Periodicidade"
+  ) |> 
+  fmt_number(
+    columns = notas,
+    sep_mark = ".",
+    dec_mark = ",",
+    decimals = 1
+  ) |> 
+  report_gt_style()
+
+```
+
+As informações sobre o **atendimento ao público**, **educação para o trânsito** e **CFCs** foram aferidas com outros critérios mais específicos por não se tratarem de dados estritamente estatísticos, exigindo uma mudança na abordagem de avaliação. As Tabelas [-@tbl-cri-atend], [-@tbl-cri-educ] e [-@tbl-cri-cfcs] demonstram os critérios para cada um destes casos:
+
+```{r}
+#| tbl-cap: Critérios de avaliação para atendimento ao público
+#| label: tbl-cri-atend
+
+df_atend <- data.frame(
+  notas = c(3.3, 6.7, 10),
+  stats =  c(
+    "3+ anos de atraso e < 5 anos",
+    "2 anos de atraso ou < 5 anos",
+    "2 anos de atraso e > 5 anos"
+  ),
+  canais = c(
+    "Atendimento por telefone",
+    "Atendimento por telefone e e-mail",
+    "Atendimento por telefone, e-mail e mensagem"
+  )
+)
+
+df_atend |> 
+  select(stats, canais, notas) |> 
+  gt() |> 
+  cols_label(
+    stats = "Estatísticas",
+    canais = "Canais de atendimento",
+    notas = "Notas"
+  ) |> 
+  report_gt_style() |> 
+  fmt_number(
+    columns = notas,
+    sep_mark = ".",
+    dec_mark = ",",
+    decimals = 1
+  )
+
+```
+
+```{r}
+#| tbl-cap: Critérios de avaliação para conteúdo educativo
+#| label: tbl-cri-educ
+
+df_educ <- data.frame(
+  conteudo = c(
+    "Dicas, sugestões de leitura, cartilhas, orientações gerais e cadernos pedagógicos."
+  ),
+  divulgacao = c("Cursos, palestras, ações, projetos e campanhas.")
+)
+
+df_educ |> 
+  gt() |> 
+  cols_label(
+    conteudo = "Conteúdos didáticos",
+    divulgacao = "Divulgação de atividades"
+  ) |> 
+  report_gt_style()
+```
+
+```{r}
+#| tbl-cap: Critérios de avaliação para informações sobre CFCs
+#| label: tbl-cri-cfcs
+
+df_cfc <- data.frame(
+  lista = c(
+    "Quantidade de CFCs no estado",
+    "Lista completa dos CFCs",
+    "Informações adicionais sobre o índice de aprovação dos alunos, quais CFCs possuem simuladores de direção, número de habilitados e informações sobre o credenciamento."
+  ),
+  notas = c(3.3, 6.7, 10)
+)
+
+df_cfc |> 
+  gt() |> 
+  cols_label(
+    lista = "Lista de CFCs credenciados",
+    notas = "Notas"
+  ) |> 
+  report_gt_style() |> 
+  fmt_number(
+    columns = notas,
+    sep_mark = ".",
+    dec_mark = ",",
+    decimals = 1
+  )
+```

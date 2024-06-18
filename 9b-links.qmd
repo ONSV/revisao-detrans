@@ -1,0 +1,46 @@
+```{r}
+#| include: false
+#| label: setup
+
+source(here::here("R", "_common.R"))
+```
+
+
+# Links Acessados {#sec-links}
+
+Os *links* de acesso às informações consultadas estão disponíveis na @tbl-links:
+
+```{r}
+#| tbl-cap: Tabela de links de acesso
+#| label: tbl-links
+
+load(here("data/links.rda"))
+
+tbl_links |>
+  rename(
+    `Frota` = frota,
+    Condutores = condutores,
+    `Infrações` = infracoes,
+    `Sinistros` = sinistros,
+    `Estatísticas de atendimento` = estatistica_atend,
+    `Canais de atendimento` = canais,
+    `Educação para trânsito` = educ,
+    CFCs = cfc
+  ) |>
+  pivot_longer(-UF) |>
+  mutate(UF = get_state_names(UF)) |>
+  group_by(UF) |>
+  gt(rowname_col = "name") |>
+  cols_label(value = "Links de acesso para informações") |>
+  sub_missing(missing_text = "N.D.") |>
+  tab_style(locations = cells_body(value),
+            style = list(cell_text(size = "smaller"))) |>
+  tab_options(
+    column_labels.background.color = onsv_palette$blue,
+    column_labels.font.weight = "bold"
+  ) |>
+  tab_style(style = cell_text(color = onsv_palette$blue),
+            locations = cells_title()) |> 
+  tab_style(style = cell_fill(color = "grey90"),
+            locations = cells_row_groups())
+```

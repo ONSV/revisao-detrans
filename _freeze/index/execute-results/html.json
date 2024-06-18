@@ -1,0 +1,15 @@
+{
+  "hash": "2e19004449c4be7f5a905694764223f7",
+  "result": {
+    "engine": "knitr",
+    "markdown": "\n\n\n# Apresentação {.unnumbered}\n\nO presente relatório é um produto da cooperação entre o Observatório Nacional de Segurança Viária (ONSV), o Centro de Liderança Pública (CLP) e a Universidade Federal do Paraná (UFPR). O documento tem como principal conteúdo a avaliação do nível de informações disponibilizadas nos portais dos Detrans de todas as unidades da federação brasileira.\n\nEssa é uma segunda versão do relatório publicado em 2020 pelo Observatório Nacional de Segurança Viária, que virou uma comunicação técnica publicada no segundo Simpósio de Transportes do Paraná (STPR), também em 2020 [@santos2020]. A elaboração de uma nova versão possibilita a análise da evolução dos portais dos DETRANs de cada estado, entre os anos de 2020 e 2024\n\n# Highlights\n\nAqui estão os principais resultados do trabalho.\n\n# Sobre\n\n## Como citar\n\n> SARAIVA, J. P. M.; DUQUE, D. V. A.; SANTOS, P. A. B. e BASTOS, J. T. Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito - Detrans. Observatório Nacional de Segurança Viária, Centro de Liderança Pública e Universidade Federal do Paraná. 2024. Disponível em: <https://onsv.org.br>.\n\n## Licença de uso\n\nAvaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito - Detrans © 2024 por Observatório Nacional de Segurança Viária está licenciada sob CC BY-NC 4.0. Para ver uma cópia desta licença, acesse <https://creativecommons.org/licenses/by-nc/4.0/>.\n\n## Código livre e aberto\n\nTodo o processo metodológico de coleta, transformação e visualização dos dados presentes nesse relatório estão disponíveis no repositório <https://github.com/ONSV/revisao-detrans>.\n\n:::{layout=\"[50, 28, 19]\"}\n\n:::{.left}\n\n![](logo/onsv_logo_main.png)\n\n:::\n\n:::{.mid}\n\n![](logo/clp-logo.png)\n\n:::\n\n:::{.right}\n\n![](logo/marca_UFPR.png)\n\n:::\n\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
