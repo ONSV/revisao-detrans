@@ -1,0 +1,15 @@
+{
+  "hash": "9d745aedaff6fc2dd431b8486e62c3c4",
+  "result": {
+    "engine": "knitr",
+    "markdown": "\n\n\n\n# Conclusões {#sec-conclusion}\n\nO propósito da avaliação dos portais eletrônicos dos DETRANs é investigar o presente cenário da disponibilidade de informações e dados estatísticos nacionais no tocante à segurança viária. Desta forma, a qualidade destes portais pode ser quantitativamente mensurada pelas métricas previamente estabelecidas.\n\n\n::: {.cell}\n\n:::\n\n\nEntre os departamentos com as **cinco maiores** notas para 2024, estão:\n\n- Sergipe - 9,61;\n- São Paulo - 8,98;\n- Rio Grande do Sul - 8,74;\n- Paraná - 7,85, e;\n- Rio de Janeiro - 7,7.\n\nDe forma análoga, os departamentos com as **cinco menores** notas são:\n\n- Roraima - 1,66;\n- Pará - 2,14;\n- Piauí - 2,38;\n- Tocantins - 2,39, e;\n- Amapá - 2,62.\n\nEm destaque, observa-se os estados que atingiram a nota máxima (10) em alguma das sete categorias de informações consultadas:\n\n- **Atendimento**: RS, SP e MG;\n- **CFCs**: SE, SP, GO, PR, RJ, ES, CE, AL e AP;\n- **Condutores**: RO;\n- **Educação**: SE, RS, PR, RJ, MS, PE, MG, DF, AC, AM e PA;\n- **Frota**: SE, RJ e RO;\n- **Infrações**: SE e MS, e;\n- **Sinistros**: SE e RO\n\nOs resultados encontrados por meio deste estudo denotam como a maior parte dos estados progrediu, visto que obtiveram pontuações finais maiores em 2024 em relação à avaliação de 2020 sob os mesmos critérios de avaliação. O conjunto de evidências geradas corroboram à conclusão de que, em geral, houve uma evolução nos sistemas estaduais de fornecimento de dados sobre o trânsito.",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

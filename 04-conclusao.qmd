@@ -1,1 +1,84 @@
+```{r}
+#| include: false
+#| label: setup
+
+source(here::here("R", "_common.R"))
+```
+
+
 # Conclusões {#sec-conclusion}
+
+O propósito da avaliação dos portais eletrônicos dos DETRANs é investigar o presente cenário da disponibilidade de informações e dados estatísticos nacionais no tocante à segurança viária. Desta forma, a qualidade destes portais pode ser quantitativamente mensurada pelas métricas previamente estabelecidas.
+
+```{r}
+
+consulta_pre <- df_revisoes |>
+  mutate(regiao = get_region(uf), .before = 1) |>
+  filter(ano == 2024) |>
+  mutate(
+    frota = rowMeans(across(starts_with("frota"))),
+    condutores = rowMeans(across(starts_with("condutores"))),
+    infracoes = rowMeans(across(starts_with("infracoes"))),
+    sinistros = rowMeans(across(starts_with("sinistros"))),
+    atendimento = rowMeans(across(starts_with("atendimento"))),
+    educ = rowMeans(across(starts_with("educ"))),
+    cfcs
+  ) |>
+  select(regiao,
+         uf,
+         frota,
+         condutores,
+         infracoes,
+         sinistros,
+         atendimento,
+         educ,
+         cfcs)
+
+
+top_5 <-
+  consulta_pre |> 
+  mutate(nota_final = rowMeans(across(frota:cfcs))) |> 
+  slice_max(nota_final, n = 5)
+
+bottom_5 <-
+  consulta_pre |> 
+  mutate(nota_final = rowMeans(across(frota:cfcs))) |> 
+  slice_min(nota_final, n = 5)
+
+notas_10 <- 
+  consulta_pre |>
+  select(-regiao) |> 
+  pivot_longer(-uf) |> 
+  filter(value == 10) |> 
+  arrange(name) |> 
+  select(-value) |> 
+  pivot_wider(names_from = name, values_from = uf)
+```
+
+Entre os departamentos com as **cinco maiores** notas para 2024, estão:
+
+- `r get_state_name(top_5[1, ]$uf)` - `r format(round(top_5[1, ]$nota_final, 2), decimal.mark  = ",")`;
+- `r get_state_name(top_5[2, ]$uf)` - `r format(round(top_5[2, ]$nota_final, 2), decimal.mark  = ",")`;
+- `r get_state_name(top_5[3, ]$uf)` - `r format(round(top_5[3, ]$nota_final, 2), decimal.mark  = ",")`;
+- `r get_state_name(top_5[4, ]$uf)` - `r format(round(top_5[4, ]$nota_final, 2), decimal.mark  = ",")`, e;
+- `r get_state_name(top_5[5, ]$uf)` - `r format(round(top_5[5, ]$nota_final, 2), decimal.mark  = ",")`.
+
+De forma análoga, os departamentos com as **cinco menores** notas são:
+
+- `r get_state_name(bottom_5[1, ]$uf)` - `r format(round(bottom_5[1, ]$nota_final, 2), decimal.mark  = ",")`;
+- `r get_state_name(bottom_5[2, ]$uf)` - `r format(round(bottom_5[2, ]$nota_final, 2), decimal.mark  = ",")`;
+- `r get_state_name(bottom_5[3, ]$uf)` - `r format(round(bottom_5[3, ]$nota_final, 2), decimal.mark  = ",")`;
+- `r get_state_name(bottom_5[4, ]$uf)` - `r format(round(bottom_5[4, ]$nota_final, 2), decimal.mark  = ",")`, e;
+- `r get_state_name(bottom_5[5, ]$uf)` - `r format(round(bottom_5[5, ]$nota_final, 2), decimal.mark  = ",")`.
+
+Em destaque, observa-se os estados que atingiram a nota máxima (10) em alguma das sete categorias de informações consultadas:
+
+- **Atendimento**: `r notas_10$atendimento |> unlist() |> combine_words(oxford_comma = F, and = " e ")`;
+- **CFCs**: `r notas_10$cfcs |> unlist() |> combine_words(oxford_comma = F, and = " e ")`;
+- **Condutores**: `r notas_10$condutores |> unlist() |> combine_words(oxford_comma = F, and = " e ")`;
+- **Educação**: `r notas_10$educ |> unlist() |> combine_words(oxford_comma = F, and = " e ")`;
+- **Frota**: `r notas_10$frota |> unlist() |> combine_words(oxford_comma = F, and = " e ")`;
+- **Infrações**: `r notas_10$infracoes |> unlist() |> combine_words(oxford_comma = F, and = " e ")`, e;
+- **Sinistros**: `r notas_10$sinistros |> unlist() |> combine_words(oxford_comma = F, and = " e ")`
+
+Os resultados encontrados por meio deste estudo denotam como a maior parte dos estados progrediu, visto que obtiveram pontuações finais maiores em 2024 em relação à avaliação de 2020 sob os mesmos critérios de avaliação. O conjunto de evidências geradas corroboram à conclusão de que, em geral, houve uma evolução nos sistemas estaduais de fornecimento de dados sobre o trânsito.
