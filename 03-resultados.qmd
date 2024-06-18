@@ -1,19 +1,683 @@
+```{r}
+#| include: false
+#| label: setup
+
+source(here::here("R", "_common.R"))
+```
+
+
 # Resultados {#sec-results}
+
+Nessa seção, os resultados estão organizados por categoria (@sec-results-cat) e estão apresentados em uma comparação entre os resultados atuais e os resultados obtidos em 2020 (@sec-results-evo). 
 
 ## Resultados por Categoria {#sec-results-cat}
 
 ### Frota de Veículos {#sec-results-frota}
 
+
+```{r}
+frota <- df_revisoes |>
+  filter(ano == 2024) |>
+  select(uf, starts_with("frota")) |>
+  mutate(regiao = get_region(uf), .before = 1) |>
+  mutate(nota_final = round(rowMeans(across(
+    starts_with("frota")
+  )), 2)) |>
+  arrange(desc(regiao))
+```
+
+Primeiramente, os dados de frota de veículos, condutores habilitados, infrações e sinistros são analisados conforme os três critérios de avaliação anteriormente vistos na @tbl-criterios. No caso da frota, o nível de desagregação considera as variáveis de ano de fabricação do veículo, categoria (particular, aluguel, etc.), combustível, espécie (passageiro, carga, etc.), procedência (nacional ou estrangeira) e tipo de veículo.
+
+A @tbl-frota aponta a qualidade dos dados estatísticos da frota veicular como fornecidos pelos portais dos Detrans, assim como a nota média para estes critérios. A periodicidade aparenta ser o critério de melhor performance na maior parte dos departamentos para esta categoria. @fig-map-frota apresenta esses dados mapeados ao longo das UFs.
+
+::: panel-tabset
+### Tabela
+
+```{r}
+#| label: tbl-frota
+#| tbl-cap: Resultados da categoria "Frota de Veículos"
+
+frota |>
+  mutate(across(
+    starts_with("frota"),
+    ~ case_match(
+      .x,
+      10.0 ~ "Melhor",
+      6.7 ~ "Intermediário",
+      3.3 ~ "Inicial",
+      0 ~ "Ausente"
+    )
+  )) |>
+  rename(
+    `Região` = regiao,
+    UF = uf,
+    Periodicidade = frota_period,
+    Interatividade = frota_inter,
+    `Nível de desagregação` = frota_desagreg,
+    `Nota Média` = nota_final
+  ) |>
+  make_reactable(
+    columns = list(
+      `Nota Média` = colDef(
+        style = continuous_bg_func,
+        format = colFormat(locales = "de-DE", digits = 1)
+      ),
+      Periodicidade = colDef(style = quali_bg_func),
+      Interatividade = colDef(style = quali_bg_func),
+      `Nível de desagregação` = colDef(style = quali_bg_func)
+    )
+  )
+```
+
+### Mapa
+
+```{r}
+#| fig-cap: Resultados da categoria "Frota de Veículos"
+#| label: fig-map-frota
+
+frota_map <- 
+  frota |> 
+  map_preproc()
+
+frota_map |>
+  make_leaflet()
+```
+:::
+
+
 ### Condutores Habilitados {#sec-results-drivers}
+
+
+```{r}
+condutores <- df_revisoes |>
+  filter(ano == 2024) |>
+  select(uf, starts_with("condutores")) |>
+  mutate(regiao = get_region(uf), .before = 1) |>
+  mutate(nota_final = round(rowMeans(across(
+    starts_with("condutores")
+  )), 2)) |>
+  arrange(desc(regiao))
+```
+
+A @tbl-condutores e a @fig-map-condutores mostram o desempenho dos Detrans na disponibilização de dados de condutores habilitados, visto que neste caso as variáveis de desagregação compreendem a categoria da habilitação, sexo, opção de doador, situação (provisória ou definitiva), idade do condutor e tempo de habilitação. Novamente, a periodicidade e a interatividade são os critérios com maior e menor performance geral respectivamente.
+
+::: panel-tabset
+### Tabela
+
+```{r}
+#| label: tbl-condutores
+#| tbl-cap: Resultados da categoria "Condutores Habilitados"
+
+condutores |>
+  mutate(across(
+    starts_with("condutores"),
+    ~ case_match(
+      .x,
+      10.0 ~ "Melhor",
+      6.7 ~ "Intermediário",
+      3.3 ~ "Inicial",
+      0 ~ "Ausente"
+    )
+  )) |> 
+  rename(
+    `Região` = regiao,
+    UF = uf,
+    Periodicidade = condutores_period,
+    Interatividade = condutores_inter,
+    `Nível de desagregação` = condutores_desagreg,
+    `Nota Média` = nota_final
+  ) |> 
+  make_reactable(
+    columns = list(
+      `Nota Média` = colDef(
+        style = continuous_bg_func,
+        format = colFormat(locales = "de-DE", digits = 1)
+      ),
+      Periodicidade = colDef(style = quali_bg_func),
+      Interatividade = colDef(style = quali_bg_func),
+      `Nível de desagregação` = colDef(style = quali_bg_func)
+    )
+  )
+```
+
+### Mapa
+
+```{r}
+#| fig-cap: Resultados da categoria "Condutores Habilitados"
+#| label: fig-map-condutores
+
+condutores_map <- 
+  condutores |> 
+  map_preproc()
+
+condutores_map |> 
+  make_leaflet()
+```
+:::
+
 
 ### Centro de Formação de Condutores {#sec-results-cfc}
 
+```{r}
+cfcs <- df_revisoes |>
+  filter(ano == 2024) |>
+  select(uf, cfcs) |>
+  mutate(regiao = get_region(uf), .before = 1) |>
+  arrange(desc(regiao))
+```
+
+As notas para cada estado estão ilustradas na @tbl-cfcs e na @fig-map-cfcs em pontuações qualitativas. Observa-se a predominância do desempenho intermediário nestes dados. Há também uma clara ausência de Detrans com **Prática Inicial**.
+
+::: panel-tabset
+### Tabela
+
+```{r}
+#| tbl-cap: Resultados da categoria "CFCs"
+#| label: tbl-cfcs
+
+cfcs |>
+  mutate(
+    nota = cfcs,
+    cfcs =
+       case_match(
+        cfcs,
+        10.0 ~ "Melhor",
+        6.7 ~ "Intermediário",
+        3.3 ~ "Inicial",
+        0 ~ "Ausente"
+      )
+  ) |>
+  rename(
+    `Região` = regiao,
+    UF = uf,
+    `Lista de CFCs` = cfcs,
+    `Nota Média` = nota
+  ) |> 
+  make_reactable(
+    columns = list(
+      `Nota Média` = colDef(
+        style = continuous_bg_func,
+        format = colFormat(locales = "de-DE", digits = 1)
+      ),
+      `Lista de CFCs` = colDef(style = quali_bg_func)
+    )
+  )
+```
+
+### Mapa
+
+```{r}
+#| fig-cap: Resultados da categoria "CFCs"
+#| label: fig-map-cfcs
+
+cfcs_map <- 
+  cfcs |> 
+  rename(nota_final = cfcs) |> 
+  map_preproc()
+
+cfcs_map |> 
+  make_leaflet()
+```
+:::
+
 ### Infrações {#sec-results-infracoes}
+
+```{r}
+infracoes <- df_revisoes |>
+  filter(ano == 2024) |>
+  select(uf, starts_with("infracoes")) |>
+  mutate(regiao = get_region(uf), .before = 1) |>
+  mutate(nota_final = round(rowMeans(across(
+    starts_with("infracoes")
+  )), 2)) |>
+  arrange(desc(regiao))
+```
+
+A @tbl-infracoes e a @fig-map-infracoes contêm os resultados das consultas de dados sobre infrações. Neste caso, a desagregação considerou a divisão por artigo de infração, grupo de infração (circulação, estacionamento, etc.), natureza (grave, leve, etc.), instrumento de autuação, local de autuação, faixa etária do condutor infrator, sexo do condutor infrator, por responsável (condutor ou proprietário) e exercício de atividade remunerada ou não do infrator.
+
+::: panel-tabset
+### Tabela
+
+```{r}
+#| tbl-cap: Resultados da categoria "Infrações"
+#| label: tbl-infracoes
+
+infracoes |>
+  mutate(across(
+    starts_with("infracoes"),
+    ~ case_match(
+      .x,
+      10.0 ~ "Melhor",
+      6.7 ~ "Intermediário",
+      3.3 ~ "Inicial",
+      0 ~ "Ausente"
+    )
+  )) |>
+  rename(
+    `Região` = regiao,
+    UF = uf,
+    Periodicidade = infracoes_period,
+    Interatividade = infracoes_inter,
+    `Nível de desagregação` = infracoes_desagreg,
+    `Nota Média` = nota_final
+  ) |> 
+  make_reactable(
+    columns = list(
+      `Nota Média` = colDef(
+        style = continuous_bg_func,
+        format = colFormat(locales = "de-DE", digits = 1)
+      ),
+      Periodicidade = colDef(style = quali_bg_func),
+      Interatividade = colDef(style = quali_bg_func),
+      `Nível de desagregação` = colDef(style = quali_bg_func)
+    )
+  )
+```
+
+### Mapa
+
+```{r}
+#| fig-cap: Resultados da categoria "Infrações"
+#| label: fig-map-infracoes
+
+infracoes_map <- 
+  infracoes |> 
+  map_preproc()
+
+infracoes_map |> 
+  make_leaflet()
+```
+:::
 
 ### Sinistros de Trânsito {#sec-results-sinistros}
 
+```{r}
+sinistros <- df_revisoes |>
+  filter(ano == 2024) |>
+  select(uf, starts_with("sinistros")) |>
+  mutate(regiao = get_region(uf), .before = 1) |>
+  mutate(nota_final = round(rowMeans(across(
+    starts_with("sinistros")
+  )), 2)) |>
+  arrange(desc(regiao))
+```
+
+A avaliação sobre os dados de sinistros de trânsito está apresentada na @tbl-sinistros e na @fig-map-sinistros. Entende-se como variáveis para a desagregação desta categoria a gravidade do sinistro (fatal ou não), período (dia ou noite), área (urbana ou rural), natureza (atropelamento, choque, etc.), dias da semana, horário, sexo da vítima e/ou do condutor, faixa etária da vítima e/ou do condutor, tipo da vítima e/ou do condutor (ciclista, pedestre, etc.), categoria do condutor (habilitado, inabilitado, etc.), tempo de habilitação do condutor e espécie do veículo envolvido (automóvel, bicicleta, etc.).
+
+::: panel-tabset
+### Tabela
+
+```{r}
+#| tbl-cap: Resultados da categoria "Sinistros"
+#| label: tbl-sinistros
+
+sinistros |>
+  mutate(across(
+    starts_with("sinistros"),
+    ~ case_match(
+      .x,
+      10.0 ~ "Melhor",
+      6.7 ~ "Intermediário",
+      3.3 ~ "Inicial",
+      0 ~ "Ausente"
+    )
+  )) |>
+  rename(
+    `Região` = regiao,
+    UF = uf,
+    Periodicidade = sinistros_period,
+    Interatividade = sinistros_inter,
+    `Nível de desagregação` = sinistros_desagreg,
+    `Nota Média` = nota_final
+  ) |> 
+  make_reactable(
+    columns = list(
+      `Nota Média` = colDef(
+        style = continuous_bg_func,
+        format = colFormat(locales = "de-DE", digits = 1)
+      ),
+      Periodicidade = colDef(style = quali_bg_func),
+      Interatividade = colDef(style = quali_bg_func),
+      `Nível de desagregação` = colDef(style = quali_bg_func)
+    )
+  )
+```
+
+### Mapa
+
+```{r}
+#| fig-cap: Resultados da categoria "Sinistros"
+#| label: fig-map-sinistros
+
+sinistros_map <- 
+  sinistros |> 
+  map_preproc()
+
+sinistros_map |> 
+  make_leaflet()
+```
+:::
+
+
 ### Educação para o Trânsito {#sec-results-educ}
+
+
+As consultas sobre informações de educação para o trânsito estão apresentadas na @tbl-educ e na @fig-map-educ, com pontuações atribuídas conforme os critérios de avaliação da @tbl-cri-educ.
+
+```{r}
+educacao <- df_revisoes |>
+  filter(ano == 2024) |>
+  select(uf, starts_with("educ")) |>
+  mutate(regiao = get_region(uf), .before = 1) |>
+  mutate(nota_final = round(rowMeans(across(
+    starts_with("educ")
+  )), 2)) |>
+  arrange(desc(regiao))
+```
+
+::: panel-tabset
+### Tabela
+
+```{r}
+#| tbl-cap: Resultados da categoria "Educação para o Trânsito"
+#| label: tbl-educ
+
+educacao |> 
+    mutate(across(
+    starts_with("educ"),
+    ~ case_match(
+      .x,
+      10.0 ~ "Melhor",
+      6.7 ~ "Intermediário",
+      3.3 ~ "Inicial",
+      0 ~ "Ausente"
+    )
+  )) |>
+  rename(
+    `Região` = regiao,
+    UF = uf,
+    `Conteúdos didáticos` = educ_conteudos,
+    `Divulgação de atividades` = educ_divulgacao,
+    `Nota Média` = nota_final
+  ) |> 
+  make_reactable(
+    columns = list(
+      `Nota Média` = colDef(
+        style = continuous_bg_func,
+        format = colFormat(locales = "de-DE", digits = 1)
+      ),
+      `Conteúdos didáticos` = colDef(style = quali_bg_func),
+      `Divulgação de atividades` = colDef(style = quali_bg_func)
+    )
+  )
+```
+
+### Mapa
+
+```{r}
+#| fig-cap: Resultados da categoria "Educação para o Trânsito"
+#| label: fig-map-educ
+
+educacao_map <-
+  educacao |>
+  map_preproc()
+
+educacao_map |> 
+  make_leaflet()
+```
+:::
 
 ### Atendimento ao Público {#sec-results-atend}
 
+```{r}
+atendimento <- df_revisoes |>
+  filter(ano == 2024) |>
+  select(uf, starts_with("atendimento")) |>
+  mutate(regiao = get_region(uf), .before = 1) |>
+  mutate(nota_final = round(rowMeans(across(
+    starts_with("atendimento")
+  )), 2)) |>
+  arrange(desc(regiao))
+```
+
+Os resultados das consultas sobre o atendimento ao público estão apresentados na @tbl-atendimento e na @fig-map-atend. É notável a ausência de estatísticas de atendimento para a maioria dos DETRANs.
+
+::: panel-tabset
+### Tabela
+
+```{r}
+#| tbl-cap: Resultados da categoria "Atendimento ao Público"
+#| label: tbl-atendimento
+
+atendimento |>
+  mutate(
+    atendimento_canais =
+      case_match(
+        atendimento_canais,
+        10.0 ~ "Melhor",
+        6.7 ~ "Intermediário",
+        3.3 ~ "Inicial",
+        0 ~ "Ausente"
+      ),
+    atendimento_estatistica =
+      case_match(
+        atendimento_estatistica,
+        10.0 ~ "Melhor",
+        6.7 ~ "Intermediário",
+        3.3 ~ "Inicial",
+        0 ~ "Ausente"
+      )
+  ) |>
+  rename(
+    `Região` = regiao,
+    UF = uf,
+    `Estatísticas de atendimento` = atendimento_estatistica,
+    `Canais de atendimento` = atendimento_canais,
+    `Nota Média` = nota_final
+  ) |>
+  make_reactable(
+    columns = list(
+      `Nota Média` = colDef(
+        style = continuous_bg_func,
+        format = colFormat(locales = "de-DE", digits = 1)
+      ),
+      `Estatísticas de atendimento` = colDef(style = quali_bg_func),
+      `Canais de atendimento` = colDef(style = quali_bg_func)
+    )
+  )
+```
+
+### Mapa
+
+```{r}
+#| fig-cap: Resultados da categoria "Atendimento ao Público"
+#| label: fig-map-atend
+
+atendimento_map <- 
+  atendimento |> 
+  map_preproc()
+
+atendimento_map |> 
+  make_leaflet()
+```
+:::
+
 ## Evolução dos Resultados {#sec-results-evo}
+
+As pontuações finais calculadas para a avaliação das informações disponibilizadas nos portais dos DETRANs de 2024 permite não apenas identificar os departamentos de melhor performance conforme os critérios de avaliação estabelecidos, mas também averiguar como progrediram ou regrediram em relação à avaliação de 2020, como visto na @fig-dumbbell.
+
+```{r}
+#| fig-cap: Evolução dos resultados finais entre 2020 e 2024
+#| label: fig-dumbbell
+#| fig-height: 5
+
+dumbbell <- df_revisoes |>
+  select(uf, nota_final, ano) |>
+  mutate(regiao = get_region(uf)) |>
+  pivot_wider(names_from = ano,
+              names_prefix = "ano_",
+              values_from = nota_final) |>
+  mutate(uf = reorder(uf, ano_2024),
+         color = if_else(ano_2020 < ano_2024, "up", "down"))
+
+dumbbell_plot <-
+  ggplot(dumbbell) +
+  geom_segment_interactive(
+    aes(
+      y = uf,
+      yend = uf,
+      x = ano_2020,
+      xend = ano_2024,
+      color = color,
+      tooltip = sprintf(
+        "Estado: %s<br>Nota de 2024: %.2f<br>Nota de 2020: %.2f",
+        uf,
+        ano_2024,
+        ano_2020
+      ),
+      data_id = uf
+    ),
+    arrow = arrow(
+      length = unit(.1, "inches"),
+      type = "closed",
+      angle = 20
+    ),
+    hover_nearest = T,
+    show.legend = F
+  ) +
+  scale_color_manual(values = c(onsv_palette$red, onsv_palette$green)) +
+  scale_x_continuous(limits = c(0, 10)) +
+  scale_y_discrete(position = "left",) +
+  labs(x = NULL, y = NULL, color = NULL) +
+  theme_bw() +
+  facet_grid(vars(regiao),
+             scales = "free_y",
+             space = "free_y",
+             switch = "y") +
+  theme(strip.text = element_text(size = 7),
+        axis.text.y = element_text(size = 8))
+
+girafe(ggobj = dumbbell_plot, options = list(opts_toolbar(saveaspng = F)))
+```
+
+```{r}
+acima_de_7 <-
+  df_revisoes |>
+  filter(ano == 2024, nota_final >= 7) |>
+  mutate(text = paste(get_state_names(uf), "-", 
+                      format(round(nota_final, 2),decimal.mark = ","))) |> 
+  arrange(-nota_final) |> 
+  pull(text)
+```
+
+Em 2024, houve uma progressão majoritariamente positiva para os DETRANs. Considerando os departamentos que obtiveram notas maiores que 7, estão em destaque: 
+
+`r knitr::combine_words(acima_de_7, sep = ";\\\n", oxford_comma = F, and = ", e;\\\n", before = "\\\t\U25CF ", after = "")`;
+
+A @fig-map-compare apresenta mapas para a comparação das pontuações finais de todos estados.
+
+```{r}
+#| fig-cap: Notas finais para DETRANs em 2020 e 2024
+#| label: fig-map-compare
+
+title_2020 <- htmltools::tags$div(htmltools::HTML('2020'))
+title_2024 <- htmltools::tags$div(htmltools::HTML('2024'))
+
+comparison_map <-
+  df_revisoes |> 
+  map_preproc()
+
+comp_map_2020 <- 
+  comparison_map[comparison_map$ano == 2020, ] |> 
+  make_leaflet() |> 
+  addControl(title_2020, position = "topright")
+
+comp_map_2024 <-
+  comparison_map[comparison_map$ano == 2024, ] |> 
+  make_leaflet() |> 
+  addControl(title_2024, position = "topright")
+
+sync(comp_map_2020, comp_map_2024, sync = F)
+```
+
+O resultado final de todas as consultas efetuadas, bem como os valores médios para cada categoria de dado acessado e suas notas finais podem ser observados na @tbl-final, em ordem descendente das pontuações atribuídas em 2024.
+
+```{r}
+#| tbl-cap: Resultados finais das consultas para 2024
+#| label: tbl-final
+
+coldef1 <- 
+  colDef(
+    format = colFormat(locales = "de-DE", digits = 1)
+  )
+
+coldef2 <- 
+  colDef(
+    style = continuous_bg_func,
+    format = colFormat(locales = "de-DE", digits = 1)
+  )
+
+variacao <- df_revisoes |>
+  select(uf, nota_final, ano) |>
+  pivot_wider(names_from = ano,
+              names_prefix = "ano",
+              values_from = nota_final) |>
+  summarise(
+    .by = uf,
+    ano2020 = mean(ano2020),
+    ano2024 = mean(ano2024)
+  ) |>
+  select(uf, ano2020)
+
+consulta_pre <- df_revisoes |>
+  mutate(regiao = get_region(uf), .before = 1) |>
+  filter(ano == 2024) |>
+  mutate(
+    frota = rowMeans(across(starts_with("frota"))),
+    condutores = rowMeans(across(starts_with("condutores"))),
+    infracoes = rowMeans(across(starts_with("infracoes"))),
+    sinistros = rowMeans(across(starts_with("sinistros"))),
+    atendimento = rowMeans(across(starts_with("atendimento"))),
+    educ = rowMeans(across(starts_with("educ"))),
+    cfcs
+  ) |>
+  select(regiao,
+         uf,
+         frota,
+         condutores,
+         infracoes,
+         sinistros,
+         atendimento,
+         educ,
+         cfcs)
+
+consulta_pre |>
+  mutate(nota_final = rowMeans(across(frota:cfcs))) |>
+  arrange(desc(nota_final)) |>
+  select(-regiao) |>
+  left_join(variacao, by = "uf") |>
+  relocate(nota_final, .after = ano2020) |> 
+  rename_with(.fn = str_to_title) |> 
+  rename(
+    UF = Uf,
+    `Infrações` = Infracoes,
+    `Educação` = Educ,
+    CFCs = Cfcs,
+    `2020` = Ano2020,
+    `2024` = Nota_final
+  ) |> 
+  make_reactable(
+    columns = list(
+      Frota = coldef1,
+      Condutores = coldef1,
+      `Infrações` = coldef1,
+      Sinistros = coldef1,
+      Atendimento = coldef1,
+      `Educação` = coldef1,
+      CFCs = coldef1,
+      `2020` = coldef2,
+      `2024` = coldef2
+    )
+  )
+
+```

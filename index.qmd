@@ -22,6 +22,11 @@ Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departam
 
 Todo o processo metodológico de coleta, transformação e visualização dos dados presentes nesse relatório estão disponíveis no repositório <https://github.com/ONSV/revisao-detrans>.
 
+# Agradecimentos
+
+A equipe de autores agradece ...
+
+
 :::{layout="[50, 28, 19]"}
 
 :::{.left}
