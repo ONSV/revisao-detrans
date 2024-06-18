@@ -1,5 +1,19 @@
 # Introdução {#sec-intro}
 
+De acordo com o CTB (Código de Trânsito Brasileiro), são competências do DETRAN o planejamento, coordenação, execução e controle relacionados às seguintes áreas: habilitação de condutores, veículos, fiscalização de trânsito, estatísticas e educação para o trânsito.
+
+Na habilitação de condutores, cabe ao DETRAN realizar e controlar o processo de formação, reciclagem e suspensão dos condutores, assim como a expedição e cassação da Licença de Aprendizagem, Permissão para Dirigir e CNH.
+
+Em relação aos veículos, compete ao DETRAN o seu registro, emplacamento, licenciamento e a expedição do seu Certificado de Registro e Licenciamento Anual.
+
+Na área de fiscalização, o DETRAN deve fazer cumprir a legislação e as normas de trânsito, sendo responsável pela autuação e aplicação de medidas administrativas cabíveis pelas infrações previstas no Código de Trânsito Brasileiro.
+
+Em relação a educação para o trânsito, é responsabilidade do DETRAN a promoção e participação de projetos de educação e segurança no trânsito. Por fim, coleta de dados estatísticos e a elaboração de estudos sobre acidentes de trânsito e suas causas também devem ser cumpridos pelo DETRAN.
+
 ## Objetivo {#sec-intro-obj}
 
-## Atribuições dos Detrans {#sec-intro-attr}
+O presente documento tem por objetivo apresentar uma avaliação do nível de informações disponibilizadas nos portais (sítios eletrônicos) dos Detrans (Departamentos Estaduais de Trânsito) de todas as unidades da federação brasileira.^[Recentemente após uma reforma administrativa da estrutura do Estado de Minas Gerais, o antigo Detran MG deixou de integrar a estrutura da Polícia Civil e passou a fazer parte da Secretaria de Estado de Planejamento e Gestão (Seplag), recebendo o nome de Coordenadoria Estadual de Gestão de Trânsito (CET-MG). Elevada ao status de subsecretaria, a Coordenadoria Estadual de Gestão de Trânsito absorveu todas as competências anteriormente desempenhadas pelo Detran. Assim, no caso do Estado de Minas Gerais, os resultados aqui apresentados são relativos ao portal da CET-MG.]
+
+Os Detrans, por sua atuação, trabalham com um grande número de informações relevantes para a gestão do trânsito no país, tendo muitas delas, além do teor formal e burocrático, uma grande utilidade para avaliações no âmbito da segurança viária, tais como: infrações de trânsito, sinistros de trânsito, e habilitação, entre outros.
+
+Nesse sentido, este documento busca apresentar uma análise da situação de cada DETRAN, permitindo obter um panorama de como essas instituições trabalham e disponibilizam informações de interesse social. Além da introdução, o documento compõe-se das seguintes seções: @sec-method, com as consultas preliminares, pontuação e critérios estabelecidos; @sec-results, com a pontuação geral em cada categoria analisada e com a evolução das notas resultantes ao longo dos anos; e @sec-conclusion, com as considerações finais. Como apêndices, @sec-praticas apresenta exemplos de boas práticas encontradas nos sítios eletrônicos e @sec-links inclui os links de acesso para as páginas consideradas na análise.

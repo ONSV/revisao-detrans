@@ -4,6 +4,9 @@ project:
 
 execute: 
   freeze: auto
+  echo: false
+  warning: false
+  message: false
 
 language:
   section-title-appendices: "Apêndices"
@@ -40,9 +43,11 @@ book:
   repo-url: https://www.github.com/onsv/revisao-detrans
   # cover-image: cover-test.png
   language: pt-BR
-  favicon: logo/onsv_fav.ico
+  favicon: logo/onsv-fav.ico
 
 bibliography: references.bib
+
+csl: associacao-brasileira-de-normas-tecnicas.csl
 
 format:
   html:

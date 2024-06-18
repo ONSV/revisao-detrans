@@ -1,8 +1,8 @@
 # Apresentação {.unnumbered}
 
-<!-- Este relatório é um dos produtos do acordo de cooperação técnica entre o Observatório Nacional de Segurança Viária (ONSV) e a Associação Brasileira de Engenharia Automotiva (AEA). O acordo tem como principal objetivo avaliar a performance dos equipamentos de segurança veicular no contexto brasileiro, pretendendo investigar e elucidar a eficiência destas tecnologias e dispositivos em prol da segurança viária.
+O presente relatório é um produto da cooperação entre o Observatório Nacional de Segurança Viária (ONSV), o Centro de Liderança Pública (CLP) e a Universidade Federal do Paraná (UFPR). O documento tem como principal conteúdo a avaliação do nível de informações disponibilizadas nos portais dos Detrans de todas as unidades da federação brasileira.
 
-A primeira etapa - Diagnóstico dos equipamentos veiculares de segurança na Primeira Década de Ação pela Segurança no Trânsito (2011 - 2020) - tem como objetivo elaborar um diagnóstico dos equipamentos veiculares de segurança no período entre 2011 a 2020. Esse diagnóstico será feito com base nos dados disponibilizados pela Polícia Rodoviária Federal (PRF), que apresenta informações sobre os sinistros e suas vítimas em rodovias federais do Brasil. -->
+Essa é uma segunda versão do relatório publicado em 2020 pelo Observatório Nacional de Segurança Viária, que virou uma comunicação técnica publicada no segundo Simpósio de Transportes do Paraná (STPR), também em 2020 [@santos2020]. A elaboração de uma nova versão possibilita a análise da evolução dos portais dos DETRANs de cada estado, entre os anos de 2020 e 2024
 
 # Highlights
 
@@ -12,7 +12,7 @@ Aqui estão os principais resultados do trabalho.
 
 ## Como citar
 
-> SARAIVA, J.P.M.; DUQUE, D.V.A.; SANTOS, P.A.B. e BASTOS, J.T. Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito - Detrans. Observatório Nacional de Segurança Viária, Centro de Liderança Pública e Universidade Federal do Paraná. 2024. Disponível em: <https://onsv.org.br>.
+> SARAIVA, J. P. M.; DUQUE, D. V. A.; SANTOS, P. A. B. e BASTOS, J. T. Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito - Detrans. Observatório Nacional de Segurança Viária, Centro de Liderança Pública e Universidade Federal do Paraná. 2024. Disponível em: <https://onsv.org.br>.
 
 ## Licença de uso
 
@@ -22,7 +22,7 @@ Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departam
 
 Todo o processo metodológico de coleta, transformação e visualização dos dados presentes nesse relatório estão disponíveis no repositório <https://github.com/ONSV/revisao-detrans>.
 
-:::{layout-ncol=2}
+:::{layout="[50, 28, 19]"}
 
 :::{.left}
 
@@ -30,9 +30,15 @@ Todo o processo metodológico de coleta, transformação e visualização dos da
 
 :::
 
+:::{.mid}
+
+![](logo/clp-logo.png)
+
+:::
+
 :::{.right}
 
-![](logo/aea-logo.png)
+![](logo/marca_UFPR.png)
 
 :::
 
