@@ -1,0 +1,231 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito - Detrans",
+    "section": "",
+    "text": "Apresentação\nO presente relatório é um produto da cooperação entre o Observatório Nacional de Segurança Viária (ONSV), o Centro de Liderança Pública (CLP) e a Universidade Federal do Paraná (UFPR). O documento tem como principal conteúdo a avaliação do nível de informações disponibilizadas nos portais dos Detrans de todas as unidades da federação brasileira.\nEssa é uma segunda versão do relatório publicado em 2020 pelo Observatório Nacional de Segurança Viária, que virou uma comunicação técnica publicada no segundo Simpósio de Transportes do Paraná (STPR), também em 2020 (SANTOS; BASTOS; GARONCE, 2020). A elaboração de uma nova versão possibilita a análise da evolução dos portais dos DETRANs de cada estado, entre os anos de 2020 e 2024",
+    "crumbs": [
+      "Apresentação"
+    ]
+  },
+  {
+    "objectID": "index.html#como-citar",
+    "href": "index.html#como-citar",
+    "title": "Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito - Detrans",
+    "section": "Como citar",
+    "text": "Como citar\n\nSARAIVA, J. P. M.; DUQUE, D. V. A.; SANTOS, P. A. B. e BASTOS, J. T. Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito - Detrans. Observatório Nacional de Segurança Viária, Centro de Liderança Pública e Universidade Federal do Paraná. 2024. Disponível em: https://onsv.org.br.",
+    "crumbs": [
+      "Apresentação"
+    ]
+  },
+  {
+    "objectID": "index.html#licença-de-uso",
+    "href": "index.html#licença-de-uso",
+    "title": "Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito - Detrans",
+    "section": "Licença de uso",
+    "text": "Licença de uso\nAvaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito - Detrans © 2024 por Observatório Nacional de Segurança Viária está licenciada sob CC BY-NC 4.0. Para ver uma cópia desta licença, acesse https://creativecommons.org/licenses/by-nc/4.0/.",
+    "crumbs": [
+      "Apresentação"
+    ]
+  },
+  {
+    "objectID": "index.html#código-livre-e-aberto",
+    "href": "index.html#código-livre-e-aberto",
+    "title": "Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito - Detrans",
+    "section": "Código livre e aberto",
+    "text": "Código livre e aberto\nTodo o processo metodológico de coleta, transformação e visualização dos dados presentes nesse relatório estão disponíveis no repositório https://github.com/ONSV/revisao-detrans.",
+    "crumbs": [
+      "Apresentação"
+    ]
+  },
+  {
+    "objectID": "01-intro.html",
+    "href": "01-intro.html",
+    "title": "1  Introdução",
+    "section": "",
+    "text": "1.1 Objetivo\nO presente documento tem por objetivo apresentar uma avaliação do nível de informações disponibilizadas nos portais (sítios eletrônicos) dos Detrans (Departamentos Estaduais de Trânsito) de todas as unidades da federação brasileira.1\nOs Detrans, por sua atuação, trabalham com um grande número de informações relevantes para a gestão do trânsito no país, tendo muitas delas, além do teor formal e burocrático, uma grande utilidade para avaliações no âmbito da segurança viária, tais como: infrações de trânsito, sinistros de trânsito, e habilitação, entre outros.\nNesse sentido, este documento busca apresentar uma análise da situação de cada DETRAN, permitindo obter um panorama de como essas instituições trabalham e disponibilizam informações de interesse social. Além da introdução, o documento compõe-se das seguintes seções: Capítulo 2, com as consultas preliminares, pontuação e critérios estabelecidos; Capítulo 3, com a pontuação geral em cada categoria analisada e com a evolução das notas resultantes ao longo dos anos; e Capítulo 4, com as considerações finais. Como apêndices, Apêndice A apresenta exemplos de boas práticas encontradas nos sítios eletrônicos e Apêndice B inclui os links de acesso para as páginas consideradas na análise.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução</span>"
+    ]
+  },
+  {
+    "objectID": "01-intro.html#footnotes",
+    "href": "01-intro.html#footnotes",
+    "title": "1  Introdução",
+    "section": "",
+    "text": "Recentemente após uma reforma administrativa da estrutura do Estado de Minas Gerais, o antigo Detran MG deixou de integrar a estrutura da Polícia Civil e passou a fazer parte da Secretaria de Estado de Planejamento e Gestão (Seplag), recebendo o nome de Coordenadoria Estadual de Gestão de Trânsito (CET-MG). Elevada ao status de subsecretaria, a Coordenadoria Estadual de Gestão de Trânsito absorveu todas as competências anteriormente desempenhadas pelo Detran. Assim, no caso do Estado de Minas Gerais, os resultados aqui apresentados são relativos ao portal da CET-MG.↩︎",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução</span>"
+    ]
+  },
+  {
+    "objectID": "02-metodos.html",
+    "href": "02-metodos.html",
+    "title": "2  Métodos",
+    "section": "",
+    "text": "2.1 Consultas Preliminares\nO estudo foi realizado por meio do acesso dos sites dos Detrans de cada estado brasileiro a fim de averiguar a existência de dados estatísticos sobre a frota veicular, condutores habilitados, infrações e sinistros de trânsito. Também foram avaliados a existência de informações relacionadas à educação para o trânsito (campanhas, material educativo, regras de trânsito, etc.), dados quantitativos do atendimento ao público pelo departamento, disponibilidade de canais de atendimento e dados informativos sobre os centros de formação de condutores do estado em questão. A Tabela 2.1 demonstra os resultados de uma consulta preliminar destes portais:\nTabela 2.1: Consultas preliminares",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Métodos</span>"
+    ]
+  },
+  {
+    "objectID": "02-metodos.html#sec-method-crit",
+    "href": "02-metodos.html#sec-method-crit",
+    "title": "2  Métodos",
+    "section": "2.2 Critérios de Avaliação",
+    "text": "2.2 Critérios de Avaliação\nA partir das categorias anteriormente discutidas, critérios de avaliação foram estabelecidos para quantificar a disponibilidade de dados e informações de cada um dos DETRANs. Assim sendo, são concedidos níveis de desempenho que equivalem a pontuações para cada um dos critérios aferidos:\n\nMelhor Prática - Nota 10;\nPrática Intermediária - Nota 6,7;\nPrática Inicial - Nota 3,3 e;\nPrática Ausente - Nota 0.\n\nA avaliação dos dados estatísticos da frota de veículos, condutores habilitados, infrações e sinistros de trânsito se baseou nos critérios de periodicidade (quantidade de anos disponíveis), interatividade (tipo de arquivos ou informações disponíveis) e nível de desagregação (quantidade de variáveis disponíveis para análise).\nA periodicidade foi avaliada em:\n\nMelhor: Quando há um máximo de 2 anos de atraso em relação ao ano atual para o dado mais recente e mais de 5 anos de dados disponíveis;\nIntermediária: Máximo de 2 anos de atraso ou menos de 5 anos disponíveis e;\nInicial: 3+ anos de atraso e menos de 5 anos disponíveis.\n\nNeste contexto, para um estado ser situado como Melhor, por exemplo, seria necessário ter mais de 5 anos disponíveis e seu dado mais recente ser de, no mínimo, 2022.\nA interatividade foi avaliada em:\n\nMelhor: Possui dados disponibilizados em relatórios interativos ou dashboards para consultas dinâmicas;\nIntermediária: Dados disponibilizados em arquivos de planinhas (como .xls, .xlsx e .ods) de editores como Microsoft Excel, Google Sheets e LibreOffice Calc, e;\nInicial: Dados disponibilizados apenas como texto na página ou arquivos de texto (.txt, .csv, etc.).\n\nO nível de desagregação foi avaliado em:\n\nMelhor: Quantidade grande de variáveis;\nIntermediário: Quantidade média de variáveis e;\nInicial: Quantidade baixa de variáveis.\n\nA relação destes critérios está ilustrada na Tabela 2.2:\n\n\n\n\nTabela 2.2: Critérios de avaliação para frota, condutores habilitados, infrações e sinistros\n\n\n\n\n\n\n\n\n\nPeriodicidade\nInteratividade\nNível de desagregação\nNotas\n\n\n\n\nFrota de veículos\n\n\n3+ anos de atraso e &lt; 5 anos\nTexto\n1 a 2 desagregações\n3,3\n\n\n2 anos de atraso ou &lt; 5 anos\nPlanilha\n3 a 4 desagregações\n6,7\n\n\n2 anos de atraso e &gt; 5 anos\nInterativo\n5+ desagregações\n10,0\n\n\nCondutores\n\n\n3+ anos de atraso e &lt; 5 anos\nTexto\n1 a 2 desagregações\n3,3\n\n\n2 anos de atraso ou &lt; 5 anos\nPlanilha\n3 a 4 desagregações\n6,7\n\n\n2 anos de atraso e &gt; 5 anos\nInterativo\n5+ desagregações\n10,0\n\n\nInfrações\n\n\n3+ anos de atraso e &lt; 5 anos\nTexto\n1 desagregação\n3,3\n\n\n2 anos de atraso ou &lt; 5 anos\nPlanilha\n2 desagregações\n6,7\n\n\n2 anos de atraso e &gt; 5 anos\nInterativo\n3+ desagregações\n10,0\n\n\nSinistros\n\n\n3+ anos de atraso e &lt; 5 anos\nTexto\n1 a 5 desagregações\n3,3\n\n\n2 anos de atraso ou &lt; 5 anos\nPlanilha\n6 a 10 desagregações\n6,7\n\n\n2 anos de atraso e &gt; 5 anos\nInterativo\n11+ desagregações\n10,0\n\n\n\n\n\n\n\n\n\n\nAs informações sobre o atendimento ao público, educação para o trânsito e CFCs foram aferidas com outros critérios mais específicos por não se tratarem de dados estritamente estatísticos, exigindo uma mudança na abordagem de avaliação. As Tabelas 2.3, 2.4 e 2.5 demonstram os critérios para cada um destes casos:\n\n\n\n\nTabela 2.3: Critérios de avaliação para atendimento ao público\n\n\n\n\n\n\n\n\n\nEstatísticas\nCanais de atendimento\nNotas\n\n\n\n\n3+ anos de atraso e &lt; 5 anos\nAtendimento por telefone\n3,3\n\n\n2 anos de atraso ou &lt; 5 anos\nAtendimento por telefone e e-mail\n6,7\n\n\n2 anos de atraso e &gt; 5 anos\nAtendimento por telefone, e-mail e mensagem\n10,0\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTabela 2.4: Critérios de avaliação para conteúdo educativo\n\n\n\n\n\n\n\n\n\nConteúdos didáticos\nDivulgação de atividades\n\n\n\n\nDicas, sugestões de leitura, cartilhas, orientações gerais e cadernos pedagógicos.\nCursos, palestras, ações, projetos e campanhas.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTabela 2.5: Critérios de avaliação para informações sobre CFCs\n\n\n\n\n\n\n\n\n\nLista de CFCs credenciados\nNotas\n\n\n\n\nQuantidade de CFCs no estado\n3,3\n\n\nLista completa dos CFCs\n6,7\n\n\nInformações adicionais sobre o índice de aprovação dos alunos, quais CFCs possuem simuladores de direção, número de habilitados e informações sobre o credenciamento.\n10,0",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Métodos</span>"
+    ]
+  },
+  {
+    "objectID": "03-resultados.html",
+    "href": "03-resultados.html",
+    "title": "3  Resultados",
+    "section": "",
+    "text": "3.1 Resultados por Categoria",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Resultados</span>"
+    ]
+  },
+  {
+    "objectID": "03-resultados.html#sec-results-cat",
+    "href": "03-resultados.html#sec-results-cat",
+    "title": "3  Resultados",
+    "section": "",
+    "text": "3.1.1 Frota de Veículos\nPrimeiramente, os dados de frota de veículos, condutores habilitados, infrações e sinistros são analisados conforme os três critérios de avaliação anteriormente vistos na Tabela 2.2. No caso da frota, o nível de desagregação considera as variáveis de ano de fabricação do veículo, categoria (particular, aluguel, etc.), combustível, espécie (passageiro, carga, etc.), procedência (nacional ou estrangeira) e tipo de veículo.\nA Tabela 3.1 aponta a qualidade dos dados estatísticos da frota veicular como fornecidos pelos portais dos Detrans, assim como a nota média para estes critérios. A periodicidade aparenta ser o critério de melhor performance na maior parte dos departamentos para esta categoria. Figura 3.1 apresenta esses dados mapeados ao longo das UFs.\n\nTabelaMapa\n\n\n\n\n\n\nTabela 3.1: Resultados da categoria “Frota de Veículos”\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigura 3.1: Resultados da categoria “Frota de Veículos”\n\n\n\n\n\n\n\n\n\n3.1.2 Condutores Habilitados\nA Tabela 3.2 e a Figura 3.2 mostram o desempenho dos Detrans na disponibilização de dados de condutores habilitados, visto que neste caso as variáveis de desagregação compreendem a categoria da habilitação, sexo, opção de doador, situação (provisória ou definitiva), idade do condutor e tempo de habilitação. Novamente, a periodicidade e a interatividade são os critérios com maior e menor performance geral respectivamente.\n\nTabelaMapa\n\n\n\n\n\n\nTabela 3.2: Resultados da categoria “Condutores Habilitados”\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigura 3.2: Resultados da categoria “Condutores Habilitados”\n\n\n\n\n\n\n\n\n\n3.1.3 Centro de Formação de Condutores\nAs notas para cada estado estão ilustradas na Tabela 3.3 e na Figura 3.3 em pontuações qualitativas. Observa-se a predominância do desempenho intermediário nestes dados. Há também uma clara ausência de Detrans com Prática Inicial.\n\nTabelaMapa\n\n\n\n\n\n\nTabela 3.3: Resultados da categoria “CFCs”\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigura 3.3: Resultados da categoria “CFCs”\n\n\n\n\n\n\n\n\n\n3.1.4 Infrações\nA Tabela 3.4 e a Figura 3.4 contêm os resultados das consultas de dados sobre infrações. Neste caso, a desagregação considerou a divisão por artigo de infração, grupo de infração (circulação, estacionamento, etc.), natureza (grave, leve, etc.), instrumento de autuação, local de autuação, faixa etária do condutor infrator, sexo do condutor infrator, por responsável (condutor ou proprietário) e exercício de atividade remunerada ou não do infrator.\n\nTabelaMapa\n\n\n\n\n\n\nTabela 3.4: Resultados da categoria “Infrações”\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigura 3.4: Resultados da categoria “Infrações”\n\n\n\n\n\n\n\n\n\n3.1.5 Sinistros de Trânsito\nA avaliação sobre os dados de sinistros de trânsito está apresentada na Tabela 3.5 e na Figura 3.5. Entende-se como variáveis para a desagregação desta categoria a gravidade do sinistro (fatal ou não), período (dia ou noite), área (urbana ou rural), natureza (atropelamento, choque, etc.), dias da semana, horário, sexo da vítima e/ou do condutor, faixa etária da vítima e/ou do condutor, tipo da vítima e/ou do condutor (ciclista, pedestre, etc.), categoria do condutor (habilitado, inabilitado, etc.), tempo de habilitação do condutor e espécie do veículo envolvido (automóvel, bicicleta, etc.).\n\nTabelaMapa\n\n\n\n\n\n\nTabela 3.5: Resultados da categoria “Sinistros”\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigura 3.5: Resultados da categoria “Sinistros”\n\n\n\n\n\n\n\n\n\n3.1.6 Educação para o Trânsito\nAs consultas sobre informações de educação para o trânsito estão apresentadas na Tabela 3.6 e na Figura 3.6, com pontuações atribuídas conforme os critérios de avaliação da Tabela 2.4.\n\nTabelaMapa\n\n\n\n\n\n\nTabela 3.6: Resultados da categoria “Educação para o Trânsito”\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigura 3.6: Resultados da categoria “Educação para o Trânsito”\n\n\n\n\n\n\n\n\n\n3.1.7 Atendimento ao Público\nOs resultados das consultas sobre o atendimento ao público estão apresentados na Tabela 3.7 e na Figura 3.7. É notável a ausência de estatísticas de atendimento para a maioria dos DETRANs.\n\nTabelaMapa\n\n\n\n\n\n\nTabela 3.7: Resultados da categoria “Atendimento ao Público”\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigura 3.7: Resultados da categoria “Atendimento ao Público”",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Resultados</span>"
+    ]
+  },
+  {
+    "objectID": "03-resultados.html#sec-results-evo",
+    "href": "03-resultados.html#sec-results-evo",
+    "title": "3  Resultados",
+    "section": "3.2 Evolução dos Resultados",
+    "text": "3.2 Evolução dos Resultados\nAs pontuações finais calculadas para a avaliação das informações disponibilizadas nos portais dos DETRANs de 2024 permite não apenas identificar os departamentos de melhor performance conforme os critérios de avaliação estabelecidos, mas também averiguar como progrediram ou regrediram em relação à avaliação de 2020, como visto na Figura 3.8.\n\n\n\n\n\n\n\n\nFigura 3.8: Evolução dos resultados finais entre 2020 e 2024\n\n\n\n\nEm 2024, houve uma progressão majoritariamente positiva para os DETRANs. Considerando os departamentos que obtiveram notas maiores que 7, estão em destaque:\n  ● Sergipe - 9,61;\n  ● São Paulo - 8,98;\n  ● Rio Grande do Sul - 8,74;\n  ● Paraná - 7,85, e;\n  ● Rio de Janeiro - 7,70;\nA Figura 3.9 apresenta mapas para a comparação das pontuações finais de todos estados.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigura 3.9: Notas finais para DETRANs em 2020 e 2024\n\n\n\n\nO resultado final de todas as consultas efetuadas, bem como os valores médios para cada categoria de dado acessado e suas notas finais podem ser observados na Tabela 3.8, em ordem descendente das pontuações atribuídas em 2024.\n\n\n\n\nTabela 3.8: Resultados finais das consultas para 2024",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Resultados</span>"
+    ]
+  },
+  {
+    "objectID": "04-conclusao.html",
+    "href": "04-conclusao.html",
+    "title": "4  Conclusões",
+    "section": "",
+    "text": "O propósito da avaliação dos portais eletrônicos dos DETRANs é investigar o presente cenário da disponibilidade de informações e dados estatísticos nacionais no tocante à segurança viária. Desta forma, a qualidade destes portais pode ser quantitativamente mensurada pelas métricas previamente estabelecidas.\nEntre os departamentos com as cinco maiores notas para 2024, estão:\n\nSergipe - 9,61;\nSão Paulo - 8,98;\nRio Grande do Sul - 8,74;\nParaná - 7,85, e;\nRio de Janeiro - 7,7.\n\nDe forma análoga, os departamentos com as cinco menores notas são:\n\nRoraima - 1,66;\nPará - 2,14;\nPiauí - 2,38;\nTocantins - 2,39, e;\nAmapá - 2,62.\n\nEm destaque, observa-se os estados que atingiram a nota máxima (10) em alguma das sete categorias de informações consultadas:\n\nAtendimento: RS, SP e MG;\nCFCs: SE, SP, GO, PR, RJ, ES, CE, AL e AP;\nCondutores: RO;\nEducação: SE, RS, PR, RJ, MS, PE, MG, DF, AC, AM e PA;\nFrota: SE, RJ e RO;\nInfrações: SE e MS, e;\nSinistros: SE e RO\n\nOs resultados encontrados por meio deste estudo denotam como a maior parte dos estados progrediu, visto que obtiveram pontuações finais maiores em 2024 em relação à avaliação de 2020 sob os mesmos critérios de avaliação. O conjunto de evidências geradas corroboram à conclusão de que, em geral, houve uma evolução nos sistemas estaduais de fornecimento de dados sobre o trânsito.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conclusões</span>"
+    ]
+  },
+  {
+    "objectID": "99-referencias.html",
+    "href": "99-referencias.html",
+    "title": "Referências Bibliográficas",
+    "section": "",
+    "text": "SANTOS, P. A. B. DOS; BASTOS, J. T.; GARONCE, F. V. AVALIAÇÃO DO\nCONTEÚDO DOS PORTAIS DOS DEPARTAMENTOS ESTADUAIS DE TRÂNSITO -\nDETRANs. 28 nov. 2020. Disponível em: &lt;https://eventos.ufpr.br/stpr/2stpr/paper/view/4327/971&gt;",
+    "crumbs": [
+      "Referências Bibliográficas"
+    ]
+  },
+  {
+    "objectID": "9a-praticas.html",
+    "href": "9a-praticas.html",
+    "title": "Apêndice A — Melhores Práticas",
+    "section": "",
+    "text": "A.1 Frota - Detran RJ\nA Figura A.1 demonstra um gerenciador de tabelas disponível no portal do Detran RJ, que apesar de não conter gráficos ou visualizações sobre os dados, possui um extenso intervalo temporal e um alto nível de desagregação das variáveis, fornecidos de forma interativa com filtros e tabelas dinâmicas.",
+    "crumbs": [
+      "Apêndices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Melhores Práticas</span>"
+    ]
+  },
+  {
+    "objectID": "9a-praticas.html#frota---detran-rj",
+    "href": "9a-praticas.html#frota---detran-rj",
+    "title": "Apêndice A — Melhores Práticas",
+    "section": "",
+    "text": "Figura A.1: Gerenciador de Tabelas do Detran RJ.\nFonte: https://www.detran.rj.gov.br/_estatisticas.veiculos/index.asp",
+    "crumbs": [
+      "Apêndices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Melhores Práticas</span>"
+    ]
+  },
+  {
+    "objectID": "9a-praticas.html#condutores---detran-ro",
+    "href": "9a-praticas.html#condutores---detran-ro",
+    "title": "Apêndice A — Melhores Práticas",
+    "section": "A.2 Condutores - Detran RO",
+    "text": "A.2 Condutores - Detran RO\nNa Figura A.2, o Detran RO disponibiliza os dados em um dashboard, ou relatório interativo, com filtros e gráficos dinâmicos para a visualização dos dados fornecidos, sendo implementado no software Power BI. O uso de programas de análise de dados para geração de relatórios interativos, como Tableau, Google Looker Studio e o anteriormente citado Microsoft Power BI, é uma prática muito recomendada aos departamentos em geral.\n\n\n\n\n\n\nFigura A.2: Dashboard de dados de condutores habilitados do Detran RO\nFonte: https://www.detran.ro.gov.br/post/43/2023/9/12/anuario-estatistico-condutores-habilitados/",
+    "crumbs": [
+      "Apêndices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Melhores Práticas</span>"
+    ]
+  },
+  {
+    "objectID": "9a-praticas.html#infrações---detran-ms",
+    "href": "9a-praticas.html#infrações---detran-ms",
+    "title": "Apêndice A — Melhores Práticas",
+    "section": "A.3 Infrações - Detran MS",
+    "text": "A.3 Infrações - Detran MS\nComo anteriormente citado, uma boa prática para demonstração dos dados é a geração de dashboards através de programas de análise de dados. Na Figura A.3, o Detran MS incorpora em seu portal visualizações dinâmicas criadas em Tableau.\n\n\n\n\n\n\nFigura A.3: Dashboard de infrações do Detran MS.\nFonte: http://www.paineis.detran.ms.gov.br/Infracoes.html",
+    "crumbs": [
+      "Apêndices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Melhores Práticas</span>"
+    ]
+  },
+  {
+    "objectID": "9a-praticas.html#sinistros---detran-se",
+    "href": "9a-praticas.html#sinistros---detran-se",
+    "title": "Apêndice A — Melhores Práticas",
+    "section": "A.4 Sinistros - Detran SE",
+    "text": "A.4 Sinistros - Detran SE\nO Detran SE disponibiliza uma grande quantidade de níveis de desagregação, como visto na Figura A.4.\n\n\n\n\n\n\nFigura A.4: Página de estatísticas de sinistros do Detran SE.\nFonte: https://www.detran.se.gov.br/?pg=estatistica/acidentes#gsc.tab=0\n\n\n\nSeus dados são apresentados em tabelas dinâmicas, com filtros e um extenso intervalo temporal, como apresenta a Figura A.5.\n\n\n\n\n\n\nFigura A.5: Exemplo de tabela dinâmica do Detran SE.\nFonte: https://www.detran.se.gov.br/?pg=estatistica/acidentes/boat_001#gsc.tab=0",
+    "crumbs": [
+      "Apêndices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Melhores Práticas</span>"
+    ]
+  },
+  {
+    "objectID": "9a-praticas.html#atendimento-ao-público---detran-sp",
+    "href": "9a-praticas.html#atendimento-ao-público---detran-sp",
+    "title": "Apêndice A — Melhores Práticas",
+    "section": "A.5 Atendimento ao Público - Detran SP",
+    "text": "A.5 Atendimento ao Público - Detran SP\nAlém de providenciar contato por telefone, e-mail e mensagem via WhatsApp, o serviço de atendimento do Detran SP oferece a possibilidade de registrar manifestações personalizadas pelo próprio portal (Figura A.6) e aplicativos para auxílio ao público (Figura A.7).\n\n\n\n\n\n\nFigura A.6: Serviço de atendimento pelo portal do Detran SP.\nFonte: https://www.detran.sp.gov.br/wps/portal/portaldetran/detran/canaisdecomunicacao\n\n\n\n\n\n\n\n\n\nFigura A.7: Aplicativos do portal do Detran SP.\nFonte: https://www.detran.sp.gov.br/wps/portal/portaldetran/cidadao/appsdetran",
+    "crumbs": [
+      "Apêndices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Melhores Práticas</span>"
+    ]
+  },
+  {
+    "objectID": "9a-praticas.html#educação-para-o-trânsito---detran-pr",
+    "href": "9a-praticas.html#educação-para-o-trânsito---detran-pr",
+    "title": "Apêndice A — Melhores Práticas",
+    "section": "A.6 Educação para o Trânsito - Detran PR",
+    "text": "A.6 Educação para o Trânsito - Detran PR\nA Figura A.8 apresenta o portal educativo do Detran PR, que dispõe de uma grande variedade de materiais e divulgações sobre a educação e conscientização para o trânsito disponíveis em diversos formatos digitais, como vídeos, cursos EaD, podcasts, entre outros.\n\n\n\n\n\n\nFigura A.8: Portal de educação do Detran PR.\nFonte: https://www.detraneduca.pr.gov.br/",
+    "crumbs": [
+      "Apêndices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Melhores Práticas</span>"
+    ]
+  },
+  {
+    "objectID": "9a-praticas.html#cfcs---detran-pr",
+    "href": "9a-praticas.html#cfcs---detran-pr",
+    "title": "Apêndice A — Melhores Práticas",
+    "section": "A.7 CFCs - Detran PR",
+    "text": "A.7 CFCs - Detran PR\nO Detran PR também possui em seu portal tabelas interativas para a consulta de CFCs de forma dinâmica e eficiente, como demonstrado na Figura A.9.\n\n\n\n\n\n\nFigura A.9: Lista de CFCs/Instituições do Detran PR.\nFonte: https://www.detran.pr.gov.br/Pagina/CFCInstituicoes-Cursos-de-Capacitacao-e-Especializados",
+    "crumbs": [
+      "Apêndices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Melhores Práticas</span>"
+    ]
+  },
+  {
+    "objectID": "9b-links.html",
+    "href": "9b-links.html",
+    "title": "Apêndice B — Links Acessados",
+    "section": "",
+    "text": "Os links de acesso às informações consultadas estão disponíveis na Tabela B.1:\n\n\n\n\nTabela B.1: Tabela de links de acesso\n\n\n\n\n\n\n\n\n\n\nLinks de acesso para informações\n\n\n\n\nSergipe\n\n\nFrota\nhttps://www.detran.se.gov.br/?pg=estatistica/veiculos#gsc.tab=0\n\n\nCondutores\nhttps://www.detran.se.gov.br/?pg=estatistica/habilitacao#gsc.tab=0\n\n\nInfrações\nhttps://www.detran.se.gov.br/?pg=estatistica/infracoes#gsc.tab=0\n\n\nSinistros\nhttps://www.detran.se.gov.br/?pg=estatistica/acidentes#gsc.tab=0\n\n\nEstatísticas de atendimento\nhttps://www.detran.se.gov.br/?pg=estatistica/atendimento#gsc.tab=0\n\n\nCanais de atendimento\nhttps://www.detran.se.gov.br/?pg=estatistica/atendimento#gsc.tab=0\n\n\nEducação para trânsito\nhttps://www.detran.se.gov.br/?pg=noticias&filtro=educacao#gsc.tab=0\n\n\nCFCs\nhttps://www.detran.se.gov.br/?pg=credenciado/cfc#gsc.tab=0\n\n\nRio Grande do Sul\n\n\nFrota\nhttps://www.detran.rs.gov.br/dados-rs\n\n\nCondutores\nhttps://www.detran.rs.gov.br/dados-rs\n\n\nInfrações\nhttps://www.detran.rs.gov.br/dados-rs\n\n\nSinistros\nhttps://www.detran.rs.gov.br/acidentalidade\n\n\nEstatísticas de atendimento\nhttps://www.detran.rs.gov.br/atendimento-ao-publico\n\n\nCanais de atendimento\nhttps://www.detran.rs.gov.br/atendimento-ao-publico\n\n\nEducação para trânsito\nhttps://www.detran.rs.gov.br/escola-publica-de-transito\n\n\nCFCs\nhttps://pcsdetran.rs.gov.br/locais-atendimento/1\n\n\nSão Paulo\n\n\nFrota\nhttps://www.detran.sp.gov.br/wps/portal/portaldetran/detran/estatisticastransito/3a410653-0dd2-45df-a324-bdfc4711d988/\n\n\nCondutores\nhttps://www.detran.sp.gov.br/wps/portal/portaldetran/detran/estatisticastransito/3a410653-0dd2-45df-a324-bdfc4711d988/\n\n\nInfrações\nhttps://www.detran.sp.gov.br/wps/portal/portaldetran/detran/estatisticastransito/3a410653-0dd2-45df-a324-bdfc4711d988/\n\n\nSinistros\nhttps://www.detran.sp.gov.br/wps/portal/portaldetran/detran/estatisticastransito/3a410653-0dd2-45df-a324-bdfc4711d988/\n\n\nEstatísticas de atendimento\nhttps://www.detran.sp.gov.br/wps/portal/portaldetran/detran/atendimento/e57cbeb5-67f2-4701-b1e1-974c73f74ca7/\n\n\nCanais de atendimento\nhttps://www.detran.sp.gov.br/wps/portal/portaldetran/detran/atendimento/e57cbeb5-67f2-4701-b1e1-974c73f74ca7/\n\n\nEducação para trânsito\nhttps://www.detran.sp.gov.br/wps/portal/portaldetran/cidadao/educacao/home\n\n\nCFCs\nhttps://www.detran.sp.gov.br/wps/portal/portaldetran/parceiros/cfc/pesquisacfc/!ut/p/z1/jZFNT4NAEIZ_iweO7s5-dLvrbaWf1Ia0FYt7MdAgJSnQUHTjv5eSaKJpKXOb5Hkmk_fFBofYFNFnlkZ1VhbRodlfjXgbCdioR6JB0iUFLfhgHfhAAYZ42wKM_wDjlwlouWYTMvYpLCg2fXxvBe5sJunTlIxc0Irz5dxbMFCsnw9XRkM_vwMw3ee32LTIbwI-owK0_7ySG-LSqaT_gQsRtUBXBre-8LDJ4hzZXY4AkWYGcsi4EERRJc4l6iJmMsWmSt6TKqnQR9V0u6_r4-nBAQestSgty_SQoF2ZO3BJ2ZenGod_SXzMgyAIIZvfm_jL6rtv4Uao3A!!/p0/IZ7_419E11C0M86S40ADKUR40V00G4=CZ6_D60S9B1A082M20A645RUO02007=LA0=Ejavax.servlet.include.path_info!QCPpagesQCPpesquisaCFCQCPpesquisaView.xhtml==/#Z7_419E11C0M86S40ADKUR40V00G4\n\n\nGoiás\n\n\nFrota\nhttps://goias.gov.br/detran/transparencia-detran-go/\n\n\nCondutores\nhttps://goias.gov.br/detran/transparencia-detran-go/\n\n\nInfrações\nhttps://goias.gov.br/detran/transparencia-detran-go/\n\n\nSinistros\nN.D.\n\n\nEstatísticas de atendimento\nN.D.\n\n\nCanais de atendimento\nhttps://goias.gov.br/detran/fale-conosco/\n\n\nEducação para trânsito\nhttps://goias.gov.br/detran/educacao/\n\n\nCFCs\nhttps://goias.gov.br/detran/transparencia-detran-go/\n\n\nSanta Catarina\n\n\nFrota\nhttps://www.detran.sc.gov.br/transparencia/\n\n\nCondutores\nhttps://www.detran.sc.gov.br/transparencia/\n\n\nInfrações\nhttps://www.detran.sc.gov.br/transparencia/\n\n\nSinistros\nhttps://www.detran.sc.gov.br/transparencia/\n\n\nEstatísticas de atendimento\nN.D.\n\n\nCanais de atendimento\nhttps://www.detran.sc.gov.br/central-de-atendimento/\n\n\nEducação para trânsito\nhttps://www.detran.sc.gov.br/educacao/\n\n\nCFCs\nhttps://www.detran.sc.gov.br/centro-de-formacao-de-condutores/\n\n\nRio Grande do Norte\n\n\nFrota\nhttp://www.detran.rn.gov.br/Conteudo.asp?TRAN=ITEM&TARG=68675&ACT=&PAGE=0&PARM=&LBL=Estat%EDstica\n\n\nCondutores\nhttp://www.detran.rn.gov.br/Conteudo.asp?TRAN=ITEM&TARG=68675&ACT=&PAGE=0&PARM=&LBL=Estat%EDstica\n\n\nInfrações\nhttp://www.detran.rn.gov.br/Conteudo.asp?TRAN=ITEM&TARG=68675&ACT=&PAGE=0&PARM=&LBL=Estat%EDstica\n\n\nSinistros\nhttp://www.detran.rn.gov.br/Conteudo.asp?TRAN=ITEM&TARG=68675&ACT=&PAGE=0&PARM=&LBL=Estat%EDstica\n\n\nEstatísticas de atendimento\nN.D.\n\n\nCanais de atendimento\nhttp://www.detran.rn.gov.br/Conteudo.asp?TRAN=ITEM&TARG=244951&ACT=&PAGE=0&PARM=&LBL=Contato\n\n\nEducação para trânsito\nhttp://www.detran.rn.gov.br/Conteudo.asp?TRAN=ITEM&TARG=68880&ACT=&PAGE=0&PARM=&LBL=Educa%E7%E3o\n\n\nCFCs\nN.D.\n\n\nParaná\n\n\nFrota\nhttps://www.detran.pr.gov.br/Pagina/Estatisticas-de-transito\n\n\nCondutores\nhttps://www.detran.pr.gov.br/Pagina/Estatisticas-de-transito\n\n\nInfrações\nhttps://www.detran.pr.gov.br/Pagina/Estatisticas-de-transito\n\n\nSinistros\nhttps://www.detran.pr.gov.br/Pagina/Estatisticas-de-transito\n\n\nEstatísticas de atendimento\nN.D.\n\n\nCanais de atendimento\nhttps://www.detran.pr.gov.br/\n\n\nEducação para trânsito\nhttps://www.detraneduca.pr.gov.br/\n\n\nCFCs\nhttps://www.detran.pr.gov.br/autoescola\n\n\nRio de Janeiro\n\n\nFrota\nhttps://www.detran.rj.gov.br/_estatisticas.veiculos/index.asp\n\n\nCondutores\nhttps://www.detran.rj.gov.br/_documento.asp?cod=126\n\n\nInfrações\nhttps://www.detran.rj.gov.br/_estatisticas.veiculos/index.asp\n\n\nSinistros\nhttps://www.detran.rj.gov.br/_documento.asp?cod=126\n\n\nEstatísticas de atendimento\nN.D.\n\n\nCanais de atendimento\nhttps://www.detran.rj.gov.br/_documento.asp?cod=1342\n\n\nEducação para trânsito\nhttps://www.detran.rj.gov.br/_documento.asp?cod=11537\n\n\nCFCs\nhttps://www.detran.rj.gov.br/_documento.asp?cod=7655\n\n\nMato Grosso do Sul\n\n\nFrota\nhttp://www.paineis.detran.ms.gov.br/veiculos.html\n\n\nCondutores\nhttp://www.paineis.detran.ms.gov.br/veiculos.html\n\n\nInfrações\nhttp://www.paineis.detran.ms.gov.br/veiculos.html\n\n\nSinistros\nhttp://www.paineis.detran.ms.gov.br/veiculos.html\n\n\nEstatísticas de atendimento\nN.D.\n\n\nCanais de atendimento\nhttps://www.meudetran.ms.gov.br/?acao=faleconosco&acao=faleconosco\n\n\nEducação para trânsito\nhttps://www.detran.ms.gov.br/educacao-2/divisao-de-educacao-2/\n\n\nCFCs\nhttps://www2.detran.ms.gov.br/detranet/pserv/habilitacao/cfcs/index.asp\n\n\nMato Grosso\n\n\nFrota\nhttps://www.detran.mt.gov.br/veiculos1\n\n\nCondutores\nhttps://www.detran.mt.gov.br/carteira-nacional-de-habilitacao-cnh-\n\n\nInfrações\nhttps://www.detran.mt.gov.br/anuario\n\n\nSinistros\nhttps://www.detran.mt.gov.br/anuario\n\n\nEstatísticas de atendimento\nhttps://www.detran.mt.gov.br/ouvidoria1\n\n\nCanais de atendimento\nhttps://www.detran.mt.gov.br/sede\n\n\nEducação para trânsito\nhttps://www.detran.mt.gov.br/servicos?c=9895444&e=10061717\n\n\nCFCs\nhttps://www.detran.mt.gov.br/consulte-por-municipio\n\n\nPernambuco\n\n\nFrota\nhttps://www.detran.pe.gov.br/institucional-detran/estatisticas\n\n\nCondutores\nhttps://www.detran.pe.gov.br/institucional-detran/estatisticas\n\n\nInfrações\nhttps://www.detran.pe.gov.br/institucional-detran/estatisticas\n\n\nSinistros\nN.D.\n\n\nEstatísticas de atendimento\nN.D.\n\n\nCanais de atendimento\nhttps://www.detran.pe.gov.br/\n\n\nEducação para trânsito\nhttps://www.detran.pe.gov.br/sempre-alerta-detran/educacao\n\n\nCFCs\nhttps://online7.detran.pe.gov.br/MvcHabilitacao/Consultar/ListarCentroFormacaoCondutores\n\n\nMinas Gerais\n\n\nFrota\nhttps://transito.mg.gov.br/sobre-1/transparencia/relatorios-de-gestao\n\n\nCondutores\nhttps://transito.mg.gov.br/sobre-1/transparencia/relatorios-de-gestao\n\n\nInfrações\nhttps://transito.mg.gov.br/sobre-1/transparencia/relatorios-de-gestao\n\n\nSinistros\nN.D.\n\n\nEstatísticas de atendimento\nhttps://transito.mg.gov.br/sobre-1/transparencia/relatorios-de-gestao\n\n\nCanais de atendimento\nhttps://transito.mg.gov.br/atendimento/fale-conosco-c/fale-conosco-2\n\n\nEducação para trânsito\nhttps://transito.mg.gov.br/educacao-no-transito\n\n\nCFCs\nhttps://transito.mg.gov.br/parceiros-credenciados/centro-de-formacao-de-condutores/consultar-cfcs-credenciados\n\n\nDistrito Federal\n\n\nFrota\nhttps://www.detran.df.gov.br/dados-anuais/\n\n\nCondutores\nhttps://www.detran.df.gov.br/dados-mensais/\n\n\nInfrações\nN.D.\n\n\nSinistros\nhttps://www.detran.df.gov.br/dados-anuais/\n\n\nEstatísticas de atendimento\nN.D.\n\n\nCanais de atendimento\nhttps://www.detran.df.gov.br/institucional-menu-lai-contatos-html/\n\n\nEducação para trânsito\nhttps://www.detran.df.gov.br/category/educacao-de-transito/\n\n\nCFCs\nhttps://portal.detran.df.gov.br/#/servicos/detran-digital/credenciadas/empresas-credenciadas\n\n\nEspírito Santo\n\n\nFrota\nhttps://detran.es.gov.br/frota\n\n\nCondutores\nhttps://detran.es.gov.br/habilitacao-2-4\n\n\nInfrações\nhttps://detran.es.gov.br/anuarioinfracoes\n\n\nSinistros\nhttps://detran.es.gov.br/acidentes-de-transito\n\n\nEstatísticas de atendimento\nN.D.\n\n\nCanais de atendimento\nhttps://detran.es.gov.br/contatos-das-areas-de-atendimento\n\n\nEducação para trânsito\nhttps://detran.es.gov.br/educacao\n\n\nCFCs\nhttps://renach2.es.gov.br/Habilitacao/publico/pub_consulta_CFC.aspx\n\n\nCeará\n\n\nFrota\nhttps://www.detran.ce.gov.br/estatisticas/\n\n\nCondutores\nhttps://www.detran.ce.gov.br/estatisticas/\n\n\nInfrações\nhttps://www.detran.ce.gov.br/estatisticas/\n\n\nSinistros\nN.D.\n\n\nEstatísticas de atendimento\nN.D.\n\n\nCanais de atendimento\nhttps://www.detran.ce.gov.br/ouvidoria/\n\n\nEducação para trânsito\nhttps://educacao.detran.ce.gov.br/\n\n\nCFCs\nhttps://www.detran.ce.gov.br/estatisticas/\n\n\nRondônia\n\n\nFrota\nhttps://www.detran.ro.gov.br/post/40/2023/9/12/evolucao-da-frota-veicular/\n\n\nCondutores\nhttps://www.detran.ro.gov.br/post/43/2023/9/12/anuario-estatistico-condutores-habilitados/\n\n\nInfrações\nN.D.\n\n\nSinistros\nhttps://www.detran.ro.gov.br/post/39/2023/9/12/anuario-estatistico-de-sinistros-de-transito-de-rondonia/\n\n\nEstatísticas de atendimento\nN.D.\n\n\nCanais de atendimento\nhttps://www.detran.ro.gov.br/pagina/8/ciretran-s-detran-ro\n\n\nEducação para trânsito\nhttps://www.detran.ro.gov.br/post/categoria/escola-publica/\n\n\nCFCs\nN.D.\n\n\nAcre\n\n\nFrota\nhttps://www.detran.ac.gov.br/estatisticas/\n\n\nCondutores\nhttps://www.detran.ac.gov.br/estatisticas/\n\n\nInfrações\nN.D.\n\n\nSinistros\nhttps://www.detran.ac.gov.br/estatisticas/\n\n\nEstatísticas de atendimento\nN.D.\n\n\nCanais de atendimento\nhttps://www.detran.ac.gov.br/institucional/fale-conosco/\n\n\nEducação para trânsito\nhttps://www.detran.ac.gov.br/educacao/educacao-de-transito/\n\n\nCFCs\nhttps://www.detran.ac.gov.br/cnh-habilitacao/cnh-credenciados/\n\n\nAlagoas\n\n\nFrota\nhttp://indicadores.detran.al.gov.br/estatistica/frota-2/\n\n\nCondutores\nhttp://indicadores.detran.al.gov.br/condutores/\n\n\nInfrações\nhttp://indicadores.detran.al.gov.br/estatistica/infracoes/\n\n\nSinistros\nhttp://indicadores.detran.al.gov.br/estatistica/sinistros-de-transito-em-alagoas/dashboard-sinistros/\n\n\nEstatísticas de atendimento\nN.D.\n\n\nCanais de atendimento\nhttps://www.detran.al.gov.br/conteudo/a-ouvidoria/\n\n\nEducação para trânsito\nhttps://www.detran.al.gov.br/educacao/\n\n\nCFCs\nhttps://www.detran.al.gov.br/habilitacao/entidades-credenciadas/1/2785/\n\n\nAmazonas\n\n\nFrota\nhttps://www.detran.am.gov.br/acesso-a-informacao/programas-e-acoes/\n\n\nCondutores\nhttps://www.detran.am.gov.br/acesso-a-informacao/programas-e-acoes/\n\n\nInfrações\nN.D.\n\n\nSinistros\nhttps://www.detran.am.gov.br/acesso-a-informacao/programas-e-acoes/\n\n\nEstatísticas de atendimento\nN.D.\n\n\nCanais de atendimento\nhttps://www.detran.am.gov.br/postos-atendimento/\n\n\nEducação para trânsito\nhttps://www.detran.am.gov.br/educacao-no-transito/\n\n\nCFCs\nhttps://www.detran.am.gov.br/tipos-de-credenciado/capital/\n\n\nMaranhão\n\n\nFrota\nhttps://portal.detrannet.detran.ma.gov.br/Veiculo/RelatorioFrota.cshtml\n\n\nCondutores\nN.D.\n\n\nInfrações\nN.D.\n\n\nSinistros\nN.D.\n\n\nEstatísticas de atendimento\nN.D.\n\n\nCanais de atendimento\nhttp://www.detran.ma.gov.br/\n\n\nEducação para trânsito\nhttp://educacao.detran.ma.gov.br/Educacao/consulta/Index.xhtml\n\n\nCFCs\nhttp://www.detran.ma.gov.br/\n\n\nParaíba\n\n\nFrota\nhttps://detran.pb.gov.br/institucional-1/estatisticas/evolucao-da-frota-geral-2000-a-2021.pdf/view\n\n\nCondutores\nhttps://detran.pb.gov.br/institucional-1/estatisticas/historico-condutores-por-sexo-2000-a-2021-1.pdf/view\n\n\nInfrações\nN.D.\n\n\nSinistros\nhttps://detran.pb.gov.br/institucional-1/estatisticas/acidentes-de-transito-2017-2018.pdf/view\n\n\nEstatísticas de atendimento\nN.D.\n\n\nCanais de atendimento\nhttps://detran.pb.gov.br/institucional-1/telefones-uteis\n\n\nEducação para trânsito\nhttps://detran.pb.gov.br/imagens/imagens-detran-tudo/fotos-noticias/acoes-educacao-de-transito\n\n\nCFCs\nhttps://detran.pb.gov.br/habilitacao-1/relacao\n\n\nBahia\n\n\nFrota\nhttps://www.detran.ba.gov.br/frota.php\n\n\nCondutores\nhttps://www.detran.ba.gov.br/habilitados.php\n\n\nInfrações\nN.D.\n\n\nSinistros\nN.D.\n\n\nEstatísticas de atendimento\nN.D.\n\n\nCanais de atendimento\nhttps://www.detran.ba.gov.br/fale-conosco.php\n\n\nEducação para trânsito\nhttps://www.detran.ba.gov.br/noticia.php?n=educacao-para-o-transito-nas-escolas\n\n\nCFCs\nhttps://www.detran.ba.gov.br/credenciados.php\n\n\nAmapá\n\n\nFrota\nN.D.\n\n\nCondutores\nN.D.\n\n\nInfrações\nN.D.\n\n\nSinistros\nN.D.\n\n\nEstatísticas de atendimento\nN.D.\n\n\nCanais de atendimento\nhttps://www.detran.ap.gov.br/detranap/institucional/postos-de-atendimento/\n\n\nEducação para trânsito\nhttps://www.detran.ap.gov.br/detranap/educacao/\n\n\nCFCs\nhttps://www.detran.ap.gov.br/detranap/habilitacao/\n\n\nPará\n\n\nFrota\nN.D.\n\n\nCondutores\nN.D.\n\n\nInfrações\nN.D.\n\n\nSinistros\nN.D.\n\n\nEstatísticas de atendimento\nN.D.\n\n\nCanais de atendimento\nhttps://www.detran.pa.gov.br/index_.php#\n\n\nEducação para trânsito\nhttps://www.detran.pa.gov.br/index_.php#\n\n\nCFCs\nN.D.\n\n\nTocantins\n\n\nFrota\nN.D.\n\n\nCondutores\nN.D.\n\n\nInfrações\nN.D.\n\n\nSinistros\nN.D.\n\n\nEstatísticas de atendimento\nN.D.\n\n\nCanais de atendimento\nhttps://www.to.gov.br/detran/contatos/6rp9e6qt1pdi\n\n\nEducação para trânsito\nhttps://www.to.gov.br/detran/educacao-para-o-transito/63g5fsxn5758\n\n\nCFCs\nhttps://www.to.gov.br/detran/centro-de-formacao-de-condutores-auto-escolas/6qnpfzbzlxgx\n\n\nPiauí\n\n\nFrota\nN.D.\n\n\nCondutores\nN.D.\n\n\nInfrações\nhttp://www.detran.pi.gov.br/multas-de-transito-detran/\n\n\nSinistros\nN.D.\n\n\nEstatísticas de atendimento\nN.D.\n\n\nCanais de atendimento\nhttp://www.detran.pi.gov.br/postos-e-ciretrans/\n\n\nEducação para trânsito\nhttp://www.detran.pi.gov.br/escola-de-transito/\n\n\nCFCs\nhttp://www.detran.pi.gov.br/parceiros/cfc/\n\n\nRoraima\n\n\nFrota\nN.D.\n\n\nCondutores\nN.D.\n\n\nInfrações\nN.D.\n\n\nSinistros\nN.D.\n\n\nEstatísticas de atendimento\nN.D.\n\n\nCanais de atendimento\nhttps://www.detran.rr.gov.br/\n\n\nEducação para trânsito\nhttps://www.detran.rr.gov.br/educacao/informacoes-gerais/\n\n\nCFCs\nhttps://www.detran.rr.gov.br/habilitacao-cnh/consultas/cfcs-credenciadas/",
+    "crumbs": [
+      "Apêndices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Links Acessados</span>"
+    ]
+  }
+]
