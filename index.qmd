@@ -24,7 +24,7 @@ Todo o processo metodológico de coleta, transformação e visualização dos da
 
 # Agradecimentos
 
-A equipe de autores agradece ...
+A equipe de autores agradece às instituições que responderam ao Ofício 321/ONSV/2024, contribuindo com a precisão das informações aqui apresentadas: CET-MG, Detran-ES, Detran-MT e Detran-SP.
 
 
 :::{layout="[50, 28, 19]"}
