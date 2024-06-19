@@ -216,6 +216,4 @@ df_revisoes <-
   rename_with(~ str_to_lower(str_replace(.x, "\\.", "_"))) |> 
   rename_with(~ str_replace(.x, "acidentes", "sinistros"))
 
-view(df_revisoes)
-
 save(df_revisoes, file = "data/revisoes.rda")

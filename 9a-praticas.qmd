@@ -74,6 +74,17 @@ Aplicativos do portal do Detran SP.\
 Fonte: https://www.detran.sp.gov.br/wps/portal/portaldetran/cidadao/appsdetran
 :::
 
+## Sinistros - Detran SP
+
+O novo painel do sistema Infosiga (Sistema de Informações Gerenciais de Sinistros de Trânsito) integra os dados referentes a sinistros e suas vítimas, com base nas ocorrências dentro do Estado de São Paulo. No dia 16/05/2024 houve o lançamento da nova versão deste sistema, que está ilustrado na @fig-infosiga
+
+::: {#fig-infosiga}
+![](assets/detran_sp_infosiga.png)
+
+Novo Infosiga \
+Fonte: https://www.infosiga.sp.gov.br/
+:::
+
 ## Educação para o Trânsito - Detran PR
 
 A @fig-pr-educ apresenta o portal educativo do Detran PR, que dispõe de uma grande variedade de materiais e divulgações sobre a educação e conscientização para o trânsito disponíveis em diversos formatos digitais, como vídeos, cursos EaD, *podcasts*, entre outros.
