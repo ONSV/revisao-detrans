@@ -7,9 +7,11 @@ source(here::here("R", "_common.R"))
 
 # Métodos {#sec-method}
 
+A metodologia deste trabalho está organizada em duas partes. Primeiro, elaborou-se uma consulta preliminar nos sites dos Detrans (@sec-method-consult). Em seguida, foram estabelecidos as categorias de análise e os critérios de cada categoria (@sec-method-crit).
+
 ## Consultas Preliminares {#sec-method-consult}
 
-O estudo foi realizado por meio do acesso dos *sites* dos Detrans de cada estado brasileiro a fim de averiguar a existência de dados estatísticos sobre a frota veicular, condutores habilitados, infrações e sinistros de trânsito. Também foram avaliados a existência de informações relacionadas à educação para o trânsito (campanhas, material educativo, regras de trânsito, etc.), dados quantitativos do atendimento ao público pelo departamento, disponibilidade de canais de atendimento e dados informativos sobre os centros de formação de condutores do estado em questão. A @tbl-consultas demonstra os resultados de uma consulta preliminar destes portais:
+O estudo foi realizado por meio do acesso dos *sites* dos Detrans de cada unidade federativa brasileira a fim de averiguar a disponibilidade de dados estatísticos e informações em sete categorias: (i) **frota de veículos**, (ii) **condutores habilitados**, (iii) **infrações**, (iv) **sinistros de trânsito**, (v) **educação para o trânsito** (campanhas, material educativo, regras de trânsito, etc.), (vi) **atendimento ao público** e (vii) **centro de formação de condutores** (CFCs). A @tbl-consultas demonstra os resultados de uma consulta preliminar da disponibilidade de informações sobre essas categorias nos portais.
 
 ```{r}
 #| include: false
@@ -65,7 +67,7 @@ consulta_pre |>
 
 ## Critérios de Avaliação {#sec-method-crit}
 
-A partir das categorias anteriormente discutidas, critérios de avaliação foram estabelecidos para quantificar a disponibilidade de dados e informações de cada um dos DETRANs. Assim sendo, são concedidos níveis de desempenho que equivalem a pontuações para cada um dos critérios aferidos:
+A partir das categorias anteriormente discutidas, critérios de avaliação foram estabelecidos para quantificar a disponibilidade e variedade de dados e informações de cada um dos Detrans. Assim sendo, são concedidos níveis de desempenho que equivalem a pontuações para cada um dos critérios aferidos:
 
 1.  **Melhor Prática** - Nota 10;
 
@@ -75,13 +77,13 @@ A partir das categorias anteriormente discutidas, critérios de avaliação fora
 
 4.  **Prática Ausente** - Nota 0.
 
-A avaliação dos dados estatísticos da **frota de veículos**, **condutores habilitados**, **infrações** e **sinistros** de trânsito se baseou nos critérios de periodicidade (quantidade de anos disponíveis), interatividade (tipo de arquivos ou informações disponíveis) e nível de desagregação (quantidade de variáveis disponíveis para análise).
+A avaliação dos dados estatísticos da **frota de veículos**, **condutores habilitados**, **infrações** e **sinistros** de trânsito se baseou nos critérios de periodicidade (quantidade de anos disponíveis e nível de atualização), interatividade (tipo de arquivos ou informações disponíveis) e nível de desagregação (quantidade de variáveis disponíveis para análise).
 
 A **periodicidade** foi avaliada em:
 
 -   Melhor: Quando há um máximo de 2 anos de atraso em relação ao ano atual para o dado mais recente e mais de 5 anos de dados disponíveis;
 
--   Intermediária: Máximo de 2 anos de atraso ou menos de 5 anos disponíveis e;
+-   Intermediária: Máximo de 2 anos de atraso e/ou menos de 5 anos disponíveis e;
 
 -   Inicial: 3+ anos de atraso e menos de 5 anos disponíveis.
 
@@ -89,11 +91,13 @@ Neste contexto, para um estado ser situado como *Melhor*, por exemplo, seria nec
 
 A **interatividade** foi avaliada em:
 
--   Melhor: Possui dados disponibilizados em relatórios interativos ou *dashboards* para consultas dinâmicas;
+-   Melhor: Possui dados disponibilizados em relatórios interativos ou *dashboards* para consultas dinâmicas, possibilitando a filtragem e seleção desses dados;
 
--   Intermediária: Dados disponibilizados em arquivos de planinhas (como `.xls`, `.xlsx` e `.ods`) de editores como Microsoft Excel, Google Sheets e LibreOffice Calc, e;
+-   Intermediária: Dados disponibilizados em arquivos de planinhas (como `.xls`, `.xlsx` e `.ods`) de softwares como Microsoft Excel, Google Sheets ou LibreOffice Calc, e;
 
 -   Inicial: Dados disponibilizados apenas como texto na página ou arquivos de texto (`.txt`, `.csv`, etc.).
+
+No nível interatividade não foi analisada a experiência do usuário ou interface das páginas (UI/UX), apenas o formato de disponibilidade dos dados.
 
 O **nível de desagregação** foi avaliado em:
 
@@ -103,10 +107,16 @@ O **nível de desagregação** foi avaliado em:
 
 -   Inicial: Quantidade baixa de variáveis.
 
-A relação destes critérios está ilustrada na @tbl-criterios:
+A quantidade específica de variáveis utilizada no critério varia de acordo com a categoria analisada, conforme apresentado na @tbl-criterios. No caso da categoria "Frota de veículos", o nível de desagregação considera as variáveis de ano de fabricação do veículo, categoria (particular, aluguel, etc.), combustível, espécie (passageiro, carga, etc.), procedência (nacional ou estrangeira) e tipo de veículo. 
+
+Na categoria "Condutores habilitados", esse critério se baseia na disponibilização de variáveis como a categoria da habilitação, sexo, opção de doador, situação (provisória ou definitiva), idade do condutor e tempo de habilitação. 
+
+Na categoria "Infrações",  considerou a divisão por artigo de infração, grupo de infração (circulação, estacionamento, etc.), natureza (grave, leve, etc.), instrumento de autuação, local de autuação, faixa etária do condutor infrator, sexo do condutor infrator, por responsável (condutor ou proprietário) e exercício de atividade remunerada ou não do infrator. 
+
+Entende-se como variáveis para a desagregação na categoria "Sinistros de trânsito" a gravidade do sinistro (fatal ou não), período (dia ou noite), área (urbana ou rural), natureza (atropelamento, choque, etc.), dias da semana, horário, sexo da vítima e/ou do condutor, faixa etária da vítima e/ou do condutor, tipo da vítima e/ou do condutor (ciclista, pedestre, etc.), categoria do condutor (habilitado, inabilitado, etc.), tempo de habilitação do condutor e espécie do veículo envolvido (automóvel, bicicleta, etc.).
 
 ```{r}
-#| tbl-cap: Critérios de avaliação para frota, condutores habilitados, infrações e sinistros
+#| tbl-cap: Critérios de avaliação para as categorias frota de veículos, condutores habilitados, infrações e sinistros de trânsito
 #| label: tbl-criterios
 
 criterio <- data.frame(
@@ -171,10 +181,12 @@ criterio_df |>
 
 ```
 
-As informações sobre o **atendimento ao público**, **educação para o trânsito** e **CFCs** foram aferidas com outros critérios mais específicos por não se tratarem de dados estritamente estatísticos, exigindo uma mudança na abordagem de avaliação. As Tabelas [-@tbl-cri-atend], [-@tbl-cri-educ] e [-@tbl-cri-cfcs] demonstram os critérios para cada um destes casos:
+As informações sobre o **atendimento ao público**, **educação para o trânsito** e **CFCs** foram aferidas com outros critérios mais específicos por não se tratarem de dados estritamente estatísticos, exigindo uma mudança na abordagem de avaliação. As Tabelas [-@tbl-cri-atend], [-@tbl-cri-educ] e [-@tbl-cri-cfcs] demonstram os critérios para cada um destes casos. 
+
+Na categoria **Atendimento ao público**, o diagnóstico foi baseado em dois critérios: presença de dados estatísticos sobre os atendimentos institucionais e presença de canais de atendimento. Sobre os dados de atendimento ao público, os níveis variam de acordo com a periodicidade dos dados, seguindo os mesmos critérios das categorias de infração, sinistros, condutores e frota. Na questão de canais de atendimento, os níveis variam de acordo com os tipos disponíveis: telefone, e-mail e mensagem.
 
 ```{r}
-#| tbl-cap: Critérios de avaliação para atendimento ao público
+#| tbl-cap: Critérios de avaliação para a categoria atendimento ao público
 #| label: tbl-cri-atend
 
 df_atend <- data.frame(
@@ -209,8 +221,10 @@ df_atend |>
 
 ```
 
+Os níveis da categoria **Educação para o trânsito** foram definidor a partir da média simples de dois critérios: conteúdos didáticos disponíveis e divulgação de atividades e campanhas no portal dos Detrans. Entende-se como conteúdos disponíveis a disponibilidade de materiais como dicas, sugestões de leitura, cartilhas, orientações gerais e cadernos pedagógicos. No critério divulgação de atividades, considerou-se a disponibilidade de divulgação sobre cursos, palestras, ações, projetos e campanhas nos sites dos Detrans. A pontuação de cada critério foi dada de acordo com a acessibilidade desses conteúdos, ou seja, a facilidade de como eles foram encontrados no site. Os portais que não possuem esses conteúdos receberam a nota 0,0 (prática ausente).
+
 ```{r}
-#| tbl-cap: Critérios de avaliação para conteúdo educativo
+#| tbl-cap: Critérios de avaliação para a categoria educação para o trânsito
 #| label: tbl-cri-educ
 
 df_educ <- data.frame(
@@ -229,6 +243,8 @@ df_educ |>
   report_gt_style()
 ```
 
+Os dados de centros de formação para condutores (CFCs) foram avaliados apenas por um único critério de disponibilidade de uma lista sobre os CFCs credenciados pelos Detrans. Definiu-se como melhor prática os portais que, além de possuírem uma lista completa de CFCs credenciados, apresentaram informações adicionais sobre o índice de aprovação dos alunos, quais CFCs possuem simuladores de direção, número de habilitados e informações sobre o credenciamento. Os portais que apresentaram uma lista completa dos CFCs, porém sem mais detalhamento, receberam a classificação de prática intermediária e os que apresentaram apenas a quantidade de CFCs no estado foram classificados como prática inicial. Os Detrans que não apresentaram nenhuma informação sobre os CFCs foram classificados como prática ausente.
+
 ```{r}
 #| tbl-cap: Critérios de avaliação para informações sobre CFCs
 #| label: tbl-cri-cfcs
@@ -237,7 +253,7 @@ df_cfc <- data.frame(
   lista = c(
     "Quantidade de CFCs no estado",
     "Lista completa dos CFCs",
-    "Informações adicionais sobre o índice de aprovação dos alunos, quais CFCs possuem simuladores de direção, número de habilitados e informações sobre o credenciamento."
+    "Informações adicionais dos CFCs listados"
   ),
   notas = c(3.3, 6.7, 10)
 )
