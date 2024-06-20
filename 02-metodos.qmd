@@ -243,7 +243,7 @@ df_educ |>
   report_gt_style()
 ```
 
-Os dados de centros de formação para condutores (CFCs) foram avaliados apenas por um único critério de disponibilidade de uma lista sobre os CFCs credenciados pelos Detrans. Definiu-se como melhor prática os portais que, além de possuírem uma lista completa de CFCs credenciados, apresentaram informações adicionais sobre o índice de aprovação dos alunos, quais CFCs possuem simuladores de direção, número de habilitados e informações sobre o credenciamento. Os portais que apresentaram uma lista completa dos CFCs, porém sem mais detalhamento, receberam a classificação de prática intermediária e os que apresentaram apenas a quantidade de CFCs no estado foram classificados como prática inicial. Os Detrans que não apresentaram nenhuma informação sobre os CFCs foram classificados como prática ausente.
+Na categoria **Centros de formação para condutores** (CFCs) foram avaliados apenas por um único critério de disponibilidade de uma lista sobre os CFCs credenciados pelos Detrans. Definiu-se como melhor prática os portais que, além de possuírem uma lista completa de CFCs credenciados, apresentaram informações adicionais sobre o índice de aprovação dos alunos, quais CFCs possuem simuladores de direção, número de habilitados e informações sobre o credenciamento. Os portais que apresentaram uma lista completa dos CFCs, porém sem mais detalhamento, receberam a classificação de prática intermediária e os que apresentaram apenas a quantidade de CFCs no estado foram classificados como prática inicial. Os Detrans que não apresentaram nenhuma informação sobre os CFCs foram classificados como prática ausente.
 
 ```{r}
 #| tbl-cap: Critérios de avaliação para informações sobre CFCs

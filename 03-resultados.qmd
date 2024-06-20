@@ -8,9 +8,11 @@ source(here::here("R", "_common.R"))
 
 # Resultados {#sec-results}
 
-Nessa seção, os resultados estão organizados por categoria (@sec-results-cat) e estão apresentados em uma comparação entre os resultados atuais e os resultados obtidos em 2020 (@sec-results-evo). 
+Nessa seção, os resultados estão organizados por categoria (@sec-results-cat) e estão apresentados em uma comparação entre os resultados atuais e os resultados obtidos na versão anterior deste trabalho, publicado em 2020 (@sec-results-evo). 
 
 ## Resultados por Categoria {#sec-results-cat}
+
+Nesta seção os resultados estão organizados por categoria de análise, iniciando com a Frota de veículos e finalizando com Atendimento ao público. Cada subseção apresenta uma tabela e um mapa com as notas resultantes de cada categoria.
 
 ### Frota de Veículos {#sec-results-frota}
 
@@ -26,9 +28,9 @@ frota <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-Primeiramente, os dados de frota de veículos, condutores habilitados, infrações e sinistros são analisados conforme os três critérios de avaliação anteriormente vistos na @tbl-criterios. No caso da frota, o nível de desagregação considera as variáveis de ano de fabricação do veículo, categoria (particular, aluguel, etc.), combustível, espécie (passageiro, carga, etc.), procedência (nacional ou estrangeira) e tipo de veículo.
+A @tbl-frota aponta os resultados obtidos na categoria frota de veículos, com os níveis em cada categoria e as notas médias resultantes. A @fig-map-frota apresenta esses dados mapeados no território brasileiro. Observa-se que a *periodicidade* é o critério de melhor performance na maior parte dos portais, e *interatividade* é o critério de pior desempenho, considerando essa categoria.
 
-A @tbl-frota aponta a qualidade dos dados estatísticos da frota veicular como fornecidos pelos portais dos Detrans, assim como a nota média para estes critérios. A periodicidade aparenta ser o critério de melhor performance na maior parte dos departamentos para esta categoria. @fig-map-frota apresenta esses dados mapeados ao longo das UFs.
+Em relação à nota média, os estados com o melhor desempenho foram Sergipe, Rondônia e Rio de Janeiro, atingindo a nota máxima de 10. Por outro lado, os estados com o pior desempenho foram Piauí, Roraima, Tocantins, Pará e Amapá, com a nota média de 0 por não possuírem dados de frota de veículos em seus portais.
 
 ::: panel-tabset
 ### Tabela
@@ -84,9 +86,7 @@ frota_map |>
 ```
 :::
 
-
 ### Condutores Habilitados {#sec-results-drivers}
-
 
 ```{r}
 condutores <- df_revisoes |>
@@ -99,7 +99,7 @@ condutores <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-A @tbl-condutores e a @fig-map-condutores mostram o desempenho dos Detrans na disponibilização de dados de condutores habilitados, visto que neste caso as variáveis de desagregação compreendem a categoria da habilitação, sexo, opção de doador, situação (provisória ou definitiva), idade do condutor e tempo de habilitação. Novamente, a periodicidade e a interatividade são os critérios com maior e menor performance geral respectivamente.
+A @tbl-condutores e a @fig-map-condutores mostram o desempenho dos Detrans na disponibilização de dados sobre os condutores habilitados. Novamente, conforme também visto na categoria frota de veículos, a periodicidade e a interatividade são os critérios com maior e menor performance geral, respectivamente. Dois estados atingiram a nota máxima: Rondônia e Espírito Santo. Os portais de sete estados não apresentam dados sobre os condutores habilitados: Piauí, Maranhão, Alagoas, Roraima, Tocantins, Pará e Amapá.
 
 ::: panel-tabset
 ### Tabela
@@ -166,7 +166,7 @@ cfcs <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-As notas para cada estado estão ilustradas na @tbl-cfcs e na @fig-map-cfcs em pontuações qualitativas. Observa-se a predominância do desempenho intermediário nestes dados. Há também uma clara ausência de Detrans com **Prática Inicial**.
+As notas médias resultantes para essa categoria estão ilustradas na @tbl-cfcs e na @fig-map-cfcs. Observa-se a predominância do desempenho intermediário nesta categoria / critério. Os estados com a melhor prática são o Paraná, São Paulo, Rio de Janeiro, Espírito Santo, Amapá, Sergipe, Ceará, Alagoas e Goiás.
 
 ::: panel-tabset
 ### Tabela
@@ -233,7 +233,7 @@ infracoes <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-A @tbl-infracoes e a @fig-map-infracoes contêm os resultados das consultas de dados sobre infrações. Neste caso, a desagregação considerou a divisão por artigo de infração, grupo de infração (circulação, estacionamento, etc.), natureza (grave, leve, etc.), instrumento de autuação, local de autuação, faixa etária do condutor infrator, sexo do condutor infrator, por responsável (condutor ou proprietário) e exercício de atividade remunerada ou não do infrator.
+A @tbl-infracoes e a @fig-map-infracoes contêm os resultados da categoria infrações. Observa-se que o critério com o melhor desempenho entre as UFs foi *Nível de desagregação* e o critério com pior desempenho foi *Interatividade*. Considerando o desempenho das UFs com base na nota média, os melhores desempenhos foram observados nos portais dos Detrans de Mato Grosso do Sul e Sergipe. Houve 12 Detrans sem dados de infrações em seus portais, configurando uma prática ausente. Dentre eles, inclui-se o Detran do Distrito Federal e de outros estados da região Norte e Nordeste.
 
 ::: panel-tabset
 ### Tabela
