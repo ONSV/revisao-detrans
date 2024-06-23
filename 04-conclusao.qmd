@@ -1,84 +1,11 @@
-```{r}
-#| include: false
-#| label: setup
-
-source(here::here("R", "_common.R"))
-```
-
-
 # Conclusões {#sec-conclusion}
 
-O propósito da avaliação dos portais eletrônicos dos DETRANs é investigar o presente cenário da disponibilidade de informações e dados estatísticos nacionais no tocante à segurança viária. Desta forma, a qualidade destes portais pode ser quantitativamente mensurada pelas métricas previamente estabelecidas.
+Este trabalho teve o objetivo de avaliar o nível das informações nos portais dos Detrans de todo o país, buscando entender como essas instituições trabalham e disponibilizam informações e serviços de interesse público. 
 
-```{r}
+A avaliação foi baseada em sete categorias. Em quatro delas - frota de veículos, condutores habilitados, infrações e sinistros de trânsito - a avaliação foi baseada na qualidade, variedade e disponibilidade de dados estatísticos, com base em três critérios: *Periodicidade*, *Interatividade* e *Nível de desagregação*. Em outras três categorias - atendimento ao público, educação para o trânsito e centro de formação de condutores - a avaliação foi realizada com critérios mais específicos de disponibilidade de informações para o público, sendo que algumas dessas categorias não apresentam dados estritamente estatísticos.
 
-consulta_pre <- df_revisoes |>
-  mutate(regiao = get_region(uf), .before = 1) |>
-  filter(ano == 2024) |>
-  mutate(
-    frota = rowMeans(across(starts_with("frota"))),
-    condutores = rowMeans(across(starts_with("condutores"))),
-    infracoes = rowMeans(across(starts_with("infracoes"))),
-    sinistros = rowMeans(across(starts_with("sinistros"))),
-    atendimento = rowMeans(across(starts_with("atendimento"))),
-    educ = rowMeans(across(starts_with("educ"))),
-    cfcs
-  ) |>
-  select(regiao,
-         uf,
-         frota,
-         condutores,
-         infracoes,
-         sinistros,
-         atendimento,
-         educ,
-         cfcs)
+Em uma verificação preliminar, observou-se que apenas 8 portais de Detrans contêm informações de todas as categorias consideradas. Doze UFs não disponibilizam dados sobre sinistros de trânsito, ou seja, nesses locais, uma das informações mais importantes para o diagnóstico da segurança viária não está disponível para o público.
 
+Observando as notas finais, destaca-se os Detrans com as melhores práticas: Detran-SE (nota 9,6), Detran-SP (nota 9,3) e Detran-ES (nota 8,9). Entre 2020 e 2024, os portais de 17 Detrans apresentaram uma melhoria no desempenho, mostrando que mais da metade dos portais disponíveis no país vem demonstrando evoluções positivas.
 
-top_5 <-
-  consulta_pre |> 
-  mutate(nota_final = rowMeans(across(frota:cfcs))) |> 
-  slice_max(nota_final, n = 5)
-
-bottom_5 <-
-  consulta_pre |> 
-  mutate(nota_final = rowMeans(across(frota:cfcs))) |> 
-  slice_min(nota_final, n = 5)
-
-notas_10 <- 
-  consulta_pre |>
-  select(-regiao) |> 
-  pivot_longer(-uf) |> 
-  filter(value == 10) |> 
-  arrange(name) |> 
-  select(-value) |> 
-  pivot_wider(names_from = name, values_from = uf)
-```
-
-Entre os departamentos com as **cinco maiores** notas para 2024, estão:
-
-- `r get_state_name(top_5[1, ]$uf)` - `r format(round(top_5[1, ]$nota_final, 2), decimal.mark  = ",")`;
-- `r get_state_name(top_5[2, ]$uf)` - `r format(round(top_5[2, ]$nota_final, 2), decimal.mark  = ",")`;
-- `r get_state_name(top_5[3, ]$uf)` - `r format(round(top_5[3, ]$nota_final, 2), decimal.mark  = ",")`;
-- `r get_state_name(top_5[4, ]$uf)` - `r format(round(top_5[4, ]$nota_final, 2), decimal.mark  = ",")`, e;
-- `r get_state_name(top_5[5, ]$uf)` - `r format(round(top_5[5, ]$nota_final, 2), decimal.mark  = ",")`.
-
-De forma análoga, os departamentos com as **cinco menores** notas são:
-
-- `r get_state_name(bottom_5[1, ]$uf)` - `r format(round(bottom_5[1, ]$nota_final, 2), decimal.mark  = ",")`;
-- `r get_state_name(bottom_5[2, ]$uf)` - `r format(round(bottom_5[2, ]$nota_final, 2), decimal.mark  = ",")`;
-- `r get_state_name(bottom_5[3, ]$uf)` - `r format(round(bottom_5[3, ]$nota_final, 2), decimal.mark  = ",")`;
-- `r get_state_name(bottom_5[4, ]$uf)` - `r format(round(bottom_5[4, ]$nota_final, 2), decimal.mark  = ",")`, e;
-- `r get_state_name(bottom_5[5, ]$uf)` - `r format(round(bottom_5[5, ]$nota_final, 2), decimal.mark  = ",")`.
-
-Em destaque, observa-se os estados que atingiram a nota máxima (10) em alguma das sete categorias de informações consultadas:
-
-- **Atendimento**: `r notas_10$atendimento |> unlist() |> combine_words(oxford_comma = F, and = " e ")`;
-- **CFCs**: `r notas_10$cfcs |> unlist() |> combine_words(oxford_comma = F, and = " e ")`;
-- **Condutores**: `r notas_10$condutores |> unlist() |> combine_words(oxford_comma = F, and = " e ")`;
-- **Educação**: `r notas_10$educ |> unlist() |> combine_words(oxford_comma = F, and = " e ")`;
-- **Frota**: `r notas_10$frota |> unlist() |> combine_words(oxford_comma = F, and = " e ")`;
-- **Infrações**: `r notas_10$infracoes |> unlist() |> combine_words(oxford_comma = F, and = " e ")`, e;
-- **Sinistros**: `r notas_10$sinistros |> unlist() |> combine_words(oxford_comma = F, and = " e ")`
-
-Os resultados encontrados por meio deste estudo denotam como a maior parte dos estados progrediu, visto que obtiveram pontuações finais maiores em 2024 em relação à avaliação de 2020 sob os mesmos critérios de avaliação. O conjunto de evidências geradas corroboram à conclusão de que, em geral, houve uma evolução nos sistemas estaduais de fornecimento de dados sobre o trânsito.
+Essa pesquisa incluiu métodos e resultados importantes para a análise sistemática dos portais dos Detrans, levando em consideração o nível de divulgação de dados e serviços de importância para o desenvolvimento da mobilidade segura. Como próximos passos, entende-se a necessidade de aplicar novamente essa análise, assim obtendo informações mais precisas sobre a evolução de desempenho quando se considera a disponibilização de dados. Em adição, considera-se a necessidade de aprimorar os métodos aqui apresentados, levando a discussão para o poder público e também para a sociedade civil.

@@ -6,7 +6,20 @@ Essa é uma segunda versão do relatório publicado em 2020 pelo Observatório N
 
 # Highlights
 
-Aqui estão os principais resultados do trabalho.
+- O objetivo principal foi avaliar o nível de informações disponibilizadas nos portais (sítios eletrônicos) dos Detrans de todas as unidades da federação brasileira, buscando classificar cada portal com uma nota de 0 a 10.
+
+- A avaliação foi baseada em em sete categorias: (i) frota de veículos, (ii) condutores habilitados, (iii) infrações, (iv) sinistros de trânsito, (v) educação para o trânsito (campanhas, material educativo, regras de trânsito, etc.), (vi) atendimento ao público e (vii) centro de formação de condutores (CFCs).
+
+- Apenas 8 portais de Detrans contêm informações de todas as categorias consideradas.
+
+- As categorias **sinistros de trânsito** e **infrações** apresentaram a menor quantidade de disponibilização, com apenas 15 portais incluindo dados.
+
+- Os Detrans dos estados de Sergipe, São Paulo e Espírito Santo atingiram os **melhores resultados**, com notas finais de 9,6, 9,3 e 8,9, respectivamente.
+
+- Os Detrans dos estados de Roraima, Pará e Piauí atingiram os **piores resultados**, com notas finais de 1,7, 2,1 e 2,4, respectivamente.
+
+- Entre 2020 e 2024, os portais de 17 Detrans apresentaram uma melhoria de desempenho, com aumento em suas notas finais.
+
 
 # Sobre
 
@@ -24,7 +37,7 @@ Todo o processo metodológico de coleta, transformação e visualização dos da
 
 # Agradecimentos
 
-A equipe de autores agradece ...
+A equipe de autores agradece às instituições que responderam ao Ofício 321/ONSV/2024, contribuindo com a precisão das informações aqui apresentadas: CET-MG, Detran-ES, Detran-MT e Detran-SP.
 
 
 :::{layout="[50, 28, 19]"}

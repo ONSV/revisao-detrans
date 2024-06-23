@@ -8,9 +8,11 @@ source(here::here("R", "_common.R"))
 
 # Resultados {#sec-results}
 
-Nessa seção, os resultados estão organizados por categoria (@sec-results-cat) e estão apresentados em uma comparação entre os resultados atuais e os resultados obtidos em 2020 (@sec-results-evo). 
+Nessa seção, os resultados estão organizados por categoria (@sec-results-cat) e estão apresentados em uma comparação entre os resultados atuais e os resultados obtidos na versão anterior deste trabalho, publicado em 2020 (@sec-results-evo). 
 
 ## Resultados por Categoria {#sec-results-cat}
+
+Nesta seção os resultados estão organizados por categoria de análise, iniciando com a Frota de veículos e finalizando com Atendimento ao público. Cada subseção apresenta uma tabela e um mapa com as notas resultantes de cada categoria.
 
 ### Frota de Veículos {#sec-results-frota}
 
@@ -26,9 +28,9 @@ frota <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-Primeiramente, os dados de frota de veículos, condutores habilitados, infrações e sinistros são analisados conforme os três critérios de avaliação anteriormente vistos na @tbl-criterios. No caso da frota, o nível de desagregação considera as variáveis de ano de fabricação do veículo, categoria (particular, aluguel, etc.), combustível, espécie (passageiro, carga, etc.), procedência (nacional ou estrangeira) e tipo de veículo.
+A @tbl-frota aponta os resultados obtidos na categoria frota de veículos, com os níveis em cada categoria e as notas médias resultantes. A @fig-map-frota apresenta esses dados mapeados no território brasileiro. Observa-se que a *periodicidade* é o critério de melhor performance na maior parte dos portais, e *interatividade* é o critério de pior desempenho, considerando essa categoria.
 
-A @tbl-frota aponta a qualidade dos dados estatísticos da frota veicular como fornecidos pelos portais dos Detrans, assim como a nota média para estes critérios. A periodicidade aparenta ser o critério de melhor performance na maior parte dos departamentos para esta categoria. @fig-map-frota apresenta esses dados mapeados ao longo das UFs.
+Em relação à nota média, os estados com o melhor desempenho foram Sergipe, Rondônia e Rio de Janeiro, atingindo a nota máxima de 10. Por outro lado, os estados com o pior desempenho foram Piauí, Roraima, Tocantins, Pará e Amapá, com a nota média de 0 por não possuírem dados de frota de veículos em seus portais.
 
 ::: panel-tabset
 ### Tabela
@@ -84,9 +86,7 @@ frota_map |>
 ```
 :::
 
-
 ### Condutores Habilitados {#sec-results-drivers}
-
 
 ```{r}
 condutores <- df_revisoes |>
@@ -99,7 +99,7 @@ condutores <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-A @tbl-condutores e a @fig-map-condutores mostram o desempenho dos Detrans na disponibilização de dados de condutores habilitados, visto que neste caso as variáveis de desagregação compreendem a categoria da habilitação, sexo, opção de doador, situação (provisória ou definitiva), idade do condutor e tempo de habilitação. Novamente, a periodicidade e a interatividade são os critérios com maior e menor performance geral respectivamente.
+A @tbl-condutores e a @fig-map-condutores mostram o desempenho dos Detrans na disponibilização de dados sobre os condutores habilitados. Novamente, conforme também visto na categoria frota de veículos, a periodicidade e a interatividade são os critérios com maior e menor performance geral, respectivamente. Dois estados atingiram a nota máxima: Rondônia e Espírito Santo. Os portais de sete estados não apresentam dados sobre os condutores habilitados: Piauí, Maranhão, Alagoas, Roraima, Tocantins, Pará e Amapá.
 
 ::: panel-tabset
 ### Tabela
@@ -166,7 +166,7 @@ cfcs <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-As notas para cada estado estão ilustradas na @tbl-cfcs e na @fig-map-cfcs em pontuações qualitativas. Observa-se a predominância do desempenho intermediário nestes dados. Há também uma clara ausência de Detrans com **Prática Inicial**.
+As notas médias resultantes para essa categoria estão ilustradas na @tbl-cfcs e na @fig-map-cfcs. Observa-se a predominância do desempenho intermediário nesta categoria / critério. Os estados com a melhor prática são o Paraná, São Paulo, Rio de Janeiro, Espírito Santo, Amapá, Sergipe, Ceará, Alagoas e Goiás. Os estados com prática ausente foram Rondônia, Pará e Rio Grande do Norte, atingindo uma nota média de 0.
 
 ::: panel-tabset
 ### Tabela
@@ -233,7 +233,7 @@ infracoes <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-A @tbl-infracoes e a @fig-map-infracoes contêm os resultados das consultas de dados sobre infrações. Neste caso, a desagregação considerou a divisão por artigo de infração, grupo de infração (circulação, estacionamento, etc.), natureza (grave, leve, etc.), instrumento de autuação, local de autuação, faixa etária do condutor infrator, sexo do condutor infrator, por responsável (condutor ou proprietário) e exercício de atividade remunerada ou não do infrator.
+A @tbl-infracoes e a @fig-map-infracoes contêm os resultados da categoria infrações. Observa-se que o critério com o melhor desempenho entre as UFs foi *Nível de desagregação* e o critério com pior desempenho foi *Interatividade*. Considerando o desempenho das UFs com base na nota média, os melhores desempenhos foram observados nos portais dos Detrans de Mato Grosso do Sul e Sergipe. Houve 12 Detrans sem dados de infrações em seus portais, configurando uma prática ausente. Dentre eles, inclui-se o Detran do Distrito Federal e de outros estados da região Norte e Nordeste.
 
 ::: panel-tabset
 ### Tabela
@@ -302,7 +302,7 @@ sinistros <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-A avaliação sobre os dados de sinistros de trânsito está apresentada na @tbl-sinistros e na @fig-map-sinistros. Entende-se como variáveis para a desagregação desta categoria a gravidade do sinistro (fatal ou não), período (dia ou noite), área (urbana ou rural), natureza (atropelamento, choque, etc.), dias da semana, horário, sexo da vítima e/ou do condutor, faixa etária da vítima e/ou do condutor, tipo da vítima e/ou do condutor (ciclista, pedestre, etc.), categoria do condutor (habilitado, inabilitado, etc.), tempo de habilitação do condutor e espécie do veículo envolvido (automóvel, bicicleta, etc.).
+Os resultados da categoria sinistros de trânsito está apresentada na @tbl-sinistros e na @fig-map-sinistros. Nessa categoria, o critério *periodicidade* apresentou melhor desempenho e o critério *interatividade* apresentou o pior. Entre as instituições, os Detrans de Sergipe, Rondônia, Espírito Santo e São Paulo apresentaram o melhor resultado, atingindo a nota 10. Detrans de 12 estados não possuem dados sobre sinistros ocorridos, disponibilizados em seus portais.
 
 ::: panel-tabset
 ### Tabela
@@ -361,8 +361,7 @@ sinistros_map |>
 
 ### Educação para o Trânsito {#sec-results-educ}
 
-
-As consultas sobre informações de educação para o trânsito estão apresentadas na @tbl-educ e na @fig-map-educ, com pontuações atribuídas conforme os critérios de avaliação da @tbl-cri-educ.
+Os resultados da categoria educação para o trânsito estão apresentadas na @tbl-educ e na @fig-map-educ. Os portais de todos os Detrans apresentaram conteúdos sobre educação para o trânsito, assim, nenhum foi classificado com prática ausente. Os Detrans do Distrito Federal, Mato Grosso do Sul, Pernambuco, Sergipe, Pará, Amazonas, Acre, Rio de Janeiro, Paraná e Rio Grande do Sul, em conjunto com CET-MG, atingiram a nota máxima nessa categoria. Por outro lado, os Detrans de Paraíba, Alagoas, Roraima, Rondônia e Santa Catarina atingiram as menores médias, com uma nota de 3,3.
 
 ```{r}
 educacao <- df_revisoes |>
@@ -440,7 +439,7 @@ atendimento <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-Os resultados das consultas sobre o atendimento ao público estão apresentados na @tbl-atendimento e na @fig-map-atend. É notável a ausência de estatísticas de atendimento para a maioria dos DETRANs.
+Os resultados da categoria atendimento ao público estão apresentados na @tbl-atendimento e na @fig-map-atend. É notável a ausência de estatísticas de atendimento ao público na maioria dos portais dos Detrans, resultando em menores médias. Como destaque positivo, os Detrans de Mato Grosso, Espírito Santo, Minas Gerais, São Paulo e Rio Grande do Sul atingiram a melhor média. Os portais dos Detrans de Piauí, Paraíba, Roraima, Amapá e Acre apresentaram as menores médias, com uma pontuação de 1,7.
 
 ::: panel-tabset
 ### Tabela
@@ -504,10 +503,116 @@ atendimento_map |>
 
 ## Evolução dos Resultados {#sec-results-evo}
 
-As pontuações finais calculadas para a avaliação das informações disponibilizadas nos portais dos DETRANs de 2024 permite não apenas identificar os departamentos de melhor performance conforme os critérios de avaliação estabelecidos, mas também averiguar como progrediram ou regrediram em relação à avaliação de 2020, como visto na @fig-dumbbell.
+A @tbl-final apresenta as notas calculadas das categorias analisadas e a média final do valor referente a 2024. Também inclui-se as médias finais obtidas no estudo de 2020, a fins de comparação com os valores atuais. Ao realizar uma média nacional com base nas notas de todas as UFs, em 2024 o Brasil atinge a nota de 5,53. Isso representa um aumento de 14%, considerando a média nacional obtida em 2020, que foi de 4,85.
+
+Considerando os resultados de 2024, sete Detrans obtiveram uma nota final acima de 7,0: Sergipe (9,6), São Paulo (9,3), Espírito Santo (8,9), Rio Grande do Sul (8,7), Paraná (7,9), Rio de Janeiro (7,7) e Mato Grosso (7,1). Dentre as menores notas, destaca-se os seguintes Detrans com as práticas mais iniciais: Roraima (1,7), Pará (2,1), Piauí (2,4), Tocantins (2,4) e Amapá (2,6).
 
 ```{r}
-#| fig-cap: Evolução dos resultados finais entre 2020 e 2024
+#| tbl-cap: Resultados finais
+#| label: tbl-final
+
+coldef1 <- 
+  colDef(
+    format = colFormat(locales = "de-DE", digits = 1)
+  )
+
+coldef2 <- 
+  colDef(
+    style = continuous_bg_func,
+    format = colFormat(locales = "de-DE", digits = 1)
+  )
+
+variacao <- df_revisoes |>
+  select(uf, nota_final, ano) |>
+  pivot_wider(names_from = ano,
+              names_prefix = "ano",
+              values_from = nota_final) |>
+  summarise(
+    .by = uf,
+    ano2020 = mean(ano2020),
+    ano2024 = mean(ano2024)
+  ) |>
+  select(uf, ano2020)
+
+consulta_pre <- df_revisoes |>
+  mutate(regiao = get_region(uf), .before = 1) |>
+  filter(ano == 2024) |>
+  mutate(
+    frota = rowMeans(across(starts_with("frota"))),
+    condutores = rowMeans(across(starts_with("condutores"))),
+    infracoes = rowMeans(across(starts_with("infracoes"))),
+    sinistros = rowMeans(across(starts_with("sinistros"))),
+    atendimento = rowMeans(across(starts_with("atendimento"))),
+    educ = rowMeans(across(starts_with("educ"))),
+    cfcs
+  ) |>
+  select(regiao,
+         uf,
+         frota,
+         condutores,
+         infracoes,
+         sinistros,
+         atendimento,
+         educ,
+         cfcs)
+
+tbl_final = consulta_pre |>
+  mutate(nota_final = rowMeans(across(frota:cfcs))) |>
+  arrange(desc(nota_final)) |>
+  select(-regiao) |>
+  left_join(variacao, by = "uf") |>
+  relocate(nota_final, .after = ano2020) |> 
+  rename_with(.fn = str_to_title) |> 
+  rename(
+    UF = Uf,
+    `Infrações` = Infracoes,
+    `Educação` = Educ,
+    CFCs = Cfcs,
+    `2020` = Ano2020,
+    `2024` = Nota_final
+  ) 
+  
+  tbl_final |> make_reactable(
+    columns = list(
+      Frota = coldef1,
+      Condutores = coldef1,
+      `Infrações` = coldef1,
+      Sinistros = coldef1,
+      Atendimento = coldef1,
+      `Educação` = coldef1,
+      CFCs = coldef1,
+      `2020` = coldef2,
+      `2024` = coldef2
+    )
+  )
+
+notas_10 <- 
+  consulta_pre |>
+  select(-regiao) |> 
+  pivot_longer(-uf) |> 
+  filter(value == 10) |> 
+  arrange(name) |> 
+  select(-value) |> 
+  pivot_wider(names_from = name, values_from = uf)
+
+```
+
+Em destaque, observa-se os estados que atingiram a nota máxima (10) em alguma das sete categorias de informações consultadas:
+
+- **Atendimento ao público**: `r notas_10$atendimento |> unlist() |> combine_words(oxford_comma = F, and = " e ")`;
+- **CFCs**: `r notas_10$cfcs |> unlist() |> combine_words(oxford_comma = F, and = " e ")`;
+- **Condutores habitados**: `r notas_10$condutores |> unlist() |> combine_words(oxford_comma = F, and = " e ")`;
+- **Educação para o trânsito**: `r notas_10$educ |> unlist() |> combine_words(oxford_comma = F, and = " e ")`;
+- **Frota de veículos**: `r notas_10$frota |> unlist() |> combine_words(oxford_comma = F, and = " e ")`;
+- **Infrações**: `r notas_10$infracoes |> unlist() |> combine_words(oxford_comma = F, and = " e ")`, e;
+- **Sinistros de trânsito**: `r notas_10$sinistros |> unlist() |> combine_words(oxford_comma = F, and = " e ")`
+
+A @fig-dumbbell apresenta a variação entre os resultados de nota final obtidos na pesquisa de 2020 e na pesquisa atual de 2024. Dentre as 27 UFs, observa-se que 17 apresentaram uma evolução positiva neste período de tempo. Todos os estados da Região Sul e Sudeste apresentaram aumento na nota final, comparando os períodos. Dois estados do Norte e do Centro-Oeste apresentaram aumento, em conjunto com 6 estados do Nordeste.
+
+De forma absoluta, os portais dos Detrans que apresentaram as melhores evoluções em relação foram aqueles dos estados do Acre (+2,69), Ceará (+2,62) e Bahia (+2,62). De outro lado, os estados que apresentaram as maiores quedas de desempenho foram Roraima (-2,62), Piauí (-1,58) e Rondônia (-1,51). 
+
+```{r}
+#| fig-cap: Evolução dos resultados entre 2020 e 2024
 #| label: fig-dumbbell
 #| fig-height: 5
 
@@ -560,24 +665,10 @@ dumbbell_plot <-
 girafe(ggobj = dumbbell_plot, options = list(opts_toolbar(saveaspng = F)))
 ```
 
-```{r}
-acima_de_7 <-
-  df_revisoes |>
-  filter(ano == 2024, nota_final >= 7) |>
-  mutate(text = paste(get_state_names(uf), "-", 
-                      format(round(nota_final, 2),decimal.mark = ","))) |> 
-  arrange(-nota_final) |> 
-  pull(text)
-```
-
-Em 2024, houve uma progressão majoritariamente positiva para os DETRANs. Considerando os departamentos que obtiveram notas maiores que 7, estão em destaque: 
-
-`r knitr::combine_words(acima_de_7, sep = ";\\\n", oxford_comma = F, and = ", e;\\\n", before = "\\\t\U25CF ", after = "")`;
-
-A @fig-map-compare apresenta mapas para a comparação das pontuações finais de todos estados.
+A @fig-map-compare apresenta mapas para a comparação das pontuações finais de todos estados. O mapa da esquerda apresenta os resultados obtidos na pesquisa de 2020 e o mapa da direita apresenta os resultados obtidos nesta pesquisa, referente ao ano de 2024.
 
 ```{r}
-#| fig-cap: Notas finais para DETRANs em 2020 e 2024
+#| fig-cap: Notas finais para Detrans em 2020 e 2024
 #| label: fig-map-compare
 
 title_2020 <- htmltools::tags$div(htmltools::HTML('2020'))
@@ -598,86 +689,4 @@ comp_map_2024 <-
   addControl(title_2024, position = "topright")
 
 sync(comp_map_2020, comp_map_2024, sync = F)
-```
-
-O resultado final de todas as consultas efetuadas, bem como os valores médios para cada categoria de dado acessado e suas notas finais podem ser observados na @tbl-final, em ordem descendente das pontuações atribuídas em 2024.
-
-```{r}
-#| tbl-cap: Resultados finais das consultas para 2024
-#| label: tbl-final
-
-coldef1 <- 
-  colDef(
-    format = colFormat(locales = "de-DE", digits = 1)
-  )
-
-coldef2 <- 
-  colDef(
-    style = continuous_bg_func,
-    format = colFormat(locales = "de-DE", digits = 1)
-  )
-
-variacao <- df_revisoes |>
-  select(uf, nota_final, ano) |>
-  pivot_wider(names_from = ano,
-              names_prefix = "ano",
-              values_from = nota_final) |>
-  summarise(
-    .by = uf,
-    ano2020 = mean(ano2020),
-    ano2024 = mean(ano2024)
-  ) |>
-  select(uf, ano2020)
-
-consulta_pre <- df_revisoes |>
-  mutate(regiao = get_region(uf), .before = 1) |>
-  filter(ano == 2024) |>
-  mutate(
-    frota = rowMeans(across(starts_with("frota"))),
-    condutores = rowMeans(across(starts_with("condutores"))),
-    infracoes = rowMeans(across(starts_with("infracoes"))),
-    sinistros = rowMeans(across(starts_with("sinistros"))),
-    atendimento = rowMeans(across(starts_with("atendimento"))),
-    educ = rowMeans(across(starts_with("educ"))),
-    cfcs
-  ) |>
-  select(regiao,
-         uf,
-         frota,
-         condutores,
-         infracoes,
-         sinistros,
-         atendimento,
-         educ,
-         cfcs)
-
-consulta_pre |>
-  mutate(nota_final = rowMeans(across(frota:cfcs))) |>
-  arrange(desc(nota_final)) |>
-  select(-regiao) |>
-  left_join(variacao, by = "uf") |>
-  relocate(nota_final, .after = ano2020) |> 
-  rename_with(.fn = str_to_title) |> 
-  rename(
-    UF = Uf,
-    `Infrações` = Infracoes,
-    `Educação` = Educ,
-    CFCs = Cfcs,
-    `2020` = Ano2020,
-    `2024` = Nota_final
-  ) |> 
-  make_reactable(
-    columns = list(
-      Frota = coldef1,
-      Condutores = coldef1,
-      `Infrações` = coldef1,
-      Sinistros = coldef1,
-      Atendimento = coldef1,
-      `Educação` = coldef1,
-      CFCs = coldef1,
-      `2020` = coldef2,
-      `2024` = coldef2
-    )
-  )
-
 ```
