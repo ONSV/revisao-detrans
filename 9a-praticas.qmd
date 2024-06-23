@@ -1,4 +1,4 @@
-# Melhores Práticas {#sec-praticas}
+# Boas Práticas {#sec-praticas}
 
 
 Esta seção é dedicada a salientar alguns exemplos de boas práticas adotadas por DETRANs a fim de demonstrar alguns costumes que podem aperfeiçoar o desempenho dos portais em geral. A escolha das menções nesta seção foi promovida em relação às maiores notas encontradas no estudo.
@@ -11,7 +11,7 @@ A @fig-rj demonstra um gerenciador de tabelas disponível no portal do Detran RJ
 ![](assets/detran_rj.png)
 
 Gerenciador de Tabelas do Detran RJ.\
-Fonte: https://www.detran.rj.gov.br/\_estatisticas.veiculos/index.asp
+Fonte: <https://www.detran.rj.gov.br/\_estatisticas.veiculos/index.asp>
 :::
 
 ## Condutores - Detran RO
@@ -22,7 +22,7 @@ Na @fig-ro, o Detran RO disponibiliza os dados em um *dashboard*, ou relatório 
 ![](assets/detran_ro.png)
 
 Dashboard de dados de condutores habilitados do Detran RO\
-Fonte: https://www.detran.ro.gov.br/post/43/2023/9/12/anuario-estatistico-condutores-habilitados/
+Fonte: <https://www.detran.ro.gov.br/post/43/2023/9/12/anuario-estatistico-condutores-habilitados/>
 :::
 
 ## Infrações - Detran MS
@@ -33,7 +33,7 @@ Como anteriormente citado, uma boa prática para demonstração dos dados é a g
 ![](assets/detran_ms.png)
 
 Dashboard de infrações do Detran MS.\
-Fonte: http://www.paineis.detran.ms.gov.br/Infracoes.html
+Fonte: <http://www.paineis.detran.ms.gov.br/Infracoes.html>
 :::
 
 ## Sinistros - Detran SE
@@ -44,7 +44,7 @@ O Detran SE disponibiliza uma grande quantidade de níveis de desagregação, co
 ![](assets/detran_se_1.png)
 
 Página de estatísticas de sinistros do Detran SE.\
-Fonte: https://www.detran.se.gov.br/?pg=estatistica/acidentes#gsc.tab=0
+Fonte: <https://www.detran.se.gov.br/?pg=estatistica/acidentes#gsc.tab=0>
 :::
 
 Seus dados são apresentados em tabelas dinâmicas, com filtros e um extenso intervalo temporal, como apresenta a @fig-se-2.
@@ -53,7 +53,7 @@ Seus dados são apresentados em tabelas dinâmicas, com filtros e um extenso int
 ![](assets/detran_se_2.png)
 
 Exemplo de tabela dinâmica do Detran SE.\
-Fonte: https://www.detran.se.gov.br/?pg=estatistica/acidentes/boat_001#gsc.tab=0
+Fonte: <https://www.detran.se.gov.br/?pg=estatistica/acidentes/boat_001#gsc.tab=0>
 :::
 
 ## Atendimento ao Público - Detran SP
@@ -64,14 +64,14 @@ Além de providenciar contato por telefone, e-mail e mensagem via WhatsApp, o se
 ![](assets/detran_sp_1.png)
 
 Serviço de atendimento pelo portal do Detran SP.\
-Fonte: https://www.detran.sp.gov.br/wps/portal/portaldetran/detran/canaisdecomunicacao
+Fonte: <https://www.detran.sp.gov.br/wps/portal/portaldetran/detran/canaisdecomunicacao>
 :::
 
 ::: {#fig-sp-2}
 ![](assets/detran_sp_2.png)
 
 Aplicativos do portal do Detran SP.\
-Fonte: https://www.detran.sp.gov.br/wps/portal/portaldetran/cidadao/appsdetran
+Fonte: <https://www.detran.sp.gov.br/wps/portal/portaldetran/cidadao/appsdetran>
 :::
 
 ## Sinistros - Detran SP
@@ -82,7 +82,7 @@ O novo painel do sistema Infosiga (Sistema de Informações Gerenciais de Sinist
 ![](assets/detran_sp_infosiga.png)
 
 Novo Infosiga \
-Fonte: https://www.infosiga.sp.gov.br/
+Fonte: <https://www.infosiga.sp.gov.br/>
 :::
 
 ## Educação para o Trânsito - Detran PR
@@ -93,7 +93,7 @@ A @fig-pr-educ apresenta o portal educativo do Detran PR, que dispõe de uma gra
 ![](assets/detran_pr_educ.png)
 
 Portal de educação do Detran PR.\
-Fonte: https://www.detraneduca.pr.gov.br/
+Fonte: <https://www.detraneduca.pr.gov.br/>
 :::
 
 ## CFCs - Detran PR
@@ -104,5 +104,16 @@ O Detran PR também possui em seu portal tabelas interativas para a consulta de 
 ![](assets/detran_pr_cfcs.png)
 
 Lista de CFCs/Instituições do Detran PR.\
-Fonte: https://www.detran.pr.gov.br/Pagina/CFCInstituicoes-Cursos-de-Capacitacao-e-Especializados
+Fonte: <https://www.detran.pr.gov.br/Pagina/CFCInstituicoes-Cursos-de-Capacitacao-e-Especializados>
+:::
+
+## Sinistros - Detran ES
+
+O Detran-ES possui o Observatório de Trânsito do Estado do Espírito Santo, disponibilizando dados sobre sinistros, frota de veículos, condutores habilitados e infrações. 
+
+::: {#fig-es-obs}
+![](assets/detran-es-observatorio.png)
+
+Observatório de Trânsito do Estado do Espírito Santo. \
+Fonte: <https://analytics-detran.vert.com.br/SASVisualAnalytics/?reportUri=%2Freports%2Freports%2Fdd289948-326b-4291-82cd-d407d3a9db8c&sectionIndex=0&sso_guest=true&reportViewOnly=true&reportContextBar=false&pageNavigation=false&sas-welcome=false>
 :::
