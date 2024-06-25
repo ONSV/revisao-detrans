@@ -41,7 +41,7 @@ book:
     - 9b-links.qmd
   twitter-card: true
   repo-url: https://www.github.com/onsv/revisao-detrans
-  # cover-image: cover-test.png
+  cover-image: logo/capa.png
   language: pt-BR
   favicon: logo/onsv-fav.ico
 
