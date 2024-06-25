@@ -7,7 +7,7 @@ source(here::here("R", "_common.R"))
 
 # Métodos {#sec-method}
 
-A metodologia deste trabalho está organizada em duas partes. Primeiro, elaborou-se uma consulta preliminar nos sites dos Detrans (@sec-method-consult). Em seguida, foram estabelecidos as categorias de análise e os critérios de cada categoria (@sec-method-crit).
+A metodologia deste trabalho está organizada em duas partes. Primeiro, elaborou-se uma consulta preliminar nos sites dos Detrans (@sec-method-consult). Em seguida, foram estabelecidos as categorias de análise e os critérios de cada categoria (@sec-method-crit). Com os métodos aplicados e as notas preliminares calculadas, fez-se uma consulta a todos os Detrans, conforme explicado em @sec-method-rev.
 
 ## Consultas Preliminares {#sec-method-consult}
 
@@ -272,3 +272,7 @@ df_cfc |>
     decimals = 1
   )
 ```
+
+## Consulta aos Detrans {#sec-method-rev}
+
+Com a aplicação dos métodos anteriores, entendeu-se a necessidade de confirmação dos dados levantados. Após o levantamento das informações e o cálculo das notas, o Observatório enviou o Ofício 321/ONSV/2024, de 23 de maio de 2024, em conjunto com uma análise individualizada dos resultados, solicitando aos Detrans / CET-MG uma revisão das pontuações levantadas pela equipe de autores. Até a data de publicação deste trabalho, obteve-se o feedback das seguintes instituições: CET-MG, Detran-ES, Detran-MT, Detran-SP e Detran-RN.
