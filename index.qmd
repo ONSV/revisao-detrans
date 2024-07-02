@@ -4,6 +4,8 @@ O presente relatório é um produto da cooperação entre o Observatório Nacion
 
 Essa é uma segunda versão do relatório realizado em 2020 pelo Observatório Nacional de Segurança Viária, também publicado como uma comunicação técnica no segundo Simpósio de Transportes do Paraná (STPR), também em 2020 [@santos2020]. A elaboração de uma nova versão possibilita a análise da evolução dos portais dos DETRANs de cada estado, entre os anos de 2020 e 2024.
 
+Nessa nova versão o relatório foi renderizado em _html_, possibilitando a visualização interativa dos resultados através de tabelas, mapas e gráficos em um formato nativo para a web, com acesso direto através do site do Observatório([onsv.org.br](https://onsv.org.br)).
+
 # Highlights
 
 - O objetivo principal foi avaliar o nível de informações disponibilizadas nos portais (sítios eletrônicos) dos Detrans de todas as unidades da federação brasileira, buscando classificar cada portal com uma nota de 0 a 10.
@@ -36,7 +38,7 @@ Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departam
 
 ## Código livre e aberto
 
-Todo o processo metodológico de coleta, transformação e visualização dos dados presentes nesse relatório estão disponíveis no repositório <https://github.com/ONSV/revisao-detrans>.
+Todo o processo metodológico de coleta, transformação e visualização dos dados presentes nesse relatório estão disponíveis no repositório <https://github.com/ONSV/revisao-detrans>. Os arquivos utilizados para renderizar este trabalho também estão disponibilizados no repositório.
 
 # Agradecimentos
 
