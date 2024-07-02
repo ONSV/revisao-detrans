@@ -1,10 +1,12 @@
 # Apresentação {.unnumbered}
 
-O presente relatório é um produto da cooperação entre o Observatório Nacional de Segurança Viária (ONSV), o Centro de Liderança Pública (CLP) e a Universidade Federal do Paraná (UFPR). O documento tem como principal conteúdo a avaliação do nível de informações disponibilizadas nos portais dos Detrans de todas as unidades da federação brasileira.
+O documento tem como principal conteúdo a avaliação do nível de informações disponibilizadas nos portais dos Detrans de todas as unidades da federação brasileira. Esta avaliação teve como propósito verificar a eficiência das entregas realizadas pelos Departamentos Estaduais de Trânsito (Detrans) com o intuito de fornecer informações e transparência ao cidadão.
 
 Essa é uma segunda versão do relatório realizado em 2020 pelo Observatório Nacional de Segurança Viária, também publicado como uma comunicação técnica no segundo Simpósio de Transportes do Paraná (STPR), também em 2020 [@santos2020]. A elaboração de uma nova versão possibilita a análise da evolução dos portais dos DETRANs de cada estado, entre os anos de 2020 e 2024.
 
 Nessa nova versão o relatório foi renderizado em _html_, possibilitando a visualização interativa dos resultados através de tabelas, mapas e gráficos em um formato nativo para a web, com acesso direto através do site do Observatório([onsv.org.br](https://onsv.org.br)).
+
+O presente relatório é um produto da cooperação entre o Observatório Nacional de Segurança Viária (ONSV), o Centro de Liderança Pública (CLP) e a Universidade Federal do Paraná (UFPR).
 
 # Highlights
 
