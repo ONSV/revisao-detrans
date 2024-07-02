@@ -1,8 +1,12 @@
 # Apresentação {.unnumbered}
 
-O presente relatório é um produto da cooperação entre o Observatório Nacional de Segurança Viária (ONSV), o Centro de Liderança Pública (CLP) e a Universidade Federal do Paraná (UFPR). O documento tem como principal conteúdo a avaliação do nível de informações disponibilizadas nos portais dos Detrans de todas as unidades da federação brasileira.
+O documento tem como principal conteúdo a avaliação do nível de informações disponibilizadas nos portais dos Detrans de todas as unidades da federação brasileira. Esta avaliação teve como propósito verificar a eficiência das entregas realizadas pelos Departamentos Estaduais de Trânsito (Detrans) com o intuito de fornecer informações e transparência ao cidadão.
 
 Essa é uma segunda versão do relatório realizado em 2020 pelo Observatório Nacional de Segurança Viária, também publicado como uma comunicação técnica no segundo Simpósio de Transportes do Paraná (STPR), também em 2020 [@santos2020]. A elaboração de uma nova versão possibilita a análise da evolução dos portais dos DETRANs de cada estado, entre os anos de 2020 e 2024.
+
+Nessa nova versão o relatório foi renderizado em _html_, possibilitando a visualização interativa dos resultados através de tabelas, mapas e gráficos em um formato nativo para a web, com acesso direto através do site do Observatório([onsv.org.br](https://onsv.org.br)).
+
+O presente relatório é um produto da cooperação entre o Observatório Nacional de Segurança Viária (ONSV), o Centro de Liderança Pública (CLP) e a Universidade Federal do Paraná (UFPR).
 
 # Highlights
 
@@ -20,8 +24,11 @@ Essa é uma segunda versão do relatório realizado em 2020 pelo Observatório N
 
 - Entre 2020 e 2024, os portais de 17 Detrans apresentaram uma melhoria de desempenho, com aumento em suas notas finais.
 
+# Sobre o Observatório
 
-# Sobre
+O Observatório Nacional de Segurança Viária é uma instituição social sem fins lucrativos, dedicada a desenvolver ações que contribuam efetivamente para a redução dos elevados índices de ocorrências no trânsito brasileiro. Com esse objetivo, um grupo de profissionais multidisciplinares decidiu reunir todo o seu conhecimento, experiência e motivação em um único projeto grandioso e desafiador: mobilizar a sociedade em prol de um trânsito mais seguro. Como um dos principais think tanks na área de segurança viária, o Observatório se dedica a mobilizar e influenciar tanto os atores públicos quanto privados, com o objetivo de promover a mobilidade humana, segura e sustentável.
+
+# Sobre o relatório
 
 ## Como citar
 
@@ -33,12 +40,11 @@ Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departam
 
 ## Código livre e aberto
 
-Todo o processo metodológico de coleta, transformação e visualização dos dados presentes nesse relatório estão disponíveis no repositório <https://github.com/ONSV/revisao-detrans>.
+Todo o processo metodológico de coleta, transformação e visualização dos dados presentes nesse relatório estão disponíveis no repositório <https://github.com/ONSV/revisao-detrans>. Os arquivos utilizados para renderizar este trabalho também estão disponibilizados no repositório.
 
 # Agradecimentos
 
-A equipe de autores agradece às instituições que responderam ao Ofício 321/ONSV/2024, contribuindo com a precisão das informações aqui apresentadas: CET-MG, Detran-ES, Detran-MT, Detran-SP e Detran-RN.
-
+A equipe de autores agradece às instituições que responderam ao Ofício 321/ONSV/2024, contribuindo com o aprimoramento dos métodos aqui apresentados: CET-MG, Detran-ES, Detran-MT, Detran-SP e Detran-RN.
 
 :::{layout="[50, 28, 19]"}
 

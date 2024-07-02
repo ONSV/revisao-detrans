@@ -221,7 +221,7 @@ df_atend |>
 
 ```
 
-Os níveis da categoria **Educação para o trânsito** foram definidor a partir da média simples de dois critérios: conteúdos didáticos disponíveis e divulgação de atividades e campanhas no portal dos Detrans. Entende-se como conteúdos disponíveis a disponibilidade de materiais como dicas, sugestões de leitura, cartilhas, orientações gerais e cadernos pedagógicos. No critério divulgação de atividades, considerou-se a disponibilidade de divulgação sobre cursos, palestras, ações, projetos e campanhas nos sites dos Detrans. A pontuação de cada critério foi dada de acordo com a acessibilidade desses conteúdos, ou seja, a facilidade de como eles foram encontrados no site. Os portais que não possuem esses conteúdos receberam a nota 0,0 (prática ausente).
+Os níveis da categoria **Educação para o trânsito** foram definidos a partir da média simples de dois critérios: conteúdos didáticos disponíveis e divulgação de atividades e campanhas no portal dos Detrans. Entende-se como conteúdos disponíveis a disponibilidade de materiais como dicas, sugestões de leitura, cartilhas, orientações gerais e cadernos pedagógicos. No critério divulgação de atividades, considerou-se a disponibilidade de divulgação sobre cursos, palestras, ações, projetos e campanhas nos sites dos Detrans. A pontuação de cada critério foi dada de acordo com a acessibilidade desses conteúdos, ou seja, a facilidade de como eles foram encontrados no site. Os portais que não possuem esses conteúdos receberam a nota 0,0 (prática ausente).
 
 ```{r}
 #| tbl-cap: Critérios de avaliação para a categoria educação para o trânsito
@@ -275,4 +275,4 @@ df_cfc |>
 
 ## Consulta aos Detrans {#sec-method-rev}
 
-Com a aplicação dos métodos anteriores, entendeu-se a necessidade de confirmação dos dados levantados. Após o levantamento das informações e o cálculo das notas, o Observatório enviou o Ofício 321/ONSV/2024, de 23 de maio de 2024, em conjunto com uma análise individualizada dos resultados, solicitando aos Detrans / CET-MG uma revisão das pontuações levantadas pela equipe de autores. Até a data de publicação deste trabalho, obteve-se o feedback das seguintes instituições: CET-MG, Detran-ES, Detran-MT, Detran-SP e Detran-RN.
+Com a aplicação dos métodos anteriormente descritos, foi realizada uma consulta a todos os Detrans, com a finalidade de buscar uma validação do método de avaliação. Após o levantamento das informações e o cálculo das notas, o Observatório enviou o Ofício 321/ONSV/2024, de 23 de maio de 2024, em conjunto com uma análise individualizada dos resultados, solicitando aos Detrans / CET-MG as suas considerações sobre as pontuações levantadas pela equipe de autores. Até a data de publicação deste trabalho, obteve-se o feedback das seguintes instituições: CET-MG, Detran-ES, Detran-MT, Detran-SP e Detran-RN.
