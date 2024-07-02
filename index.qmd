@@ -20,8 +20,11 @@ Essa é uma segunda versão do relatório realizado em 2020 pelo Observatório N
 
 - Entre 2020 e 2024, os portais de 17 Detrans apresentaram uma melhoria de desempenho, com aumento em suas notas finais.
 
+# Sobre o Observatório
 
-# Sobre
+O Observatório Nacional de Segurança Viária é uma instituição social sem fins lucrativos, dedicada a desenvolver ações que contribuam efetivamente para a redução dos elevados índices de ocorrências no trânsito brasileiro. Com esse objetivo, um grupo de profissionais multidisciplinares decidiu reunir todo o seu conhecimento, experiência e motivação em um único projeto grandioso e desafiador: mobilizar a sociedade em prol de um trânsito mais seguro. Como um dos principais think tanks na área de segurança viária, o Observatório se dedica a mobilizar e influenciar tanto os atores públicos quanto privados, com o objetivo de promover a mobilidade humana, segura e sustentável.
+
+# Sobre o relatório
 
 ## Como citar
 
@@ -37,8 +40,7 @@ Todo o processo metodológico de coleta, transformação e visualização dos da
 
 # Agradecimentos
 
-A equipe de autores agradece às instituições que responderam ao Ofício 321/ONSV/2024, contribuindo com a precisão das informações aqui apresentadas: CET-MG, Detran-ES, Detran-MT, Detran-SP e Detran-RN.
-
+A equipe de autores agradece às instituições que responderam ao Ofício 321/ONSV/2024, contribuindo com o aprimoramento dos métodos aqui apresentados: CET-MG, Detran-ES, Detran-MT, Detran-SP e Detran-RN.
 
 :::{layout="[50, 28, 19]"}
 
