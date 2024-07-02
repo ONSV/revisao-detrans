@@ -221,7 +221,7 @@ df_atend |>
 
 ```
 
-Os níveis da categoria **Educação para o trânsito** foram definidor a partir da média simples de dois critérios: conteúdos didáticos disponíveis e divulgação de atividades e campanhas no portal dos Detrans. Entende-se como conteúdos disponíveis a disponibilidade de materiais como dicas, sugestões de leitura, cartilhas, orientações gerais e cadernos pedagógicos. No critério divulgação de atividades, considerou-se a disponibilidade de divulgação sobre cursos, palestras, ações, projetos e campanhas nos sites dos Detrans. A pontuação de cada critério foi dada de acordo com a acessibilidade desses conteúdos, ou seja, a facilidade de como eles foram encontrados no site. Os portais que não possuem esses conteúdos receberam a nota 0,0 (prática ausente).
+Os níveis da categoria **Educação para o trânsito** foram definidos a partir da média simples de dois critérios: conteúdos didáticos disponíveis e divulgação de atividades e campanhas no portal dos Detrans. Entende-se como conteúdos disponíveis a disponibilidade de materiais como dicas, sugestões de leitura, cartilhas, orientações gerais e cadernos pedagógicos. No critério divulgação de atividades, considerou-se a disponibilidade de divulgação sobre cursos, palestras, ações, projetos e campanhas nos sites dos Detrans. A pontuação de cada critério foi dada de acordo com a acessibilidade desses conteúdos, ou seja, a facilidade de como eles foram encontrados no site. Os portais que não possuem esses conteúdos receberam a nota 0,0 (prática ausente).
 
 ```{r}
 #| tbl-cap: Critérios de avaliação para a categoria educação para o trânsito
