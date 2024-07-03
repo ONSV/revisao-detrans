@@ -1,12 +1,12 @@
 # Apresentação {.unnumbered}
 
-O documento tem como principal conteúdo a avaliação do nível de informações disponibilizadas nos portais dos Detrans de todas as unidades da federação brasileira. Esta avaliação teve como propósito verificar a eficiência das entregas realizadas pelos Departamentos Estaduais de Trânsito (Detrans) com o intuito de fornecer informações e transparência ao cidadão.
+O documento tem como principal conteúdo a avaliação do nível de informações disponibilizadas nos portais dos Detrans de todas as unidades da federação brasileira. Esta avaliação teve como propósito verificar a eficiência dos Departamentos Estaduais de Trânsito (Detrans) em relação à disponibilização de informações e transparência ao cidadão.
 
 Essa é uma segunda versão do relatório realizado em 2020 pelo Observatório Nacional de Segurança Viária, também publicado como uma comunicação técnica no segundo Simpósio de Transportes do Paraná (STPR), também em 2020 [@santos2020]. A elaboração de uma nova versão possibilita a análise da evolução dos portais dos DETRANs de cada estado, entre os anos de 2020 e 2024.
 
-Nessa nova versão o relatório foi renderizado em _html_, possibilitando a visualização interativa dos resultados através de tabelas, mapas e gráficos em um formato nativo para a web, com acesso direto através do site do Observatório([onsv.org.br](https://onsv.org.br)).
+Nessa nova versão o relatório foi renderizado em _html_, possibilitando a visualização interativa dos resultados através de tabelas, mapas e gráficos em um formato nativo para a web, com acesso direto através do site do Observatório ([onsv.org.br](https://onsv.org.br)).
 
-O presente relatório é um produto da cooperação entre o Observatório Nacional de Segurança Viária (ONSV), o Centro de Liderança Pública (CLP) e a Universidade Federal do Paraná (UFPR).
+O presente relatório é um produto do acordo de cooperação técnica entre o Observatório Nacional de Segurança Viária (ONSV) e a Universidade Federal do Paraná (UFPR).
 
 # Highlights
 
@@ -32,7 +32,7 @@ O Observatório Nacional de Segurança Viária é uma instituição social sem f
 
 ## Como citar
 
-> SARAIVA, J. P. M.; DUQUE, D. V. A.; SANTOS, P. A. B. e BASTOS, J. T. Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito - Detrans. Observatório Nacional de Segurança Viária, Centro de Liderança Pública e Universidade Federal do Paraná. 2024. Disponível em: <https://onsv.org.br>.
+> SARAIVA, J. P. M.; DUQUE, D. V. A.; SANTOS, P. A. B. e BASTOS, J. T. Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito - Detrans. Observatório Nacional de Segurança Viária e Universidade Federal do Paraná. 2024. Disponível em: <https://onsv.org.br>.
 
 ## Licença de uso
 
@@ -46,23 +46,17 @@ Todo o processo metodológico de coleta, transformação e visualização dos da
 
 A equipe de autores agradece às instituições que responderam ao Ofício 321/ONSV/2024, contribuindo com o aprimoramento dos métodos aqui apresentados: CET-MG, Detran-ES, Detran-MT, Detran-SP e Detran-RN.
 
-:::{layout="[50, 28, 19]"}
+:::{layout-ncol="2"}
 
 :::{.left}
 
-![](logo/onsv_logo_main.png)
-
-:::
-
-:::{.mid}
-
-![](logo/clp-logo.png)
+![](logo/onsv_logo_main.png){width="100%"}
 
 :::
 
 :::{.right}
 
-![](logo/marca_UFPR.png)
+![](logo/marca_UFPR.png){width="40%" fig-align="center"}
 
 :::
 
