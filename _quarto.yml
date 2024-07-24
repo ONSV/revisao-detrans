@@ -18,9 +18,6 @@ book:
     affiliation:
     - id: onsv
       name: Observatório Nacional de Segurança Viária
-  - name: Daniel Vasconcellos Archer Duque
-    affiliation: Centro de Liderança Pública
-    orcid: 0000-0001-7090-1224
   - name: Pedro Augusto Borges dos Santos
     affiliation: 
       - ref: onsv
