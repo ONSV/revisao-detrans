@@ -8,7 +8,7 @@ source(here::here("R", "_common.R"))
 
 # Resultados {#sec-results}
 
-Nessa seção, os resultados estão organizados por categoria (@sec-results-cat) e estão apresentados em uma comparação entre os resultados atuais e os resultados obtidos na versão anterior deste trabalho, publicado em 2020 (@sec-results-evo). 
+Nesta seção, os resultados estão organizados por categoria (@sec-results-cat) e estão apresentados em uma comparação entre os resultados atuais e os resultados obtidos na versão anterior deste trabalho, publicado em 2020 (@sec-results-evo). 
 
 ## Resultados por Categoria {#sec-results-cat}
 
@@ -29,7 +29,7 @@ frota <- df_revisoes |>
 
 A @tbl-frota aponta os resultados obtidos na categoria frota de veículos, com os níveis em cada categoria e as notas médias resultantes. A @fig-map-frota apresenta esses dados mapeados no território brasileiro. Observa-se que a *periodicidade* é o critério de melhor performance na maior parte dos portais, e *interatividade* é o critério de pior desempenho, considerando essa categoria.
 
-Em relação à nota média, os estados com o melhor desempenho foram Rio Grande do Norte, Sergipe, Rondônia e Rio de Janeiro, atingindo a nota máxima de 10. Por outro lado, os estados com o pior desempenho foram Piauí, Roraima, Tocantins, Pará e Amapá, com a nota média de 0 por não possuírem dados de frota de veículos em seus portais.
+Em relação à nota média, os estados com o melhor desempenho foram Rio Grande do Norte, Sergipe, Rondônia, Rio de Janeiro e Santa Catarina, atingindo a nota máxima de 10. Por outro lado, os estados com o pior desempenho foram Piauí, Roraima, Tocantins, Pará e Amapá, com a nota média de 0 por não possuírem dados de frota de veículos em seus portais.
 
 ::: panel-tabset
 ### Tabela
@@ -165,7 +165,7 @@ cfcs <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-As notas médias resultantes para essa categoria estão ilustradas na @tbl-cfcs e na @fig-map-cfcs. Observa-se a predominância do desempenho intermediário nesta categoria / critério. Os estados com a melhor prática são o Paraná, São Paulo, Rio de Janeiro, Espírito Santo, Amapá, Sergipe, Rio Grande do Norte, Ceará, Alagoas e Goiás. Os estados com prática ausente foram Rondônia, Pará e Rio Grande do Norte, atingindo uma nota média de 0.
+As notas médias resultantes para essa categoria estão ilustradas na @tbl-cfcs e na @fig-map-cfcs. Observa-se a predominância do desempenho intermediário nesta categoria / critério. Os estados com a melhor prática são o Paraná, São Paulo, Rio de Janeiro, Espírito Santo, Amapá, Sergipe, Rio Grande do Norte, Ceará, Alagoas e Goiás. Os estados com prática ausente foram Rondônia e Pará, atingindo uma nota média de 0.
 
 ::: panel-tabset
 ### Tabela
@@ -232,7 +232,7 @@ infracoes <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-A @tbl-infracoes e a @fig-map-infracoes contêm os resultados da categoria infrações. Observa-se que o critério com o melhor desempenho entre as UFs foi *Nível de desagregação* e o critério com pior desempenho foi *Interatividade*. Considerando o desempenho das UFs com base na nota média, os melhores desempenhos foram observados nos portais dos Detrans de Mato Grosso do Sul e Sergipe. Houve 12 Detrans sem dados de infrações em seus portais, configurando uma prática ausente. Dentre eles, inclui-se o Detran do Distrito Federal e de outros estados da região Norte e Nordeste.
+A @tbl-infracoes e a @fig-map-infracoes contêm os resultados da categoria infrações. Observa-se que o critério com o melhor desempenho entre as UFs foi *Nível de desagregação* e o critério com pior desempenho foi *Interatividade*. Considerando o desempenho das UFs com base na nota média, os melhores desempenhos foram observados nos portais dos Detrans de Mato Grosso do Sul, Sergipe e Santa Catarina. Houve 12 Detrans sem dados de infrações em seus portais, configurando uma prática ausente. Dentre eles, inclui-se o Detran do Distrito Federal e de outros estados da região Norte e Nordeste.
 
 ::: panel-tabset
 ### Tabela
@@ -502,9 +502,9 @@ atendimento_map |>
 
 ## Evolução dos Resultados {#sec-results-evo}
 
-A @tbl-final apresenta as notas calculadas das categorias analisadas e a média final do valor referente a 2024. Também inclui-se as médias finais obtidas no estudo de 2020, a fins de comparação com os valores atuais. Ao realizar uma média nacional com base nas notas de todas as UFs, em 2024 o Brasil atinge a nota de 5,61. Isso representa um aumento de 14%, considerando a média nacional obtida em 2020, que foi de 4,85.
+A @tbl-final apresenta as notas calculadas das categorias analisadas e a média final do valor referente a 2024. Também inclui-se as médias finais obtidas no estudo de 2020, a fins de comparação com os valores atuais. Ao realizar uma média nacional com base nas notas de todas as UFs, em 2024 o Brasil atinge a nota de 5,64. Isso representa um aumento de 16%, considerando a média nacional obtida em 2020, que foi de 4,85.
 
-Considerando os resultados de 2024, oito Detrans obtiveram uma nota final acima de 7,0: Sergipe (9,6), São Paulo (9,3), Espírito Santo (8,9), Rio Grande do Sul (8,7), Rio Grande do Norte (7,9), Paraná (7,9), Rio de Janeiro (7,7) e Mato Grosso (7,1). Dentre as menores notas, destaca-se os seguintes Detrans com as práticas mais iniciais: Roraima (1,7), Pará (2,1), Piauí (2,4), Tocantins (2,4) e Amapá (2,6).
+Considerando os resultados de 2024, nove Detrans obtiveram uma nota final acima de 7,0: Sergipe (9,6), São Paulo (9,3), Espírito Santo (8,9), Rio Grande do Sul (8,7), Rio Grande do Norte (7,9), Paraná (7,9), Rio de Janeiro (7,7), Santa Catarina (7,5) e Mato Grosso (7,1). Dentre as menores notas, destaca-se os seguintes Detrans com as práticas mais iniciais: Roraima (1,7), Pará (2,1), Piauí (2,4), Tocantins (2,4) e Amapá (2,6).
 
 ```{r}
 #| tbl-cap: Resultados finais
@@ -608,7 +608,7 @@ Em destaque, observa-se os estados que atingiram a nota máxima (10) em alguma d
 
 A @fig-dumbbell apresenta a variação entre os resultados de nota final obtidos na pesquisa de 2020 e na pesquisa atual de 2024. Dentre as 27 UFs, observa-se que 17 apresentaram uma evolução positiva neste período de tempo. Todos os estados da Região Sul e Sudeste apresentaram aumento na nota final, comparando os períodos. Dois estados do Norte e 2 do Centro-Oeste apresentaram aumento, em conjunto com 6 estados do Nordeste.
 
-De forma absoluta, os portais dos Detrans que apresentaram as melhores evoluções em relação foram aqueles dos estados do Rio Grande do Norte (+3,10), Acre (+2,69), Ceará (+2,62) e Bahia (+2,62). De outro lado, os estados que apresentaram as maiores quedas de desempenho foram Roraima (-2,62), Piauí (-1,58) e Rondônia (-1,51). 
+De forma absoluta, os portais dos Detrans que apresentaram as melhores evoluções em relação foram aqueles dos estados do Rio Grande do Norte (+3,10), Santa Catarina (+2,94), Acre (+2,69), Ceará (+2,62) e Bahia (+2,62). De outro lado, os estados que apresentaram as maiores quedas de desempenho foram Roraima (-2,62), Piauí (-1,58) e Rondônia (-1,51). 
 
 ```{r}
 #| fig-cap: Evolução dos resultados entre 2020 e 2024
