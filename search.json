@@ -30,11 +30,11 @@
     ]
   },
   {
-    "objectID": "index.html#código-livre-e-aberto",
-    "href": "index.html#código-livre-e-aberto",
+    "objectID": "index.html#código-fonte",
+    "href": "index.html#código-fonte",
     "title": "Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito - Detrans",
-    "section": "Código livre e aberto",
-    "text": "Código livre e aberto\nTodo o processo metodológico de coleta, transformação e visualização dos dados presentes nesse relatório estão disponíveis no repositório https://github.com/ONSV/revisao-detrans. Os arquivos utilizados para renderizar este trabalho também estão disponibilizados no repositório.",
+    "section": "Código-fonte",
+    "text": "Código-fonte\nTodo o processo metodológico de coleta, transformação e visualização dos dados presentes nesse relatório estão disponíveis em um repositório do GitHub. Para acessar, entre em contato com onsv@onsv.org.br",
     "crumbs": [
       "Apresentação"
     ]
