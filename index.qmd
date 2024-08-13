@@ -38,9 +38,9 @@ O Observatório Nacional de Segurança Viária é uma instituição social sem f
 
 Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departamentos Estaduais de Trânsito - Detrans © 2024 por Observatório Nacional de Segurança Viária está licenciada sob CC BY-NC 4.0. Para ver uma cópia desta licença, acesse <https://creativecommons.org/licenses/by-nc/4.0/>.
 
-## Código livre e aberto
+## Código-fonte
 
-Todo o processo metodológico de coleta, transformação e visualização dos dados presentes nesse relatório estão disponíveis no repositório <https://github.com/ONSV/revisao-detrans>. Os arquivos utilizados para renderizar este trabalho também estão disponibilizados no repositório.
+Todo o processo metodológico de coleta, transformação e visualização dos dados presentes nesse relatório estão disponíveis em um repositório do GitHub. Para acessar, entre em contato com [onsv@onsv.org.br](mailto:onsv@onsv.org.br)
 
 # Agradecimentos
 
