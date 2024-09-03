@@ -502,7 +502,7 @@ atendimento_map |>
 
 ## Evolução dos Resultados {#sec-results-evo}
 
-A @tbl-final apresenta as notas calculadas das categorias analisadas e a média final do valor referente a 2024. Também inclui-se as médias finais obtidas no estudo de 2020, a fins de comparação com os valores atuais. Ao realizar uma média nacional com base nas notas de todas as UFs, em 2024 o Brasil atinge a nota de 5,64. Isso representa um aumento de 13,5%, considerando a média nacional obtida em 2020, que foi de 4,97.
+A @tbl-final apresenta as notas calculadas das categorias analisadas e a média final do valor referente a 2024. Também inclui-se as médias finais obtidas no estudo de 2020, a fins de comparação com os valores atuais. Ao realizar uma média nacional com base nas notas de todas as UFs, em 2024 o Brasil atinge a nota de 5,64. Isso representa um aumento de 14%, considerando a média nacional obtida em 2020, que foi de 4,97.
 
 Considerando os resultados de 2024, nove Detrans obtiveram uma nota final acima de 7,0: Sergipe (9,6), São Paulo (9,3), Espírito Santo (8,9), Rio Grande do Sul (8,7), Rio Grande do Norte (7,9), Paraná (7,9), Rio de Janeiro (7,7), Santa Catarina (7,5) e Mato Grosso (7,1). Dentre as menores notas, destaca-se os seguintes Detrans com as práticas mais iniciais: Roraima (1,7), Pará (2,1), Piauí (2,4), Tocantins (2,4) e Amapá (2,6).
 
