@@ -8,7 +8,7 @@ source(here::here("R", "_common.R"))
 
 # Resultados {#sec-results}
 
-Nesta seção, os resultados estão organizados por categoria (@sec-results-cat) e estão apresentados em uma comparação entre os resultados atuais e os resultados obtidos na versão anterior deste trabalho, publicado em 2020 (@sec-results-evo). 
+Nessa seção, os resultados estão organizados por categoria (@sec-results-cat) e estão apresentados em uma comparação entre os resultados atuais e os resultados obtidos na versão anterior deste trabalho, publicado em 2020 (@sec-results-evo). 
 
 ## Resultados por Categoria {#sec-results-cat}
 
@@ -502,7 +502,7 @@ atendimento_map |>
 
 ## Evolução dos Resultados {#sec-results-evo}
 
-A @tbl-final apresenta as notas calculadas das categorias analisadas e a média final do valor referente a 2024. Também inclui-se as médias finais obtidas no estudo de 2020, a fins de comparação com os valores atuais. Ao realizar uma média nacional com base nas notas de todas as UFs, em 2024 o Brasil atinge a nota de 5,64. Isso representa um aumento de 16%, considerando a média nacional obtida em 2020, que foi de 4,85.
+A @tbl-final apresenta as notas calculadas das categorias analisadas e a média final do valor referente a 2024. Também inclui-se as médias finais obtidas no estudo de 2020, a fins de comparação com os valores atuais. Ao realizar uma média nacional com base nas notas de todas as UFs, em 2024 o Brasil atinge a nota de 5,64. Isso representa um aumento de 13,5%, considerando a média nacional obtida em 2020, que foi de 4,97.
 
 Considerando os resultados de 2024, nove Detrans obtiveram uma nota final acima de 7,0: Sergipe (9,6), São Paulo (9,3), Espírito Santo (8,9), Rio Grande do Sul (8,7), Rio Grande do Norte (7,9), Paraná (7,9), Rio de Janeiro (7,7), Santa Catarina (7,5) e Mato Grosso (7,1). Dentre as menores notas, destaca-se os seguintes Detrans com as práticas mais iniciais: Roraima (1,7), Pará (2,1), Piauí (2,4), Tocantins (2,4) e Amapá (2,6).
 
@@ -608,7 +608,7 @@ Em destaque, observa-se os estados que atingiram a nota máxima (10) em alguma d
 
 A @fig-dumbbell apresenta a variação entre os resultados de nota final obtidos na pesquisa de 2020 e na pesquisa atual de 2024. Dentre as 27 UFs, observa-se que 17 apresentaram uma evolução positiva neste período de tempo. Todos os estados da Região Sul e Sudeste apresentaram aumento na nota final, comparando os períodos. Dois estados do Norte e 2 do Centro-Oeste apresentaram aumento, em conjunto com 6 estados do Nordeste.
 
-De forma absoluta, os portais dos Detrans que apresentaram as melhores evoluções em relação foram aqueles dos estados do Rio Grande do Norte (+3,10), Santa Catarina (+2,94), Acre (+2,69), Ceará (+2,62) e Bahia (+2,62). De outro lado, os estados que apresentaram as maiores quedas de desempenho foram Roraima (-2,62), Piauí (-1,58) e Rondônia (-1,51). 
+De forma absoluta, os portais dos Detrans que apresentaram as melhores evoluções em relação foram aqueles dos estados do Rio Grande do Norte (+2,94), Acre (+2,69), Santa Catarina (+2,62), Bahia (+2,62) e Ceará (+2,30). De outro lado, os estados que apresentaram as maiores quedas de desempenho foram Roraima (-2,62), Rondônia (-1,83) e Piauí (-1,75). 
 
 ```{r}
 #| fig-cap: Evolução dos resultados entre 2020 e 2024
