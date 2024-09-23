@@ -13,7 +13,7 @@ source(here::here("R", "_common.R"))
 
 # Resultados {#sec-results}
 
-Nessa seção, os resultados estão organizados por categoria (@sec-results-cat) e estão apresentados em uma comparação entre os resultados atuais e os resultados obtidos na versão anterior deste trabalho, publicado em 2020 (@sec-results-evo). 
+Nessa seção os resultados estão organizados por categoria (@sec-results-cat) e estão apresentados em uma comparação entre os resultados atuais e os resultados obtidos na versão anterior deste trabalho, publicado em 2020 (@sec-results-evo). 
 
 ## Resultados por Categoria {#sec-results-cat}
 
@@ -36,17 +36,38 @@ A @tbl-frota aponta os resultados obtidos na categoria frota de veículos, com o
 
 ```{r}
 text_results <- function(results_df, values = c("min", "max")) {
-  estados <- c(
-    "Rio Grande do Sul", "Santa Catarina", "Paraná", "São Paulo",
-    "Rio de Janeiro", "Minas Gerais", "Espírito Santo", "Rondônia", "Acre",
-    "Amazonas", "Amapá", "Pará", "Tocantins", "Roraima", "Sergipe",
-    "Rio Grande do Norte", "Pernambuco", "Ceará", "Alagoas", "Maranhão",
-    "Paraíba", "Bahia", "Piauí", "Goiás", "Mato Grosso do Sul", "Mato Grosso",
-    "Distrito Federal"
-  )
-  
   df <- results_df |> 
-    mutate(estados = estados)
+    mutate(estados = case_match(
+      uf,
+      "AC" ~ "Acre",
+      "AL" ~ "Alagoas",
+      "AP" ~ "Amapá",
+      "AM" ~ "Amazonas",
+      "BA" ~ "Bahia",
+      "CE" ~ "Ceará",
+      "DF" ~ "Distrito Federal",
+      "ES" ~ "Espírito Santo",
+      "GO" ~ "Goiás",
+      "MA" ~ "Maranhão",
+      "MT" ~ "Mato Grosso",
+      "MS" ~ "Mato Grosso do Sul",
+      "MG" ~ "Minas Gerais",
+      "PA" ~ "Pará",
+      "PB" ~ "Paraíba",
+      "PR" ~ "Paraná",
+      "PE" ~ "Pernambuco",
+      "PI" ~ "Piauí",
+      "RJ" ~ "Rio de Janeiro",
+      "RN" ~ "Rio Grande do Norte",
+      "RS" ~ "Rio Grande do Sul",
+      "RO" ~ "Rondônia",
+      "RR" ~ "Roraima",
+      "SC" ~ "Santa Catarina",
+      "SP" ~ "São Paulo",
+      "SE" ~ "Sergipe",
+      "TO" ~ "Tocantins",
+      .default = NA
+    ))
   
   if (values == "min") {
     df |> 
@@ -665,19 +686,40 @@ delta <- delta_media(
 
 print_results_text <- function(df_final, type = c("min", "max")) {
   
-  df_final$estados <- c(
-    "Sergipe", "São Paulo", "Espírito Santo", "Rio Grande do Sul",
-    "Rio Grande do Norte", "Paraná", "Rio de Janeiro", "Santa Catarina",
-    "Mato Grosso", "Mato Grosso do Sul", "Goiás", "Pernambuco", "Minas Gerais",
-    "Ceará", "Distrito Federal", "Rondônia", "Acre", "Alagoas", "Amazonas",
-    "Maranhão", "Paraíba", "Bahia", "Amapá", "Tocantins", "Piauí", "Pará",
-    "Roraima"
-  )
-
-  
   df_text <- df_final |> 
-    select(estados, ano_2024) |> 
+    select(UF, ano_2024) |> 
     mutate(
+      estados = case_match(
+        UF,
+        "AC" ~ "Acre",
+        "AL" ~ "Alagoas",
+        "AP" ~ "Amapá",
+        "AM" ~ "Amazonas",
+        "BA" ~ "Bahia",
+        "CE" ~ "Ceará",
+        "DF" ~ "Distrito Federal",
+        "ES" ~ "Espírito Santo",
+        "GO" ~ "Goiás",
+        "MA" ~ "Maranhão",
+        "MT" ~ "Mato Grosso",
+        "MS" ~ "Mato Grosso do Sul",
+        "MG" ~ "Minas Gerais",
+        "PA" ~ "Pará",
+        "PB" ~ "Paraíba",
+        "PR" ~ "Paraná",
+        "PE" ~ "Pernambuco",
+        "PI" ~ "Piauí",
+        "RJ" ~ "Rio de Janeiro",
+        "RN" ~ "Rio Grande do Norte",
+        "RS" ~ "Rio Grande do Sul",
+        "RO" ~ "Rondônia",
+        "RR" ~ "Roraima",
+        "SC" ~ "Santa Catarina",
+        "SP" ~ "São Paulo",
+        "SE" ~ "Sergipe",
+        "TO" ~ "Tocantins",
+        .default = NA
+      ),
       results_text = scales::number(
         ano_2024, 
         accuracy = 0.1, 
@@ -703,7 +745,7 @@ print_results_text <- function(df_final, type = c("min", "max")) {
 
 A @tbl-final apresenta as notas calculadas das categorias analisadas e a média final do valor referente a 2024. Também inclui-se as médias finais obtidas no estudo de 2020, a fins de comparação com os valores atuais. Ao realizar uma média nacional com base nas notas de todas as UFs, em 2024 o Brasil atinge a nota de `r calc_media(tbl_final, ano_2024)`. Isso representa um aumento de `r delta`, considerando a média nacional obtida em 2020, que foi de `r calc_media(tbl_final, ano_2020)`.
 
-Considerando os resultados de 2024, nove Detrans obtiveram uma nota final acima de 7,0: `r print_results_text(tbl_final, "max")`. Dentre as menores notas, destaca-se os seguintes Detrans com as práticas mais iniciais: `r print_results_text(tbl_final, "min")`.
+Considerando os resultados de 2024, seguem os Detrans que obtiveram uma nota final acima de 7,0: `r print_results_text(tbl_final, "max")`. Dentre as menores notas, destaca-se os seguintes Detrans com as práticas mais iniciais: `r print_results_text(tbl_final, "min")`.
 
 ```{r}
 #| tbl-cap: Resultados finais
@@ -755,19 +797,40 @@ dumbbell <- df_revisoes |>
          color = if_else(ano_2020 < ano_2024, "up", "down"))
 
 print_delta_text <- function(df_dumbbell, type = c("up", "down")) {
-  estados <- c(
-    "Sergipe", "Rio Grande do Sul", "São Paulo", "Goiás", "Santa Catarina",
-    "Rio Grande do Norte", "Paraná", "Rio de Janeiro", "Mato Grosso do Sul",
-    "Mato Grosso", "Pernambuco", "Minas Gerais", "Distrito Federal", 
-    "Espírito Santo", "Ceará", "Rondônia", "Acre", "Alagoas", "Amazonas",
-    "Maranhão", "Paraíba", "Bahia", "Amapá", "Pará", "Tocantins", "Piauí",
-    "Roraima"
-  )
-  
-  df_dumbbell$estados <- estados
-  
+
   df_results <- df_dumbbell |> 
     mutate(
+      estados = case_match(
+        uf,
+        "AC" ~ "Acre",
+        "AL" ~ "Alagoas",
+        "AP" ~ "Amapá",
+        "AM" ~ "Amazonas",
+        "BA" ~ "Bahia",
+        "CE" ~ "Ceará",
+        "DF" ~ "Distrito Federal",
+        "ES" ~ "Espírito Santo",
+        "GO" ~ "Goiás",
+        "MA" ~ "Maranhão",
+        "MT" ~ "Mato Grosso",
+        "MS" ~ "Mato Grosso do Sul",
+        "MG" ~ "Minas Gerais",
+        "PA" ~ "Pará",
+        "PB" ~ "Paraíba",
+        "PR" ~ "Paraná",
+        "PE" ~ "Pernambuco",
+        "PI" ~ "Piauí",
+        "RJ" ~ "Rio de Janeiro",
+        "RN" ~ "Rio Grande do Norte",
+        "RS" ~ "Rio Grande do Sul",
+        "RO" ~ "Rondônia",
+        "RR" ~ "Roraima",
+        "SC" ~ "Santa Catarina",
+        "SP" ~ "São Paulo",
+        "SE" ~ "Sergipe",
+        "TO" ~ "Tocantins",
+        .default = NA
+      ),
       delta = ano_2024 - ano_2020,
       delta_text = scales::number(
         abs(delta), 
@@ -795,7 +858,7 @@ print_delta_text <- function(df_dumbbell, type = c("up", "down")) {
 ```
 
 
-A @fig-dumbbell apresenta a variação entre os resultados de nota final obtidos na pesquisa de 2020 e na pesquisa atual de 2024. Dentre as 27 UFs, observa-se que 17 apresentaram uma evolução positiva neste período de tempo. Todos os estados da Região Sul e Sudeste apresentaram aumento na nota final, comparando os períodos. Dois estados do Norte e 2 do Centro-Oeste apresentaram aumento, em conjunto com 6 estados do Nordeste.
+A @fig-dumbbell apresenta a variação entre os resultados de nota final obtidos na pesquisa de 2020 e na pesquisa atual de 2024. Dentre as 27 UFs, observa-se que 19 apresentaram uma evolução positiva neste período de tempo. Todos os estados da Região Sul, Sudeste e Centro-Oeste apresentaram aumento na nota final, comparando os períodos. Dois estados do Norte apresentaram aumento, em conjunto com 6 estados do Nordeste.
 
 De forma absoluta, os portais dos Detrans que apresentaram as melhores evoluções em relação foram aqueles dos estados do `r print_delta_text(dumbbell, "up")`. De outro lado, os estados que apresentaram as maiores quedas de desempenho foram `r print_delta_text(dumbbell, "down")`. 
 
