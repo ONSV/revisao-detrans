@@ -1,3 +1,8 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 ```{r}
 #| include: false
 #| label: setup
@@ -29,7 +34,67 @@ frota <- df_revisoes |>
 
 A @tbl-frota aponta os resultados obtidos na categoria frota de veículos, com os níveis em cada categoria e as notas médias resultantes. A @fig-map-frota apresenta esses dados mapeados no território brasileiro. Observa-se que a *periodicidade* é o critério de melhor performance na maior parte dos portais, e *interatividade* é o critério de pior desempenho, considerando essa categoria.
 
-Em relação à nota média, os estados com o melhor desempenho foram Rio Grande do Norte, Sergipe, Rondônia, Rio de Janeiro e Santa Catarina, atingindo a nota máxima de 10. Por outro lado, os estados com o pior desempenho foram Piauí, Roraima, Tocantins, Pará e Amapá, com a nota média de 0 por não possuírem dados de frota de veículos em seus portais.
+```{r}
+text_results <- function(results_df, values = c("min", "max")) {
+  estados <- c(
+    "Rio Grande do Sul", "Santa Catarina", "Paraná", "São Paulo",
+    "Rio de Janeiro", "Minas Gerais", "Espírito Santo", "Rondônia", "Acre",
+    "Amazonas", "Amapá", "Pará", "Tocantins", "Roraima", "Sergipe",
+    "Rio Grande do Norte", "Pernambuco", "Ceará", "Alagoas", "Maranhão",
+    "Paraíba", "Bahia", "Piauí", "Goiás", "Mato Grosso do Sul", "Mato Grosso",
+    "Distrito Federal"
+  )
+  
+  df <- results_df |> 
+    mutate(estados = estados)
+  
+  if (values == "min") {
+    df |> 
+      slice_min(nota_final) |> 
+      pull(estados) |> 
+      sort() |> 
+      knitr::combine_words(
+        sep = ", ",
+        and = " e ",
+        oxford_comma = FALSE
+      )
+  } else {
+    df |> 
+      slice_max(nota_final) |> 
+      pull(estados) |> 
+      sort() |> 
+      knitr::combine_words(
+        sep = ", ",
+        and = " e ",
+        oxford_comma = FALSE
+      )
+  }
+  
+}
+
+numeric_results <- function(results_df, values = c("min", "max")) {
+  if (values == "min") {
+    results <- scales::number(
+      min(results_df$nota_final), 
+      accuracy = 0.1, 
+      decimal.mark = ",", 
+      big.mark = "."
+    )
+  } else {
+    results <- scales::number(
+      max(results_df$nota_final), 
+      accuracy = 0.1, 
+      decimal.mark = ",", 
+      big.mark = "."
+    )
+  }
+  return(results)
+}
+
+```
+
+
+Em relação à nota média, os estados com o melhor desempenho foram `r text_results(frota, "max")`, atingindo a nota máxima de `r numeric_results(frota, "max")`. Por outro lado, os estados com o pior desempenho foram `r text_results(frota, "min")`, com a nota média de `r numeric_results(frota, "min")` por não possuírem dados de frota de veículos em seus portais.
 
 ::: panel-tabset
 ### Tabela
@@ -98,7 +163,7 @@ condutores <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-A @tbl-condutores e a @fig-map-condutores mostram o desempenho dos Detrans na disponibilização de dados sobre os condutores habilitados. Novamente, conforme também visto na categoria frota de veículos, a periodicidade e a interatividade são os critérios com maior e menor performance geral, respectivamente. Dois estados atingiram a nota máxima: Rondônia e Espírito Santo. Os portais de sete estados não apresentam dados sobre os condutores habilitados: Piauí, Maranhão, Alagoas, Roraima, Tocantins, Pará e Amapá.
+A @tbl-condutores e a @fig-map-condutores mostram o desempenho dos Detrans na disponibilização de dados sobre os condutores habilitados. Novamente, conforme também visto na categoria frota de veículos, a periodicidade e a interatividade são os critérios com maior e menor performance geral, respectivamente. Dois estados atingiram a nota máxima: `r text_results(condutores, "max")`. Os portais de sete estados não apresentam dados sobre os condutores habilitados: `r text_results(condutores, "min")`.
 
 ::: panel-tabset
 ### Tabela
@@ -160,12 +225,12 @@ condutores_map |>
 ```{r}
 cfcs <- df_revisoes |>
   filter(ano == 2024) |>
-  select(uf, cfcs) |>
+  select(uf, nota_final = cfcs) |>
   mutate(regiao = get_region(uf), .before = 1) |>
   arrange(desc(regiao))
 ```
 
-As notas médias resultantes para essa categoria estão ilustradas na @tbl-cfcs e na @fig-map-cfcs. Observa-se a predominância do desempenho intermediário nesta categoria / critério. Os estados com a melhor prática são o Paraná, São Paulo, Rio de Janeiro, Espírito Santo, Amapá, Sergipe, Rio Grande do Norte, Ceará, Alagoas e Goiás. Os estados com prática ausente foram Rondônia e Pará, atingindo uma nota média de 0.
+As notas médias resultantes para essa categoria estão ilustradas na @tbl-cfcs e na @fig-map-cfcs. Observa-se a predominância do desempenho intermediário nesta categoria / critério. Os estados com a melhor prática são o `r text_results(cfcs, "max")`. Os estados com prática ausente foram `r text_results(cfcs, "min")`, atingindo uma nota média de `r numeric_results(cfcs, "min")`.
 
 ::: panel-tabset
 ### Tabela
@@ -176,20 +241,21 @@ As notas médias resultantes para essa categoria estão ilustradas na @tbl-cfcs 
 
 cfcs |>
   mutate(
-    nota = cfcs,
-    cfcs =
+    nota = nota_final,
+    cfcs_results =
        case_match(
-        cfcs,
+        nota,
         10.0 ~ "Melhor",
         6.7 ~ "Intermediário",
         3.3 ~ "Inicial",
         0 ~ "Ausente"
       )
   ) |>
+  select(regiao, uf, cfcs_results, nota) |>
   rename(
     `Região` = regiao,
     UF = uf,
-    `Lista de CFCs` = cfcs,
+    `Lista de CFCs` = cfcs_results,
     `Nota Média` = nota
   ) |> 
   make_reactable(
@@ -211,7 +277,7 @@ cfcs |>
 
 cfcs_map <- 
   cfcs |> 
-  rename(nota_final = cfcs) |> 
+ #rename(nota_final = nota) |> 
   map_preproc()
 
 cfcs_map |> 
@@ -232,7 +298,7 @@ infracoes <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-A @tbl-infracoes e a @fig-map-infracoes contêm os resultados da categoria infrações. Observa-se que o critério com o melhor desempenho entre as UFs foi *Nível de desagregação* e o critério com pior desempenho foi *Interatividade*. Considerando o desempenho das UFs com base na nota média, os melhores desempenhos foram observados nos portais dos Detrans de Mato Grosso do Sul, Sergipe e Santa Catarina. Houve 12 Detrans sem dados de infrações em seus portais, configurando uma prática ausente. Dentre eles, inclui-se o Detran do Distrito Federal e de outros estados da região Norte e Nordeste.
+A @tbl-infracoes e a @fig-map-infracoes contêm os resultados da categoria infrações. Observa-se que o critério com o melhor desempenho entre as UFs foi *Nível de desagregação* e o critério com pior desempenho foi *Interatividade*. Considerando o desempenho das UFs com base na nota média, os melhores desempenhos foram observados nos portais dos Detrans de `r text_results(infracoes, "max")`. Houve `r length(infracoes$nota_final[infracoes$nota_final == 0])` Detrans sem dados de infrações em seus portais, configurando uma prática ausente. Dentre eles, inclui-se `r text_results(infracoes, "min")`.
 
 ::: panel-tabset
 ### Tabela
@@ -301,7 +367,7 @@ sinistros <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-Os resultados da categoria sinistros de trânsito está apresentada na @tbl-sinistros e na @fig-map-sinistros. Nessa categoria, o critério *periodicidade* apresentou melhor desempenho e o critério *interatividade* apresentou o pior. Entre as instituições, os Detrans de Sergipe, Rondônia, Espírito Santo e São Paulo apresentaram o melhor resultado, atingindo a nota 10. Detrans de 12 estados não possuem dados sobre sinistros ocorridos, disponibilizados em seus portais.
+Os resultados da categoria sinistros de trânsito está apresentada na @tbl-sinistros e na @fig-map-sinistros. Nessa categoria, o critério *periodicidade* apresentou melhor desempenho e o critério *interatividade* apresentou o pior. Entre as instituições, os Detrans de `r text_results(sinistros, "max")` apresentaram o melhor resultado, atingindo a nota `r numeric_results(sinistros, "max")`. Detrans de `r length(sinistros$nota_final[sinistros$nota_final == 0])` estados não possuem dados sobre sinistros ocorridos, disponibilizados em seus portais.
 
 ::: panel-tabset
 ### Tabela
@@ -360,8 +426,6 @@ sinistros_map |>
 
 ### Educação para o Trânsito {#sec-results-educ}
 
-Os resultados da categoria educação para o trânsito estão apresentadas na @tbl-educ e na @fig-map-educ. Os portais de todos os Detrans apresentaram conteúdos sobre educação para o trânsito, assim, nenhum foi classificado com prática ausente. Os Detrans do Distrito Federal, Mato Grosso do Sul, Pernambuco, Sergipe, Pará, Amazonas, Acre, Rio de Janeiro, Paraná e Rio Grande do Sul, em conjunto com CET-MG, atingiram a nota máxima nessa categoria. Por outro lado, os Detrans de Paraíba, Alagoas, Roraima, Rondônia e Santa Catarina atingiram as menores médias, com uma nota de 3,3.
-
 ```{r}
 educacao <- df_revisoes |>
   filter(ano == 2024) |>
@@ -372,6 +436,8 @@ educacao <- df_revisoes |>
   )), 2)) |>
   arrange(desc(regiao))
 ```
+
+Os resultados da categoria educação para o trânsito estão apresentadas na @tbl-educ e na @fig-map-educ. Os portais de todos os Detrans apresentaram conteúdos sobre educação para o trânsito, assim, nenhum foi classificado com prática ausente. O `r text_results(educacao, "max")`, atingiram a nota máxima nessa categoria. Por outro lado, os Detrans de `r text_results(educacao, "min")` atingiram as menores médias, com uma nota de `r numeric_results(educacao, "min")`.
 
 ::: panel-tabset
 ### Tabela
@@ -438,7 +504,7 @@ atendimento <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-Os resultados da categoria atendimento ao público estão apresentados na @tbl-atendimento e na @fig-map-atend. É notável a ausência de estatísticas de atendimento ao público na maioria dos portais dos Detrans, resultando em menores médias. Como destaque positivo, os Detrans de Mato Grosso, Espírito Santo, Minas Gerais, São Paulo e Rio Grande do Sul atingiram a melhor média. Os portais dos Detrans de Piauí, Paraíba, Roraima, Amapá e Acre apresentaram as menores médias, com uma pontuação de 1,7.
+Os resultados da categoria atendimento ao público estão apresentados na @tbl-atendimento e na @fig-map-atend. É notável a ausência de estatísticas de atendimento ao público na maioria dos portais dos Detrans, resultando em menores médias. Como destaque positivo, os Detrans de `r text_results(atendimento, "max")` atingiram a melhor média. Os portais dos Detrans de `r text_results(atendimento, "min")` apresentaram as menores médias, com uma pontuação de `r numeric_results(atendimento, "min")`.
 
 ::: panel-tabset
 ### Tabela
@@ -502,14 +568,7 @@ atendimento_map |>
 
 ## Evolução dos Resultados {#sec-results-evo}
 
-A @tbl-final apresenta as notas calculadas das categorias analisadas e a média final do valor referente a 2024. Também inclui-se as médias finais obtidas no estudo de 2020, a fins de comparação com os valores atuais. Ao realizar uma média nacional com base nas notas de todas as UFs, em 2024 o Brasil atinge a nota de 5,64. Isso representa um aumento de 14%, considerando a média nacional obtida em 2020, que foi de 4,97.
-
-Considerando os resultados de 2024, nove Detrans obtiveram uma nota final acima de 7,0: Sergipe (9,6), São Paulo (9,3), Espírito Santo (8,9), Rio Grande do Sul (8,7), Rio Grande do Norte (7,9), Paraná (7,9), Rio de Janeiro (7,7), Santa Catarina (7,5) e Mato Grosso (7,1). Dentre as menores notas, destaca-se os seguintes Detrans com as práticas mais iniciais: Roraima (1,7), Pará (2,1), Piauí (2,4), Tocantins (2,4) e Amapá (2,6).
-
 ```{r}
-#| tbl-cap: Resultados finais
-#| label: tbl-final
-
 coldef1 <- 
   colDef(
     format = colFormat(locales = "de-DE", digits = 1)
@@ -518,7 +577,15 @@ coldef1 <-
 coldef2 <- 
   colDef(
     style = continuous_bg_func,
-    format = colFormat(locales = "de-DE", digits = 1)
+    format = colFormat(locales = "de-DE", digits = 1),
+    name = "2020"
+  )
+
+coldef3 <- 
+  colDef(
+    style = continuous_bg_func,
+    format = colFormat(locales = "de-DE", digits = 1),
+    name = "2024"
   )
 
 variacao <- df_revisoes |>
@@ -567,21 +634,92 @@ tbl_final = consulta_pre |>
     `Infrações` = Infracoes,
     `Educação` = Educ,
     CFCs = Cfcs,
-    `2020` = Ano2020,
-    `2024` = Nota_final
-  ) 
+    ano_2020 = Ano2020,
+    ano_2024 = Nota_final
+  )
+```
+
+```{r}
+calc_media <- function(df_final, ano) {
+  scales::number(
+    mean(df_final |> pull({{ ano }})), 
+    accuracy = 0.01, 
+    decimal.mark = ",", 
+    big.mark = "."
+  )
+}
+
+delta_media <- function(media_2020, media_2024) {
+  scales::percent(
+    ((media_2024 - media_2020) / media_2020), 
+    accuracy = 0.1, 
+    decimal.mark = ",", 
+    big.mark = "."
+  )
+}
+
+delta <- delta_media(
+  tbl_final |> pull(ano_2020) |> mean(),
+  tbl_final |> pull(ano_2024) |> mean()
+)
+
+print_results_text <- function(df_final, type = c("min", "max")) {
   
-  tbl_final |> make_reactable(
-    columns = list(
-      Frota = coldef1,
-      Condutores = coldef1,
-      `Infrações` = coldef1,
-      Sinistros = coldef1,
-      Atendimento = coldef1,
-      `Educação` = coldef1,
-      CFCs = coldef1,
-      `2020` = coldef2,
-      `2024` = coldef2
+  df_final$estados <- c(
+    "Sergipe", "São Paulo", "Espírito Santo", "Rio Grande do Sul",
+    "Rio Grande do Norte", "Paraná", "Rio de Janeiro", "Santa Catarina",
+    "Mato Grosso", "Mato Grosso do Sul", "Goiás", "Pernambuco", "Minas Gerais",
+    "Ceará", "Distrito Federal", "Rondônia", "Acre", "Alagoas", "Amazonas",
+    "Maranhão", "Paraíba", "Bahia", "Amapá", "Tocantins", "Piauí", "Pará",
+    "Roraima"
+  )
+
+  
+  df_text <- df_final |> 
+    select(estados, ano_2024) |> 
+    mutate(
+      results_text = scales::number(
+        ano_2024, 
+        accuracy = 0.1, 
+        decimal.mark = ",", 
+        big.mark = "."
+      ),
+      text = glue::glue("{estados} ({results_text})")
+    )
+  
+    if (type == "max") {
+      df_text |> 
+        filter(ano_2024 > 7) |> 
+        pull(text) |> 
+        knitr::combine_words(oxford_comma = FALSE, and = " e ", sep = ", ")
+    } else {
+      df_text |> 
+        slice_min(ano_2024, n = 5) |>
+        pull(text) |> 
+        knitr::combine_words(oxford_comma = FALSE, and = " e ", sep = ", ")
+    }
+}
+```
+
+A @tbl-final apresenta as notas calculadas das categorias analisadas e a média final do valor referente a 2024. Também inclui-se as médias finais obtidas no estudo de 2020, a fins de comparação com os valores atuais. Ao realizar uma média nacional com base nas notas de todas as UFs, em 2024 o Brasil atinge a nota de `r calc_media(tbl_final, ano_2024)`. Isso representa um aumento de `r delta`, considerando a média nacional obtida em 2020, que foi de `r calc_media(tbl_final, ano_2020)`.
+
+Considerando os resultados de 2024, nove Detrans obtiveram uma nota final acima de 7,0: `r print_results_text(tbl_final, "max")`. Dentre as menores notas, destaca-se os seguintes Detrans com as práticas mais iniciais: `r print_results_text(tbl_final, "min")`.
+
+```{r}
+#| tbl-cap: Resultados finais
+#| label: tbl-final
+
+tbl_final |> make_reactable(
+  columns = list(
+    Frota = coldef1,
+    Condutores = coldef1,
+    `Infrações` = coldef1,
+    Sinistros = coldef1,
+    Atendimento = coldef1,
+    `Educação` = coldef1,
+    CFCs = coldef1,
+    ano_2020 = coldef2,
+    ano_2024 = coldef3
     )
   )
 
@@ -606,15 +744,7 @@ Em destaque, observa-se os estados que atingiram a nota máxima (10) em alguma d
 - **Infrações**: `r notas_10$infracoes |> unlist() |> combine_words(oxford_comma = F, and = " e ")`, e;
 - **Sinistros de trânsito**: `r notas_10$sinistros |> unlist() |> combine_words(oxford_comma = F, and = " e ")`
 
-A @fig-dumbbell apresenta a variação entre os resultados de nota final obtidos na pesquisa de 2020 e na pesquisa atual de 2024. Dentre as 27 UFs, observa-se que 17 apresentaram uma evolução positiva neste período de tempo. Todos os estados da Região Sul e Sudeste apresentaram aumento na nota final, comparando os períodos. Dois estados do Norte e 2 do Centro-Oeste apresentaram aumento, em conjunto com 6 estados do Nordeste.
-
-De forma absoluta, os portais dos Detrans que apresentaram as melhores evoluções em relação foram aqueles dos estados do Rio Grande do Norte (+2,94), Acre (+2,69), Santa Catarina (+2,62), Bahia (+2,62) e Ceará (+2,30). De outro lado, os estados que apresentaram as maiores quedas de desempenho foram Roraima (-2,62), Rondônia (-1,83) e Piauí (-1,75). 
-
 ```{r}
-#| fig-cap: Evolução dos resultados entre 2020 e 2024
-#| label: fig-dumbbell
-#| fig-height: 5
-
 dumbbell <- df_revisoes |>
   select(uf, nota_final, ano) |>
   mutate(regiao = get_region(uf)) |>
@@ -623,6 +753,56 @@ dumbbell <- df_revisoes |>
               values_from = nota_final) |>
   mutate(uf = reorder(uf, ano_2024),
          color = if_else(ano_2020 < ano_2024, "up", "down"))
+
+print_delta_text <- function(df_dumbbell, type = c("up", "down")) {
+  estados <- c(
+    "Sergipe", "Rio Grande do Sul", "São Paulo", "Goiás", "Santa Catarina",
+    "Rio Grande do Norte", "Paraná", "Rio de Janeiro", "Mato Grosso do Sul",
+    "Mato Grosso", "Pernambuco", "Minas Gerais", "Distrito Federal", 
+    "Espírito Santo", "Ceará", "Rondônia", "Acre", "Alagoas", "Amazonas",
+    "Maranhão", "Paraíba", "Bahia", "Amapá", "Pará", "Tocantins", "Piauí",
+    "Roraima"
+  )
+  
+  df_dumbbell$estados <- estados
+  
+  df_results <- df_dumbbell |> 
+    mutate(
+      delta = ano_2024 - ano_2020,
+      delta_text = scales::number(
+        abs(delta), 
+        accuracy = 0.01, 
+        decimal.mark = ",", 
+        big.mark = "."
+      ),
+      signal = if_else(color == "up", "+", "-"),
+      print_text = glue::glue("{estados} ({signal}{delta_text})")
+    )
+  
+  if (type == "up") {
+    df_results |> 
+      slice_max(delta, n = 5) |> 
+      pull(print_text) |> 
+      knitr::combine_words(oxford_comma = FALSE, and = " e ", sep = ", ")
+  } else {
+    df_results |> 
+      slice_min(delta, n = 5) |> 
+      pull(print_text) |> 
+      knitr::combine_words(oxford_comma = FALSE, and = " e ", sep = ", ")
+  }
+}
+
+```
+
+
+A @fig-dumbbell apresenta a variação entre os resultados de nota final obtidos na pesquisa de 2020 e na pesquisa atual de 2024. Dentre as 27 UFs, observa-se que 17 apresentaram uma evolução positiva neste período de tempo. Todos os estados da Região Sul e Sudeste apresentaram aumento na nota final, comparando os períodos. Dois estados do Norte e 2 do Centro-Oeste apresentaram aumento, em conjunto com 6 estados do Nordeste.
+
+De forma absoluta, os portais dos Detrans que apresentaram as melhores evoluções em relação foram aqueles dos estados do `r print_delta_text(dumbbell, "up")`. De outro lado, os estados que apresentaram as maiores quedas de desempenho foram `r print_delta_text(dumbbell, "down")`. 
+
+```{r}
+#| fig-cap: Evolução dos resultados entre 2020 e 2024
+#| label: fig-dumbbell
+#| fig-height: 5
 
 dumbbell_plot <-
   ggplot(dumbbell) +
