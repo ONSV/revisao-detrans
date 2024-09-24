@@ -1,0 +1,611 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  a4paper,
+]{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[top=30mm,left=30mm,right=30mm,bottom=30mm]{geometry}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{5}
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+\let\paragraph\oldparagraph
+\let\subparagraph\oldsubparagraph
+
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+
+%% Cores nos títulos
+
+\definecolor{headingcolor}{HTML}{00496D} % Blue color
+
+\titleformat{\section}
+  {\color{headingcolor}\normalfont\Large\bfseries}
+  {\color{headingcolor}\thesection}{1em}{}
+
+\titleformat{\subsection}
+  {\color{headingcolor}\normalfont\large\bfseries}
+  {\color{headingcolor}\thesubsection}{1em}{}
+
+\titleformat{\subsubsection}
+  {\color{headingcolor}\normalfont\normalsize\bfseries}
+  {\color{headingcolor}\thesubsubsection}{1em}{}
+
+%% Edita cabeçalho e rodapé
+
+\fancypagestyle{myfooter}{%
+  \fancyhf{} % Clear header and footer
+  \fancyfoot[L]{onsv.org.br} % Left footer text
+  \fancyfoot[R]{\thepage} % Right footer: page number
+  \fancyhead[L]{\includegraphics[width=3.5cm]{_extensions/onsv/onsvpub/onsv_logo_header.png}}
+  \fancyhead[R]{\includegraphics[width=1.75cm]{_extensions/onsv/onsvpub/obs2030.png}}
+  \setlength{\headsep}{0.5in}
+  \renewcommand{\headrulewidth}{0.4pt} % Add header rule
+  \renewcommand{\footrulewidth}{0.4pt} % Add a footer rule
+}
+
+\pagestyle{myfooter}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{longtable}
+\usepackage{colortbl}
+\usepackage{array}
+\usepackage[noblocks]{authblk}
+\renewcommand*{\Authsep}{, }
+\renewcommand*{\Authand}{, }
+\renewcommand*{\Authands}{, }
+\renewcommand\Affilfont{\small}
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Índice}
+\else
+  \newcommand\contentsname{Índice}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{Lista de Figuras}
+\else
+  \newcommand\listfigurename{Lista de Figuras}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{Lista de Tabelas}
+\else
+  \newcommand\listtablename{Lista de Tabelas}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figura}
+\else
+  \newcommand\figurename{Figura}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Tabela}
+\else
+  \newcommand\tablename{Tabela}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listagem}
+\newcommand*\listoflistings{\listof{codelisting}{Lista de Listagens}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+\babelprovide[main,import]{brazilian}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Avaliação do Nível de Informações Disponibilizadas no Portal do Detran - TO},
+  pdfauthor={João Pedro Melani Saraiva; Pedro Augusto Borges dos Santos; Dr.~Jorge Tiago Bastos},
+  pdflang={pt-BR},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Avaliação do Nível de Informações Disponibilizadas no Portal do
+Detran - TO}
+
+
+\author[1]{João Pedro Melani Saraiva}
+\author[1]{Pedro Augusto Borges dos Santos}
+\author[2]{Dr.~Jorge Tiago Bastos}
+
+\affil[1]{Observatório Nacional de Segurança Viária}
+\affil[2]{Universidade Federal do Paraná}
+
+
+\date{2024-09-24}
+\begin{document}
+\maketitle
+
+\section{Sobre o relatório}\label{sobre-o-relatuxf3rio}
+
+Este trabalho é uma iniciativa do Observatório Nacional de Segurança
+Viária, elaborado em parceria com a Universidade Federal do Paraná. O
+relatório ainda está em desenvolvimento e as informações presentes estão
+sujeitas a mudanças. Elaborou-se um documento individual para cada
+Departamento Estadual de Trânsito, a fim de expor os resultados de forma
+preliminar para cada instituição.
+
+\section{Introdução}\label{introduuxe7uxe3o}
+
+\subsection{Objetivo}\label{objetivo}
+
+O presente documento tem por objetivo apresentar uma avaliação do nível
+de informações disponibilizadas no portal (sítio eletrônico) do Detran
+(Departamento Estadual de Trânsito) do Tocantins.
+
+Os Detrans, por sua atuação, trabalham com um grande número de
+informações relevantes para a gestão do trânsito no país, tendo muitas
+delas, além do teor formal e burocrático, uma grande utilidade para
+avaliações no âmbito da segurança viária, tais como: infrações de
+trânsito, sinistros de trânsito, e habilitação, entre outros.
+
+Nesse sentido, este documento busca apresentar uma análise da situação
+deste Detran, permitindo obter um panorama de como esta instituições
+disponibiliza informações de interesse social. Além da introdução, o
+documento compõe-se das seguintes seções: Seção~\ref{sec-metodos}, com
+as consultas preliminares, pontuação e critérios estabelecidos; e
+Seção~\ref{sec-resultados}, com a pontuação geral em cada categoria
+analisada, com a evolução das notas resultantes ao longo dos anos.
+
+\subsection{Atribuições do Detran}\label{atribuiuxe7uxf5es-do-detran}
+
+De acordo com o CTB (Código de Trânsito Brasileiro), são competências do
+Detran o planejamento, coordenação, execução e controle relacionados às
+seguintes áreas: habilitação de condutores, veículos, fiscalização de
+trânsito, estatísticas e educação para o trânsito.
+
+Na habilitação de condutores, cabe ao Detran realizar e controlar o
+processo de formação, reciclagem e suspensão dos condutores, assim como
+a expedição e cassação da Licença de Aprendizagem, Permissão para
+Dirigir e CNH.
+
+Em relação aos veículos, compete ao Detran o seu registro, emplacamento,
+licenciamento e a expedição do seu Certificado de Registro e
+Licenciamento Anual.
+
+Na área de fiscalização, o Detran deve fazer cumprir a legislação e as
+normas de trânsito, sendo responsável pela autuação e aplicação de
+medidas administrativas cabíveis pelas infrações previstas no Código de
+Trânsito Brasileiro.
+
+Em relação a educação para o trânsito, é responsabilidade do Detran a
+promoção e participação de projetos de educação e segurança no trânsito.
+Por fim, coleta de dados estatísticos e a elaboração de estudos sobre
+acidentes de trânsito e suas causas também devem ser cumpridos pelo
+Detran.
+
+\subsection{Versão anterior}\label{versuxe3o-anterior}
+
+Este trabalho faz parte da segunda versão do relatório anteriormente
+publicado em 2020 pelo Observatório Nacional de Segurança Viária, que
+virou uma comunicação técnica publicada no segundo Simpósio de
+Transportes do Paraná (STPR), também em (2020). A elaboração de uma nova
+versão irá possibilitar a evolução dos portais dos Detrans de cada
+estado.
+
+\section{Métodos}\label{sec-metodos}
+
+\subsection{Consultas Preliminares}\label{consultas-preliminares}
+
+O estudo foi realizado por meio do acesso ao \emph{site} do Detran-TO a
+fim de averiguar a existência de dados estatíticos sobre a frota
+veicular, condutores habilitados, infrações e sinistros de trânsito.
+Também foram avaliadas a existência de informações relacionadas à
+educação para o trânsito (campanhas, material educativo, regras de
+trânsito, etc.), dados quantitivos do atendimento ao público pelo
+departamento, disponibilidade de canais de atendimento e dados
+informativos sobre os centros de formação de condutores do estado em
+questão. A Tabela~\ref{tbl-consultas} demonstra os resultados de uma
+consulta preliminar destes portais:
+
+\begin{longtable}{lc}
+
+\caption{\label{tbl-consultas}Consultas preliminares}
+
+\tabularnewline
+
+\toprule
+Categoria & Situação \\ 
+\midrule\addlinespace[2.5pt]
+CFCs & \cellcolor[HTML]{1FA149}{\textcolor[HTML]{FFFFFF}{Presente}} \\ 
+Nota Final & \cellcolor[HTML]{1FA149}{\textcolor[HTML]{FFFFFF}{Presente}} \\ 
+Frota & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{Ausente}} \\ 
+Condutores & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{Ausente}} \\ 
+Infrações & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{Ausente}} \\ 
+Sinistros & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{Ausente}} \\ 
+Atendimento & \cellcolor[HTML]{1FA149}{\textcolor[HTML]{FFFFFF}{Presente}} \\ 
+Educação & \cellcolor[HTML]{1FA149}{\textcolor[HTML]{FFFFFF}{Presente}} \\ 
+\bottomrule
+
+\end{longtable}
+
+\subsection{Critérios de
+Avaliação}\label{crituxe9rios-de-avaliauxe7uxe3o}
+
+A partir das categorias anteriormente discutidas, critérios de avaliação
+foram estabelecidos para quantificar a disponibilidade de dados e
+informações de cada um dos Detrans. Assim sendo, são concedidos níveis
+de desempenho que equivalem a pontuações para cada um dos critérios
+aferidos:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Melhor Prática} - Nota 10;
+\item
+  \textbf{Prática Intermediária} - Nota 6,7;
+\item
+  \textbf{Prática Inicial} - Nota 3,3 e;
+\item
+  \textbf{Prática Ausente} - Nota 0.
+\end{enumerate}
+
+A avaliação dos dados estatísticos da \textbf{frota veicular},
+\textbf{condutores habilitados}, \textbf{infrações} e \textbf{sinistros}
+de trânsito se baseou nos critérios de periodicidade (quantidade de anos
+disponíveis), interatividade (tipo de arquivos ou informações
+disponíveis) e nível de desagregação (quantidade de variáveis
+disponíveis para análise).
+
+A \textbf{periodicidade} foi avaliada em:
+
+\begin{itemize}
+\item
+  Melhor: Quando há um máximo de 2 anos de atraso em relação ao ano
+  atual para o dado mais recente e mais de 5 anos de dados disponíves;
+\item
+  Intermediária: Máximo de 2 anos de atraso ou menos de 5 anos
+  disponíveis e;
+\item
+  Inicial: 3+ anos de atraso e menos de 5 anos disponíveis.
+\end{itemize}
+
+Neste contexto, para um estado ser situado como \emph{Melhor}, por
+exemplo, seria necessário ter mais de 5 anos disponíveis e seu dado mais
+recente ser de, no mínino, 2022.
+
+A \textbf{interatividade} foi avaliada em:
+
+\begin{itemize}
+\item
+  Melhor: Possui dados disponibilizados em relatórios interativos ou
+  \emph{dashboards} para consultas dinâmicas;
+\item
+  Intermediária: Dados disponibilizados em arquivos de planinhas (como
+  \texttt{.xls}, \texttt{.xlsx} e \texttt{.ods}) de editores como
+  Microsoft Excel, Google Sheets e LibreOffice Calc, e;
+\item
+  Inicial: Dados disponibilizados apenas como texto na página ou
+  arquivos de texto (\texttt{.txt}, \texttt{.csv}, etc.).
+\end{itemize}
+
+O \textbf{nível de desagregação} foi avaliado em:
+
+\begin{itemize}
+\item
+  Melhor: Quantidade grande de variáveis;
+\item
+  Intermediário: Quantidade média de variáveis e;
+\item
+  Inicial: Quantidade baixa de variáveis.
+\end{itemize}
+
+A relação destes critérios está ilustrada na Tabela~\ref{tbl-criterios}:
+
+\break
+
+\begin{longtable}{l|cccc}
+
+\caption{\label{tbl-criterios}Critérios de avaliação para frota,
+condutores habilitados, infrações e sinistros}
+
+\tabularnewline
+
+\toprule
+\multicolumn{1}{l}{} & Periodicidade & Interatividade & Nível de desagregação & Notas \\ 
+\midrule\addlinespace[2.5pt]
+Frota & 3+ anos de atraso e < 5 anos & Texto & 1 a 2 desagregações & 3.3 \\ 
+ & 2 anos de atraso ou < 5 anos & Planilha & 3 a 4 desagregações & 6.7 \\ 
+ & 2 anos de atraso e > 5 anos & Interativo & 5+ desagregações & 10.0 \\ 
+\midrule\addlinespace[2.5pt]
+Condutores & 3+ anos de atraso e < 5 anos & Texto & 1 a 2 desagregações & 3.3 \\ 
+ & 2 anos de atraso ou < 5 anos & Planilha & 3 a 4 desagregações & 6.7 \\ 
+ & 2 anos de atraso e > 5 anos & Interativo & 5+ desagregações & 10.0 \\ 
+\midrule\addlinespace[2.5pt]
+Infrações & 3+ anos de atraso e < 5 anos & Texto & 1 desagregação & 3.3 \\ 
+ & 2 anos de atraso ou < 5 anos & Planilha & 2 desagregações & 6.7 \\ 
+ & 2 anos de atraso e > 5 anos & Interativo & 3+ desagregações & 10.0 \\ 
+\midrule\addlinespace[2.5pt]
+Sinistros & 3+ anos de atraso e < 5 anos & Texto & 1 a 5 desagregações & 3.3 \\ 
+ & 2 anos de atraso ou < 5 anos & Planilha & 6 a 10 desagregações & 6.7 \\ 
+ & 2 anos de atraso e > 5 anos & Interativo & 11+ desagregações & 10.0 \\ 
+\bottomrule
+
+\end{longtable}
+
+As informações sobre o \textbf{atendimento ao público}, \textbf{educação
+para o trânsito} e \textbf{CFCs} foram aferidas com outros critérios
+mais específicos por não se tratarem de dados estritamente estatísticos,
+exigindo uma mudança na abordagem de avaliação. As Tabelas
+\ref{tbl-cri-atend}, \ref{tbl-cri-educ} e \ref{tbl-cri-cfcs} demonstram
+os critérios para cada um destes casos:
+
+\begin{longtable}{>{\centering\arraybackslash}p{\dimexpr 0.3\linewidth-2\tabcolsep-1.5\arrayrulewidth}>{\centering\arraybackslash}p{\dimexpr 0.3\linewidth-2\tabcolsep-1.5\arrayrulewidth}>{\centering\arraybackslash}p{\dimexpr 0.3\linewidth-2\tabcolsep-1.5\arrayrulewidth}}
+
+\caption{\label{tbl-cri-atend}Critérios de avaliação para atendimento ao
+público}
+
+\tabularnewline
+
+\toprule
+Periodicidade & Canais de Atendimento & Notas \\ 
+\midrule\addlinespace[2.5pt]
+3+ anos de atraso e < 5 anos & Atendimento por telefone & 3.3 \\ 
+2 anos de atraso ou < 5 anos & Atendimento por telefone e e-mail & 6.7 \\ 
+2 anos de atraso e > 5 anos & Atendimento por telefone, e-mail e mensagem & 10.0 \\ 
+\bottomrule
+
+\end{longtable}
+
+\begin{longtable}{>{\centering\arraybackslash}p{\dimexpr 0.3\linewidth-2\tabcolsep-1.5\arrayrulewidth}>{\centering\arraybackslash}p{\dimexpr 0.3\linewidth-2\tabcolsep-1.5\arrayrulewidth}}
+
+\caption{\label{tbl-cri-educ}Critérios de avaliação para conteúdo
+educativo}
+
+\tabularnewline
+
+\toprule
+Conteúdos didáticos & Divulgação de atividade \\ 
+\midrule\addlinespace[2.5pt]
+Dicas, sugestões de leitura, cartilhas, orientações gerais e cadernos pedagógicos. & Cursos, palestras, ações, projetos e campanhas. \\ 
+\bottomrule
+
+\end{longtable}
+
+\begin{longtable}{>{\centering\arraybackslash}p{\dimexpr 0.5\linewidth-2\tabcolsep-1.5\arrayrulewidth}>{\centering\arraybackslash}p{\dimexpr 0.5\linewidth-2\tabcolsep-1.5\arrayrulewidth}}
+
+\caption{\label{tbl-cri-cfcs}Critérios de avaliação para informações
+sobre CFCs}
+
+\tabularnewline
+
+\toprule
+Lista sobre CFCs credenciados & Notas \\ 
+\midrule\addlinespace[2.5pt]
+Quantidade de CFCs credenciados no estado & 3.3 \\ 
+Lista completa dos CFCs no estado & 6.7 \\ 
+Informações adicionais sobre o índice de aprovação dos alunos, quais CFCs possuem simuladores de direção, número de habilitados e informações sobre o credenciamento. & 10.0 \\ 
+\bottomrule
+
+\end{longtable}
+
+\section{Resultados}\label{sec-resultados}
+
+A fim de analisar os índices atribuídos para cada tipo de informação
+consultada, compara-se os dados de 2020 e 2024. A nota resultante para
+cada categoria considerada é calculada por meio da média das pontuações
+de seus critérios, como aponta Tabela~\ref{tbl-media}.
+
+\begin{longtable}{l|ccccccc}
+
+\caption{\label{tbl-media}Notas médias para cada categoria}
+
+\tabularnewline
+
+\toprule
+\multicolumn{1}{l}{} & CFCs & Frota & Condutores & Infrações & Sinistros & Atendimento & Educação \\ 
+\midrule\addlinespace[2.5pt]
+2024 & \cellcolor[HTML]{F5951E}{\textcolor[HTML]{000000}{$6,7$}} & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} & \cellcolor[HTML]{F47B20}{\textcolor[HTML]{FFFFFF}{$5,0$}} & \cellcolor[HTML]{F47B20}{\textcolor[HTML]{FFFFFF}{$5,0$}} \\ 
+\midrule\addlinespace[2.5pt]
+2020 & \cellcolor[HTML]{1FA149}{\textcolor[HTML]{FFFFFF}{$10,0$}} & \cellcolor[HTML]{F5841F}{\textcolor[HTML]{FFFFFF}{$5,6$}} & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} & \cellcolor[HTML]{F47B20}{\textcolor[HTML]{FFFFFF}{$5,0$}} & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} \\ 
+\bottomrule
+
+\end{longtable}
+
+A pontuação final de 2024 para o estado em destaque foi computada por
+meio da média destas notas, atingindo um valor de \textbf{2,39}, o que
+representa um regresso em relação a 2020.
+
+O resultado final das consultas, efetuadas em 2020 e 2024, sobre todas
+as categorias e critérios considerados para a avaliação da
+disponibilidade de dados no portal do Detran-TO está disponível na
+Tabela~\ref{tbl-final}.
+
+\begin{longtable}{l|ccc}
+
+\caption{\label{tbl-final}Resultados finais das consultas}
+
+\tabularnewline
+
+\toprule
+\multicolumn{1}{l}{} &  & \multicolumn{2}{c}{Ano} \\ 
+\cmidrule(lr){3-4}
+\multicolumn{1}{l}{} & Critério & 2020 & 2024 \\ 
+\midrule\addlinespace[2.5pt]
+Frota & Periodicidade & \cellcolor[HTML]{F5951E}{\textcolor[HTML]{000000}{$6,7$}} & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} \\ 
+ & Interatividade & \cellcolor[HTML]{F05E22}{\textcolor[HTML]{FFFFFF}{$3,3$}} & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} \\ 
+ & Nível de desagregação & \cellcolor[HTML]{F5951E}{\textcolor[HTML]{000000}{$6,7$}} & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} \\ 
+\midrule\addlinespace[2.5pt]
+Condutores & Periodicidade & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} \\ 
+ & Interatividade & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} \\ 
+ & Nível de desagregação & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} \\ 
+\midrule\addlinespace[2.5pt]
+Infrações & Periodicidade & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} \\ 
+ & Interatividade & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} \\ 
+ & Nível de desagregação & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} \\ 
+\midrule\addlinespace[2.5pt]
+Sinistros & Periodicidade & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} \\ 
+ & Interatividade & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} \\ 
+ & Nível de desagregação & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} \\ 
+\midrule\addlinespace[2.5pt]
+Atendimento & Estatística & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} \\ 
+ & Canais & \cellcolor[HTML]{1FA149}{\textcolor[HTML]{FFFFFF}{$10,0$}} & \cellcolor[HTML]{1FA149}{\textcolor[HTML]{FFFFFF}{$10,0$}} \\ 
+\midrule\addlinespace[2.5pt]
+Educação & Conteúdos & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} & \cellcolor[HTML]{F05E22}{\textcolor[HTML]{FFFFFF}{$3,3$}} \\ 
+ & Divulgação & \cellcolor[HTML]{D7191C}{\textcolor[HTML]{FFFFFF}{$0,0$}} & \cellcolor[HTML]{F5951E}{\textcolor[HTML]{000000}{$6,7$}} \\ 
+\midrule\addlinespace[2.5pt]
+CFCs & CFCs & \cellcolor[HTML]{1FA149}{\textcolor[HTML]{FFFFFF}{$10,0$}} & \cellcolor[HTML]{F5951E}{\textcolor[HTML]{000000}{$6,7$}} \\ 
+\midrule\addlinespace[2.5pt]
+Nota Final & Nota Final & \cellcolor[HTML]{ED5921}{\textcolor[HTML]{FFFFFF}{$2,9$}} & \cellcolor[HTML]{E94F20}{\textcolor[HTML]{FFFFFF}{$2,4$}} \\ 
+\bottomrule
+
+\end{longtable}
+
+\section{Conclusão}\label{conclusuxe3o}
+
+O presente trabalho avaliou de forma quantitativa o desempenho do portal
+do departamento consultado em disponibilizar ao público informações
+pertinentes à segurança viária do respectivo estado. Desta maneira, a
+categoria de melhor desempenho para o Detran do Tocantins foi a de CFCs,
+com nota igual a 6,7. Em contraparte, as categorias de pior desempenho
+foram as de Frota, Condutores, Infrações e Sinistros, com nota 0.
+
+Os resultados discutidos nesta análise visam não apenas mensurar o
+desempenho do fornecimento de dados, mas também auxiliar na instrução de
+possíveis melhorias para o sítio eletrônico estudado, visando agregar à
+qualidade e disponibilidade das informações providenciadas pelo
+Detran-TO em conformidade às suas atribuições.
+
+\section*{Referências}\label{referuxeancias}
+\addcontentsline{toc}{section}{Referências}
+
+\phantomsection\label{refs}
+\begin{CSLReferences}{0}{1}
+\bibitem[\citeproctext]{ref-santos2020}
+SANTOS, P. A. B. DOS; BASTOS, J. T.; GARONCE, F. V. \textbf{AVALIAÇÃO DO
+CONTEÚDO DOS PORTAIS DOS DEPARTAMENTOS ESTADUAIS DE TRÂNSITO - DETRANs}.
+28 nov. 2020. Disponível em:
+\textless{}\url{https://stpr.ufpr.br/wp-content/uploads/2021/02/Anais-STPR-2020-1.pdf}\textgreater{}
+
+\end{CSLReferences}
+
+
+
+\end{document}
