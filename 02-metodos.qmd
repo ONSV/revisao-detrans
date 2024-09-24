@@ -275,4 +275,10 @@ df_cfc |>
 
 ## Consulta aos Detrans {#sec-method-rev}
 
-Com a aplicação dos métodos anteriormente descritos, foi realizada uma consulta a todos os Detrans, com a finalidade de buscar uma validação do método de avaliação. Após o levantamento das informações e o cálculo das notas, o Observatório enviou o Ofício 321/ONSV/2024, de 23 de maio de 2024, em conjunto com uma análise individualizada dos resultados, solicitando aos Detrans / CET-MG as suas considerações sobre as pontuações levantadas pela equipe de autores. Até a data de publicação deste trabalho, obteve-se o feedback das seguintes instituições: CET-MG, Detran-ES, Detran-MT, Detran-SP e Detran-RN.
+Com a aplicação dos métodos anteriormente descritos, foi realizada uma consulta a todos os Detrans, com a finalidade de buscar uma validação do método de avaliação. Após o levantamento das informações e o cálculo das notas, o Observatório enviou o Ofício 321/ONSV/2024, de 23 de maio de 2024, em conjunto com uma análise individualizada dos resultados, solicitando aos Detrans / CET-MG as suas considerações sobre as pontuações levantadas pela equipe de autores.
+
+Em um segundo momento, o CEO do Observatório, Paulo Guimarães, enviou os documentos com as análises individualizadas dos resultados para os diretores de cada Detran, através do WhatsApp. As mensagens foram enviadas no dia 09 de agosto de 2024.
+
+No dia 03 de setembro de 2024, o trabalho foi apresentado no 80º Encontro Nacional de Detrans, em Brasília, com a presença de representantes de todos os Detrans do Brasil. Na ocasião, o CEO do Observatório apresentou a metodologia e os resultados obtidos, além de abrir espaço para que os representantes dos Detrans pudessem se manifestar sobre o trabalho.
+
+Com isso, foi estabelecido um novo prazo para o retorno dos Detrans em relação ao conteúdo do trabalho: 16 de setembro de 2024. Até a data de publicação deste trabalho, obteve-se o feedback formalizado das seguintes instituições: CET-MG, Detran-ES, Detran-DF, Detran-GO, Detran-MT, Detran-PB, Detran-PR, Detran-SC, Detran-SP e Detran-RN.
