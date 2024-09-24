@@ -16,13 +16,13 @@ O presente relatório é um produto do acordo de cooperação técnica entre o O
 
 - Um em cada três portais de Detrans contêm informações de todas as categorias consideradas.
 
-- As categorias **sinistros de trânsito** e **infrações** apresentaram a menor quantidade de disponibilização, com apenas 15 portais incluindo dados.
+- Doze portais não incluem dados sobre **sinistros de trânsito** e 11 não incluem dados sobre **infrações**, mostrando que essas categorias apresentaram a menor disponibilização de informações.
 
 - Os Detrans dos estados de Sergipe, São Paulo e Espírito Santo atingiram os **melhores resultados**, com notas finais de 9,6, 9,3 e 8,9, respectivamente.
 
 - Os Detrans dos estados de Roraima, Pará e Piauí atingiram os **piores resultados**, com notas finais de 1,7, 2,1 e 2,4, respectivamente.
 
-- Entre 2020 e 2024, os portais de 17 Detrans apresentaram uma melhoria de desempenho, com aumento em suas notas finais.
+- Entre 2020 e 2024, os portais de 19 Detrans apresentaram uma melhoria de desempenho, com aumento em suas notas finais.
 
 # Sobre o Observatório
 
@@ -44,7 +44,7 @@ Todo o processo metodológico de coleta, transformação e visualização dos da
 
 # Agradecimentos
 
-A equipe de autores agradece às instituições que responderam ao Ofício 321/ONSV/2024, contribuindo com o aprimoramento dos métodos aqui apresentados: CET-MG, Detran-ES, Detran-MT, Detran-PR, Detran-SC, Detran-SP e Detran-RN.
+A equipe de autores agradece às instituições que enviaram suas considerações, contribuindo com o aprimoramento dos métodos aqui apresentados: CET-MG, Detran-ES, Detran-DF, Detran-GO, Detran-MT, Detran-PB, Detran-PR, Detran-SC, Detran-SP e Detran-RN.
 
 A equipe de autores também agradece pelo apoio do Centro de Liderança Pública e do pesquisador Daniel Vasconcellos Archer Duque na elaboração do relatório.
 
