@@ -4,7 +4,7 @@ O documento tem como principal conteúdo a avaliação do nível de informaçõe
 
 Essa é uma segunda versão do relatório realizado em 2020 pelo Observatório Nacional de Segurança Viária, também publicado como uma comunicação técnica no segundo Simpósio de Transportes do Paraná [-@santos2020]. A elaboração de uma nova versão possibilita a análise da evolução dos portais dos DETRANs de cada estado, entre os anos de 2020 e 2024.
 
-Nessa nova versão o relatório foi renderizado em _html_, possibilitando a visualização interativa dos resultados através de tabelas, mapas e gráficos em um formato nativo para a web, com acesso direto através do site do Observatório ([onsv.org.br](https://onsv.org.br)).
+Nessa nova versão o relatório foi renderizado em _html_, possibilitando a visualização interativa dos resultados por tabelas, mapas e gráficos em um formato nativo para a web, com acesso direto através do site do Observatório ([onsv.org.br](https://onsv.org.br)).
 
 O presente relatório é um produto do acordo de cooperação técnica entre o Observatório Nacional de Segurança Viária (ONSV) e a Universidade Federal do Paraná (UFPR).
 
@@ -12,7 +12,7 @@ O presente relatório é um produto do acordo de cooperação técnica entre o O
 
 - O objetivo principal foi avaliar o nível de informações disponibilizadas nos portais (sítios eletrônicos) dos Detrans de todas as unidades da federação brasileira, buscando classificar cada portal com uma nota de 0 a 10.
 
-- A avaliação foi baseada em em sete categorias: (i) frota de veículos, (ii) condutores habilitados, (iii) infrações, (iv) sinistros de trânsito, (v) educação para o trânsito (campanhas, material educativo, regras de trânsito, etc.), (vi) atendimento ao público e (vii) centro de formação de condutores (CFCs).
+- A avaliação foi baseada em sete categorias: (i) frota de veículos, (ii) condutores habilitados, (iii) infrações, (iv) sinistros de trânsito, (v) educação para o trânsito (campanhas, material educativo, regras de trânsito, etc.), (vi) atendimento ao público e (vii) centro de formação de condutores (CFCs).
 
 - Um em cada três portais de Detrans contêm informações de todas as categorias consideradas.
 

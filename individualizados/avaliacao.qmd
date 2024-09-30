@@ -126,7 +126,7 @@ preposicao <- function(uf) { filter(df_estados, estados == uf)$Preposicao_De }
 
 ## Sobre o relatório
 
-Este trabalho é uma iniciativa do Observatório Nacional de Segurança Viária, elaborado em parceria com a Universidade Federal do Paraná. O relatório ainda está em desenvolvimento e as informações presentes estão sujeitas a mudanças. Elaborou-se um documento individual para cada Departamento Estadual de Trânsito, a fim de expor os resultados de forma preliminar para cada instituição.
+Este trabalho é uma iniciativa do Observatório Nacional de Segurança Viária, elaborado em parceria com a Universidade Federal do Paraná. Foi elaborado um documento individual para cada Departamento Estadual de Trânsito, a fim de expor os resultados para cada instituição.
 
 ## Introdução
 
@@ -136,11 +136,11 @@ O presente documento tem por objetivo apresentar uma avaliação do nível de in
 
 Os Detrans, por sua atuação, trabalham com um grande número de informações relevantes para a gestão do trânsito no país, tendo muitas delas, além do teor formal e burocrático, uma grande utilidade para avaliações no âmbito da segurança viária, tais como: infrações de trânsito, sinistros de trânsito, e habilitação, entre outros.
 
-Nesse sentido, este documento busca apresentar uma análise da situação deste Detran, permitindo obter um panorama de como esta instituições disponibiliza informações de interesse social. Além da introdução, o documento compõe-se das seguintes seções: @sec-metodos, com as consultas preliminares, pontuação e critérios estabelecidos; e @sec-resultados, com a pontuação geral em cada categoria analisada, com a evolução das notas resultantes ao longo dos anos.
+Nesse sentido, este documento busca apresentar uma análise da situação deste Detran, permitindo obter um panorama de como esta instituição disponibiliza informações de interesse social. Além da introdução, o documento compõe-se das seguintes seções: @sec-metodos, com as consultas preliminares, pontuação e critérios estabelecidos; e @sec-resultados, com a pontuação geral em cada categoria analisada, com a evolução das notas resultantes ao longo dos anos.
 
 ### Atribuições do Detran
 
-De acordo com o CTB (Código de Trânsito Brasileiro), são competências do Detran o planejamento, coordenação, execução e controle relacionados às seguintes áreas: habilitação de condutores, veículos, fiscalização de trânsito, estatísticas e educação para o trânsito.
+Conforme o CTB (Código de Trânsito Brasileiro), são competências do Detran o planejamento, coordenação, execução e controle relacionados às seguintes áreas: habilitação de condutores, veículos, fiscalização de trânsito, estatísticas e educação para o trânsito.
 
 Na habilitação de condutores, cabe ao Detran realizar e controlar o processo de formação, reciclagem e suspensão dos condutores, assim como a expedição e cassação da Licença de Aprendizagem, Permissão para Dirigir e CNH.
 
@@ -148,7 +148,7 @@ Em relação aos veículos, compete ao Detran o seu registro, emplacamento, lice
 
 Na área de fiscalização, o Detran deve fazer cumprir a legislação e as normas de trânsito, sendo responsável pela autuação e aplicação de medidas administrativas cabíveis pelas infrações previstas no Código de Trânsito Brasileiro.
 
-Em relação a educação para o trânsito, é responsabilidade do Detran a promoção e participação de projetos de educação e segurança no trânsito. Por fim, coleta de dados estatísticos e a elaboração de estudos sobre acidentes de trânsito e suas causas também devem ser cumpridos pelo Detran.
+Em relação à educação para o trânsito, é responsabilidade do Detran a promoção e participação de projetos de educação e segurança no trânsito. Por fim, coleta de dados estatísticos e a elaboração de estudos sobre acidentes de trânsito e suas causas também devem ser cumpridos pelo Detran.
 
 ### Versão anterior
 
@@ -158,7 +158,7 @@ Este trabalho faz parte da segunda versão do relatório anteriormente publicado
 
 ### Consultas Preliminares
 
-O estudo foi realizado por meio do acesso ao *site* do Detran-`r params$state` a fim de averiguar a existência de dados estatíticos sobre a frota veicular, condutores habilitados, infrações e sinistros de trânsito. Também foram avaliadas a existência de informações relacionadas à educação para o trânsito (campanhas, material educativo, regras de trânsito, etc.), dados quantitivos do atendimento ao público pelo departamento, disponibilidade de canais de atendimento e dados informativos sobre os centros de formação de condutores do estado em questão. A @tbl-consultas demonstra os resultados de uma consulta preliminar destes portais:
+O estudo foi realizado por meio do acesso ao *site* do Detran-`r params$state` a fim de averiguar a existência de dados estatísticos sobre a frota veicular, condutores habilitados, infrações e sinistros de trânsito. Também foram avaliadas a existência de informações relacionadas à educação para o trânsito (campanhas, material educativo, regras de trânsito, etc.), dados quantitativos do atendimento ao público pelo departamento, disponibilidade de canais de atendimento e dados informativos sobre os centros de formação de condutores do estado em questão. A @tbl-consultas demonstra os resultados de uma consulta preliminar destes portais
 
 ```{r}
 preliminar <-
@@ -218,7 +218,7 @@ A **periodicidade** foi avaliada em:
 
 -   Inicial: 3+ anos de atraso e menos de 5 anos disponíveis.
 
-Neste contexto, para um estado ser situado como *Melhor*, por exemplo, seria necessário ter mais de 5 anos disponíveis e seu dado mais recente ser de, no mínino, 2022.
+Neste contexto, para um estado ser situado como *Melhor*, por exemplo, seria necessário ter mais de 5 anos disponíveis e seu dado mais recente ser de, no mmínimo 2022.
 
 A **interatividade** foi avaliada em:
 

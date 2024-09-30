@@ -1,9 +1,9 @@
 # Boas Práticas {#sec-praticas}
 
 
-Esta seção é dedicada a salientar alguns exemplos de boas práticas adotadas por DETRANs a fim de demonstrar alguns costumes que podem aperfeiçoar o desempenho dos portais em geral. A escolha das menções nesta seção foi promovida em relação às maiores notas encontradas no estudo.
+Esta seção é dedicada a salientar alguns exemplos de boas práticas adotadas por Detrans a fim de demonstrar alguns costumes que podem aperfeiçoar o desempenho dos portais em geral. A escolha das menções nesta seção foi promovida em relação às maiores notas encontradas no estudo.
 
-## Frota - Detran RJ
+## Frota - Detran-RJ
 
 A @fig-rj demonstra um gerenciador de tabelas disponível no portal do Detran RJ, que apesar de não conter gráficos ou visualizações sobre os dados, possui um extenso intervalo temporal e um alto nível de desagregação das variáveis, fornecidos de forma interativa com filtros e tabelas dinâmicas.
 
@@ -14,7 +14,7 @@ Gerenciador de Tabelas do Detran RJ.\
 Fonte: <https://www.detran.rj.gov.br/\_estatisticas.veiculos/index.asp>
 :::
 
-## Condutores - Detran RO
+## Condutores - Detran-RO
 
 Na @fig-ro, o Detran RO disponibiliza os dados em um *dashboard*, ou relatório interativo, com filtros e gráficos dinâmicos para a visualização dos dados fornecidos, sendo implementado no *software* Power BI. O uso de programas de análise de dados para geração de relatórios interativos, como Tableau, Google Looker Studio e o anteriormente citado Microsoft Power BI, é uma prática muito recomendada aos departamentos em geral.
 
@@ -25,7 +25,7 @@ Dashboard de dados de condutores habilitados do Detran RO\
 Fonte: <https://www.detran.ro.gov.br/post/43/2023/9/12/anuario-estatistico-condutores-habilitados/>
 :::
 
-## Infrações - Detran MS
+## Infrações - Detran-MS
 
 Como anteriormente citado, uma boa prática para demonstração dos dados é a geração de dashboards através de programas de análise de dados. Na @fig-ms, o Detran MS incorpora em seu portal visualizações dinâmicas criadas em Tableau.
 
@@ -36,7 +36,7 @@ Dashboard de infrações do Detran MS.\
 Fonte: <http://www.paineis.detran.ms.gov.br/Infracoes.html>
 :::
 
-## Sinistros - Detran SE
+## Sinistros - Detran-SE
 
 O Detran SE disponibiliza uma grande quantidade de níveis de desagregação, como visto na @fig-se-1.
 
@@ -56,7 +56,7 @@ Exemplo de tabela dinâmica do Detran SE.\
 Fonte: <https://www.detran.se.gov.br/?pg=estatistica/acidentes/boat_001#gsc.tab=0>
 :::
 
-## Atendimento ao Público - Detran SP
+## Atendimento ao Público - Detran-SP
 
 Além de providenciar contato por telefone, e-mail e mensagem via WhatsApp, o serviço de atendimento do Detran SP oferece a possibilidade de registrar manifestações personalizadas pelo próprio portal (@fig-sp-1) e aplicativos para auxílio ao público (@fig-sp-2).
 
@@ -74,7 +74,7 @@ Aplicativos do portal do Detran SP.\
 Fonte: <https://www.detran.sp.gov.br/wps/portal/portaldetran/cidadao/appsdetran>
 :::
 
-## Sinistros - Detran SP
+## Sinistros - Detran-SP
 
 O novo painel do sistema Infosiga (Sistema de Informações Gerenciais de Sinistros de Trânsito) integra os dados referentes a sinistros e suas vítimas, com base nas ocorrências dentro do Estado de São Paulo. No dia 16/05/2024 houve o lançamento da nova versão deste sistema, que está ilustrado na @fig-infosiga
 
@@ -85,7 +85,7 @@ Novo Infosiga \
 Fonte: <https://www.infosiga.sp.gov.br/>
 :::
 
-## Educação para o Trânsito - Detran PR
+## Educação para o Trânsito - Detran-PR
 
 A @fig-pr-educ apresenta o portal educativo do Detran PR, que dispõe de uma grande variedade de materiais e divulgações sobre a educação e conscientização para o trânsito disponíveis em diversos formatos digitais, como vídeos, cursos EaD, *podcasts*, entre outros.
 
@@ -96,7 +96,7 @@ Portal de educação do Detran PR.\
 Fonte: <https://www.detraneduca.pr.gov.br/>
 :::
 
-## CFCs - Detran PR
+## CFCs - Detran-PR
 
 O Detran PR também possui em seu portal tabelas interativas para a consulta de CFCs de forma dinâmica e eficiente, como demonstrado na @fig-pr-cfcs.
 
@@ -107,7 +107,7 @@ Lista de CFCs/Instituições do Detran PR.\
 Fonte: <https://www.detran.pr.gov.br/Pagina/CFCInstituicoes-Cursos-de-Capacitacao-e-Especializados>
 :::
 
-## Sinistros - Detran ES
+## Sinistros - Detran-ES
 
 O Detran-ES possui o Observatório de Trânsito do Estado do Espírito Santo, disponibilizando dados sobre sinistros, frota de veículos, condutores habilitados e infrações. 
 

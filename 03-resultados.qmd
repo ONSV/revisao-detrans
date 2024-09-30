@@ -32,7 +32,7 @@ frota <- df_revisoes |>
   arrange(desc(regiao))
 ```
 
-A @tbl-frota aponta os resultados obtidos na categoria frota de veículos, com os níveis em cada categoria e as notas médias resultantes. A @fig-map-frota apresenta esses dados mapeados no território brasileiro. Observa-se que a *periodicidade* é o critério de melhor performance na maior parte dos portais, e *interatividade* é o critério de pior desempenho, considerando essa categoria.
+A @tbl-frota aponta os resultados obtidos na categoria frota de veículos, com os níveis em cada categoria e as notas médias resultantes. A @fig-map-frota apresenta esses dados mapeados no território brasileiro. Observa-se que a *periodicidade* é o critério de melhor desempenho na maior parte dos portais, e *interatividade* é o critério de pior desempenho, considerando essa categoria.
 
 ```{r}
 text_results <- function(results_df, values = c("min", "max")) {
