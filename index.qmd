@@ -42,11 +42,11 @@ Avaliação do Nível de Informações Disponibilizadas nos Portais dos Departam
 
 Todo o processo metodológico de coleta, transformação e visualização dos dados presentes nesse relatório estão disponíveis em um repositório do GitHub. Para acessar, entre em contato com [onsv@onsv.org.br](mailto:onsv@onsv.org.br)
 
-# Agradecimentos
+<!-- # Agradecimentos
 
 A equipe de autores agradece às instituições que enviaram suas considerações, contribuindo com o aprimoramento dos métodos aqui apresentados: CET-MG, Detran-ES, Detran-DF, Detran-GO, Detran-MT, Detran-PB, Detran-PR, Detran-SC, Detran-SP e Detran-RN.
 
-A equipe de autores também agradece pelo apoio do Centro de Liderança Pública e do pesquisador Daniel Vasconcellos Archer Duque na elaboração do relatório.
+A equipe de autores também agradece pelo apoio do Centro de Liderança Pública e do pesquisador Daniel Vasconcellos Archer Duque na elaboração do relatório. -->
 
 :::{layout-ncol="2"}
 
